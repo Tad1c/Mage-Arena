@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Net;
 public class ClientHandle
 {
     public static void Welcome(Packet packet)
@@ -13,6 +13,15 @@ public class ClientHandle
         Client.instance.myId = id;
 
         ClientSend.WelcomeReceived();
-        //TODO: send welcome receivde
+
+        Client.instance.udp.Connect(((IPEndPoint)Client.instance.tcp.socket.Client.LocalEndPoint).Port);
+    }
+
+    public static void UDPTest(Packet packet)
+    {
+        string msg = packet.ReadString();
+
+        Debug.Log($"Received packet via UDP. Contains message: {msg}");
+        ClientSend.UDPTestReceived();
     }
 }
