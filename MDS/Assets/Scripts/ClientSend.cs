@@ -29,14 +29,40 @@ public class ClientSend : MonoBehaviour
         }
     }
 
-    public static void UDPTestReceived()
+    public static void PlayerMovement(bool[] inputs)
     {
-        using (Packet packet = new Packet((int)ClientPackets.udpTestReceive))
+        using (Packet packet = new Packet((int)ClientPackets.playerMovement))
         {
-            packet.Write("Received a UDP packet.");
+            packet.Write(inputs.Length);
+            foreach (bool input in inputs)
+            {
+                packet.Write(input);
+            }
+
+            packet.Write(GameManager.players[Client.instance.myId].transform.rotation);
 
             SendUDPData(packet);
         }
     }
+
+    public static void PlayerShoot(Vector3 facing)
+    {
+        using (Packet packet = new Packet((int)ClientPackets.playerShoot))
+        {
+            packet.Write(facing);
+            SendTCPData(packet);
+        }
+    }
+
+
+    // public static void UDPTestReceived()
+    // {
+    //     using (Packet packet = new Packet((int)ClientPackets.udpTestReceive))
+    //     {
+    //         packet.Write("Received a UDP packet.");
+
+    //         SendUDPData(packet);
+    //     }
+    // }
     #endregion
 }
