@@ -290,7 +290,10 @@ public class Client : MonoBehaviour
                 {(int)ServerPackets.playerRotation, ClientHandle.PlayerRotation},
                 {(int)ServerPackets.playerDisconnected, ClientHandle.PlayerDisconnected},
                 {(int)ServerPackets.playerHealth, ClientHandle.PlayerHealth},
-                {(int)ServerPackets.playerRespawn, ClientHandle.PlayerRespawn}
+                {(int)ServerPackets.playerRespawn, ClientHandle.PlayerRespawn},
+                {(int)ServerPackets.projectileShoot, ClientHandle.ProjectileSpawn},
+                {(int)ServerPackets.projectilePosition, ClientHandle.ProjectilePosition},
+                {(int)ServerPackets.projectileDestroy, ClientHandle.ProjectileDestroy},
                 // {(int)ServerPackets.udpTest, ClientHandle.UDPTest}
             };
 

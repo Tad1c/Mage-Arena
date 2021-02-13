@@ -67,6 +67,31 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.players[id].Respawn();
     }
+    
+    public static void ProjectilePosition(Packet packet)
+    {
+        int id = packet.ReadInt();
+        Vector3 position = packet.ReadVector3();
+
+        GameManager.projectiles[id].transform.position = position;
+    }
+     
+    public static void ProjectileSpawn(Packet packet)
+    {
+        int id = packet.ReadInt();
+        int byPlayerId = packet.ReadInt();
+        Vector3 position = packet.ReadVector3();
+
+        GameManager.instance.SpawnProjectile(id, byPlayerId, position);
+    }
+     
+    public static void ProjectileDestroy(Packet packet)
+    {
+        int id = packet.ReadInt();
+        Vector3 position = packet.ReadVector3();
+
+        GameManager.projectiles[id].DestoryProjectile(position);
+    }
 
     // public static void UDPTest(Packet packet)
     // {

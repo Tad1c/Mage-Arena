@@ -54,6 +54,14 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+    public static void ShootProjectile(Vector3 facing)
+    {
+        using (Packet packet = new Packet((int)ClientPackets.shootProjectile))
+        {
+            packet.Write(facing);
+            SendTCPData(packet);
+        }
+    }
 
     // public static void UDPTestReceived()
     // {
