@@ -8,7 +8,7 @@ public class ProjectileManager : MonoBehaviour
     public int playerId;
 
     public float speed = 10.0f;
-    
+
     private Vector3 finalPosition;
 
     public void Init(int id, int playerId, Vector3 finalPosition)
@@ -16,6 +16,7 @@ public class ProjectileManager : MonoBehaviour
         this.id = id;
         this.playerId = playerId;
         this.finalPosition = finalPosition;
+        transform.LookAt(finalPosition);
     }
 
     private void Update()
