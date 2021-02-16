@@ -37,13 +37,13 @@ public class GameManager : MonoBehaviour
         players.Add(id, player.GetComponent<PlayerManager>());
     }
 
-    public void SpawnProjectile(int id, int playerId, Vector3 position)
+    public void SpawnProjectile(int id, int playerId, Vector3 position, Vector3 finalPosition)
     {
         GameObject projectile = Instantiate(projectilePrefab, position, Quaternion.identity);
 
         ProjectileManager projectileManager = projectile.GetComponent<ProjectileManager>();
         projectiles.Add(id, projectileManager);
-        projectileManager.Init(id, playerId);
+        projectileManager.Init(id, playerId, finalPosition);
        
     }
 

@@ -108,3 +108,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   playerId: 0
+  speed: 10

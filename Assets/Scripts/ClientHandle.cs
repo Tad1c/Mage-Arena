@@ -71,9 +71,9 @@ public class ClientHandle : MonoBehaviour
     public static void ProjectilePosition(Packet packet)
     {
         int id = packet.ReadInt();
-        Vector3 position = packet.ReadVector3();
+        Vector3 finalPosition = packet.ReadVector3();
 
-        GameManager.projectiles[id].transform.position = position;
+        //GameManager.projectiles[id].UpdatePosition(finalPosition);
     }
      
     public static void ProjectileSpawn(Packet packet)
@@ -81,8 +81,9 @@ public class ClientHandle : MonoBehaviour
         int id = packet.ReadInt();
         int byPlayerId = packet.ReadInt();
         Vector3 position = packet.ReadVector3();
+        Vector3 finalPosition = packet.ReadVector3();
 
-        GameManager.instance.SpawnProjectile(id, byPlayerId, position);
+        GameManager.instance.SpawnProjectile(id, byPlayerId, position, finalPosition);
     }
      
     public static void ProjectileDestroy(Packet packet)
@@ -91,6 +92,7 @@ public class ClientHandle : MonoBehaviour
         Vector3 position = packet.ReadVector3();
 
         GameManager.projectiles[id].DestoryProjectile(position);
+        GameManager.projectiles.Remove(id);
     }
 
     // public static void UDPTest(Packet packet)

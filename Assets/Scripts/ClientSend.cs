@@ -54,11 +54,11 @@ public class ClientSend : MonoBehaviour
         }
     }
 
-    public static void ShootProjectile(Vector3 facing)
+    public static void ShootProjectile(Vector3 shootDirection)
     {
         using (Packet packet = new Packet((int)ClientPackets.shootProjectile))
         {
-            packet.Write(facing);
+            packet.Write(shootDirection);
             SendTCPData(packet);
         }
     }
