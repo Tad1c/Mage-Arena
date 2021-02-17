@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using ClientSide;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -12,11 +13,26 @@ public class PlayerManager : MonoBehaviour
     public string username;
 
     public TextMeshProUGUI user_text;
+    public TextMeshProUGUI pingText;
     public Slider healthSlider;
 
     public float health;
     public float maxHealth;
     public MeshRenderer model;
+
+    public float pingCountdown = 1f;
+    public float pingCountDownLimit = 1f;
+
+    private void FixedUpdate()
+    {
+        pingCountdown += Time.fixedDeltaTime;
+        if (pingCountdown >= pingCountDownLimit)
+        {
+            pingCountdown = 0;
+            pingText.text = Client.instance.ping.ToString();
+            ClientSend.Ping();
+        }
+    }
 
     public void Init(int id, string userName)
     {

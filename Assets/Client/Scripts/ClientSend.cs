@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ClientSide;
+using System;
 
 public class ClientSend : MonoBehaviour
 {
@@ -59,6 +61,15 @@ public class ClientSend : MonoBehaviour
         using (Packet packet = new Packet((int)ClientPackets.shootProjectile))
         {
             packet.Write(shootDirection);
+            SendTCPData(packet);
+        }
+    }
+
+    public static void Ping()
+    {
+        Client.instance.pingSent = DateTime.UtcNow;
+        using (Packet packet = new Packet((int)ClientPackets.ping))
+        {
             SendTCPData(packet);
         }
     }

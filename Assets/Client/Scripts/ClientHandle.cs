@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using System.Net;
+using ClientSide;
+
 public class ClientHandle : MonoBehaviour
 {
     public static void Welcome(Packet packet)
@@ -67,7 +70,7 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.players[id].Respawn();
     }
-    
+
     public static void ProjectilePosition(Packet packet)
     {
         int id = packet.ReadInt();
@@ -75,7 +78,7 @@ public class ClientHandle : MonoBehaviour
 
         //GameManager.projectiles[id].UpdatePosition(finalPosition);
     }
-     
+
     public static void ProjectileSpawn(Packet packet)
     {
         int id = packet.ReadInt();
@@ -85,7 +88,7 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.instance.SpawnProjectile(id, byPlayerId, position, finalPosition);
     }
-     
+
     public static void ProjectileDestroy(Packet packet)
     {
         int id = packet.ReadInt();
@@ -93,6 +96,11 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.projectiles[id].DestoryProjectile(position);
         GameManager.projectiles.Remove(id);
+    }
+
+    public static void Ping(Packet packet)
+    {
+        Client.instance.ping = Math.Round((DateTime.UtcNow - Client.instance.pingSent).TotalMilliseconds, 0f);
     }
 
     // public static void UDPTest(Packet packet)

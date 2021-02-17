@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
-using System;
 
 public class ThreadManager : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class ThreadManager : MonoBehaviour
     private static readonly List<Action> executeCopiedOnMainThread = new List<Action>();
     private static bool actionToExecuteOnMainThread = false;
 
-    private void Update()
+    private void FixedUpdate()
     {
         UpdateMain();
     }
@@ -50,3 +51,4 @@ public class ThreadManager : MonoBehaviour
         }
     }
 }
+

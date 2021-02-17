@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ClientSide;
 
 public class GameManager : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour
         ProjectileManager projectileManager = projectile.GetComponent<ProjectileManager>();
         projectiles.Add(id, projectileManager);
         projectileManager.Init(id, playerId, finalPosition);
-       
+
     }
 
 }

@@ -1,8 +1,7 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using System.Text;
+using UnityEngine;
 
 /// <summary>Sent from server to client.</summary>
 public enum ServerPackets
@@ -17,6 +16,7 @@ public enum ServerPackets
     projectileShoot,
     projectilePosition,
     projectileDestroy,
+    ping,
     udpTest
 }
 
@@ -27,6 +27,7 @@ public enum ClientPackets
     playerMovement,
     shootProjectile,
     playerShoot,
+    ping,
     udpTestReceive
 }
 
@@ -172,13 +173,11 @@ public class Packet : IDisposable
         buffer.AddRange(Encoding.ASCII.GetBytes(_value)); // Add the string itself
     }
 
-
     public void Write(Vector3 _value)
     {
         Write(_value.x);
         Write(_value.y);
         Write(_value.z);
-
     }
 
     public void Write(Quaternion _value)
@@ -394,3 +393,4 @@ public class Packet : IDisposable
         GC.SuppressFinalize(this);
     }
 }
+
