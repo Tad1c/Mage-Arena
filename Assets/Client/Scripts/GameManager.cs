@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    public static Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager>();
+    public static Dictionary<int, PlayerClient> players = new Dictionary<int, PlayerClient>();
     public static Dictionary<int, ProjectileManager> projectiles = new Dictionary<int, ProjectileManager>();
 
     public GameObject localPlayerPrefab;
@@ -32,10 +32,10 @@ public class GameManager : MonoBehaviour
         else
             player = Instantiate(playerPrefab, position, rotation);
 
-        player.GetComponent<PlayerManager>().Init(id, username);
+        player.GetComponent<PlayerClient>().Init(id, username);
 
 
-        players.Add(id, player.GetComponent<PlayerManager>());
+        players.Add(id, player.GetComponent<PlayerClient>());
     }
 
     public void SpawnProjectile(int id, int playerId, Vector3 position, Vector3 finalPosition)

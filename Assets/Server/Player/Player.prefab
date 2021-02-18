@@ -49,14 +49,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   username: 
-  controller: {fileID: 1414741740}
   shootOrigin: {fileID: 2222490797104248287}
-  gravity: -9.81
-  moveSpeed: 6
-  jumpSpeed: 50
-  health: 0
-  maxHealht: 100
-  distanceCheck: 5
+  playerStats:
+    moveSpeed: 8
+    jumpSpeed: 5
+    health: 0
+    maxHealht: 100
+  movementStates: 000000000100000002000000
   isOffline: 0
 --- !u!54 &1414741740
 Rigidbody:

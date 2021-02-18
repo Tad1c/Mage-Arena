@@ -24,12 +24,10 @@ public class PlayerController : MonoBehaviour
 
     private void SendInputToServer()
     {
-        bool[] inputs = new bool[]
+        float[] inputs = new float[]
         {
-            Input.GetKey(KeyCode.W),
-            Input.GetKey(KeyCode.S),
-            Input.GetKey(KeyCode.A),
-            Input.GetKey(KeyCode.D)
+           Input.GetAxisRaw("Horizontal"),
+           Input.GetAxisRaw("Vertical"),
         };
 
         ClientSend.PlayerMovement(inputs);

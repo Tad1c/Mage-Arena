@@ -128,7 +128,8 @@ public class ServerSend
         using (Packet packet = new Packet((int)ServerPackets.playerHealth))
         {
             packet.Write(player.id);
-            packet.Write(player.health);
+            //TODO: Uncomment this line of code.
+            packet.Write(player.playerStats.health);
 
             SendTCPDataToAll(packet);
         }

@@ -31,12 +31,12 @@ public class ClientSend : MonoBehaviour
         }
     }
 
-    public static void PlayerMovement(bool[] inputs)
+    public static void PlayerMovement(float[] inputs)
     {
         using (Packet packet = new Packet((int)ClientPackets.playerMovement))
         {
             packet.Write(inputs.Length);
-            foreach (bool input in inputs)
+            foreach (var input in inputs)
             {
                 packet.Write(input);
             }

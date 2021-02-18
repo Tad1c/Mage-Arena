@@ -21,10 +21,10 @@ public class ServerHandle
 
     public static void PlayerMovement(int fromClient, Packet packet)
     {
-        bool[] inputs = new bool[packet.ReadInt()];
+        float[] inputs = new float[packet.ReadInt()];
         for (int i = 0; i < inputs.Length; i++)
         {
-            inputs[i] = packet.ReadBool();
+            inputs[i] = packet.ReadFloat();
         }
 
         Quaternion rotation = packet.ReadQuaternion();
