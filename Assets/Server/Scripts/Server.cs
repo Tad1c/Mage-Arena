@@ -138,7 +138,7 @@ public class Server
                 {(int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived},
                 {(int)ClientPackets.playerMovement, ServerHandle.PlayerMovement},
                 {(int)ClientPackets.shootProjectile, ServerHandle.PlayerShootProjectile},
-                {(int)ClientPackets.playerShoot, ServerHandle.PlayerShoot},
+                {(int)ClientPackets.playerJump, ServerHandle.PlayerJump},
                 {(int)ClientPackets.ping, ServerHandle.Ping}
 
                // {(int)ClientPackets.udpTestReceive, ServerHandle.UDPTestReceived}

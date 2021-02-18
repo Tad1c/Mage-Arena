@@ -33,17 +33,19 @@ public class ServerHandle
 
     }
 
-    public static void PlayerShoot(int fromClient, Packet packet)
-    {
-        Vector3 shootingDireciton = packet.ReadVector3();
-        Server.clients[fromClient].player.Shoot(shootingDireciton);
-    }
-
     public static void PlayerShootProjectile(int fromClient, Packet packet)
     {
         Vector3 shootDirection = packet.ReadVector3();
         Server.clients[fromClient].player.ShootProjectile(shootDirection);
     }
+
+
+    public static void PlayerJump(int fromClient, Packet packet)
+    {
+        bool hasJumped = packet.ReadBool();
+        Server.clients[fromClient].player.Jump();
+    }
+
 
     public static void Ping(int fromClient, Packet packet)
     {

@@ -103,6 +103,17 @@ public class ServerSend
         }
     }
 
+    public static void Jump(Player player)
+    {
+        using (Packet packet = new Packet((int)ServerPackets.playerJump))
+        {
+            // the invocation of this method itself means the player jumped
+            packet.Write(player.id);
+
+            SendTCPDataToAll(packet);
+        }
+    }
+
     public static void PlayerDisconnected(int playerId)
     {
         using (Packet packet = new Packet((int)ServerPackets.playerDisconnected))

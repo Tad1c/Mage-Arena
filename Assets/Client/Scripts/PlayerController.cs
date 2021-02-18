@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
         {
             ClientSend.ShootProjectile(shootPos.forward);
         }
+
+        if (Input.GetKeyDown(KeyCode.Space)) ClientSend.PlayerJump();
     }
 
     private void FixedUpdate()
@@ -27,8 +29,7 @@ public class PlayerController : MonoBehaviour
             Input.GetKey(KeyCode.W),
             Input.GetKey(KeyCode.S),
             Input.GetKey(KeyCode.A),
-            Input.GetKey(KeyCode.D),
-            Input.GetKey(KeyCode.Space)
+            Input.GetKey(KeyCode.D)
         };
 
         ClientSend.PlayerMovement(inputs);

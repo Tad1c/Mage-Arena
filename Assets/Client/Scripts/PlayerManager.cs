@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
     public float pingCountdown = 1f;
     public float pingCountDownLimit = 1f;
 
+    public Animator animator;
     private void FixedUpdate()
     {
         pingCountdown += Time.fixedDeltaTime;
@@ -43,7 +44,7 @@ public class PlayerManager : MonoBehaviour
         user_text.text = username;
     }
 
-    public void SetHealht(float health)
+    public void SetHealth(float health)
     {
         this.health = health;
         healthSlider.value = health;
@@ -62,7 +63,12 @@ public class PlayerManager : MonoBehaviour
     public void Respawn()
     {
         model.enabled = true;
-        SetHealht(maxHealth);
+        SetHealth(maxHealth);
+    }
+
+    public void Jump()
+    {
+        animator.SetTrigger("Jump");
     }
 
 }

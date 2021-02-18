@@ -15,16 +15,13 @@ public class Player : MonoBehaviour
     public float maxHealht = 100;
 
     private bool[] inputs;
-    private float yVelocity = 0;
-
-    private bool isGrounded;
 
     [SerializeField]
     private float distanceCheck;
 
-    private bool hasBeenHit = false;
     private Vector3 projectileDirection;
     private float projectilePushTime;
+    private float projectilePushForce;
 
     [Header("Only for testing purposes")]
     public bool isOffline;
@@ -36,6 +33,7 @@ public class Player : MonoBehaviour
         //  jumpSpeed *= Time.fixedDeltaTime;
         if (isOffline)
             Initialize(1, "Hello");
+
     }
 
     public void Initialize(int id, string username)
@@ -44,20 +42,6 @@ public class Player : MonoBehaviour
         this.username = username;
         health = maxHealht;
         inputs = new bool[5];
-    }
-
-    private void Update()
-    {
-        RaycastHit hit;
-
-        Debug.DrawRay(this.transform.position, Vector3.down, Color.red, distanceCheck);
-        if (Physics.Raycast(this.transform.position, Vector3.down, out hit, distanceCheck))
-        {
-            if (hit.collider.CompareTag("Untagged"))
-                isGrounded = true;
-        }
-        else
-            isGrounded = false;
     }
 
     public void FixedUpdate()
@@ -122,19 +106,14 @@ public class Player : MonoBehaviour
             moveDirection.x *= ratio;
             moveDirection.z *= ratio;
         }
-    
-        if (isGrounded)
-        {
-            if (inputs[4])
-                controller.AddForce(new Vector3(0f, jumpSpeed, 0f));
-        }
 
         controller.velocity = new Vector3(moveDirection.x, controller.velocity.y, moveDirection.z);
 
-        if (hasBeenHit)
+        if (projectilePushForce >= 1)
         {
-            // this -3f will actually be the speed when moving opposite of the applied force
-            controller.AddForce(projectileDirection * (moveSpeed - (moveSpeed / 2.5f)), ForceMode.VelocityChange);
+            // calculate the force to be applied to the rb
+            controller.AddForce(projectileDirection * projectilePushForce, ForceMode.VelocityChange);
+            projectilePushForce = Mathf.Lerp(projectilePushForce, 0f, projectilePushTime * Time.deltaTime);
         }
 
         ServerSend.PlayerPosition(this);
@@ -147,35 +126,21 @@ public class Player : MonoBehaviour
         transform.rotation = rotation;
     }
 
-    public void Shoot(Vector3 viewDirection)
-    {
-        if (Physics.Raycast(shootOrigin.position, viewDirection, out RaycastHit hit, 25f))
-        {
-            if (hit.collider.CompareTag("Player"))
-            {
-                hit.collider.GetComponent<Player>().TakeDamage(5);
-                //hit.collider.GetComponent<Player>().MoveBackwardsOnHit(-hit.transform.forward, 200);
-            }
-        }
-    }
-
     public void ShootProjectile(Vector3 shootDirection)
     {
         NetworkManager.instance.InstanciateProjectile(shootOrigin).Init(shootDirection, id);
     }
 
-    public void HitByProjectile(Vector3 direction, float pushTime)
+    public void Jump()
+    {
+        ServerSend.Jump(this);
+    }
+
+    public void HitByProjectile(Vector3 direction, float pushTime, float pushForce)
     {
         projectileDirection = direction;
         projectilePushTime = pushTime;
-        StartCoroutine(stunCountdown(direction));
-    }
-
-    private IEnumerator stunCountdown(Vector3 dir)
-    {
-        hasBeenHit = true;
-        yield return new WaitForSeconds(projectilePushTime);
-        hasBeenHit = false;
+        projectilePushForce = pushForce;
     }
 
     public void TakeDamage(float dmg)

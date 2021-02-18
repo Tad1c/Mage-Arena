@@ -37,15 +37,20 @@ public class ClientHandle : MonoBehaviour
         int id = packet.ReadInt();
         Vector3 position = packet.ReadVector3();
 
-        GameManager.players[id].transform.position = position;
+        if (GameManager.players.ContainsKey(id)) {
+            GameManager.players[id].transform.position = position;
+        }
     }
 
     public static void PlayerRotation(Packet packet)
     {
         int id = packet.ReadInt();
         Quaternion rotation = packet.ReadQuaternion();
-
-        GameManager.players[id].transform.rotation = rotation;
+        if (GameManager.players.ContainsKey(id))
+        {
+            GameManager.players[id].transform.rotation = rotation;
+        }
+        
     }
 
     public static void PlayerDisconnected(Packet pack)
@@ -61,7 +66,7 @@ public class ClientHandle : MonoBehaviour
         int id = pack.ReadInt();
         float health = pack.ReadFloat();
 
-        GameManager.players[id].SetHealht(health);
+        GameManager.players[id].SetHealth(health);
     }
 
     public static void PlayerRespawn(Packet packet)
@@ -101,6 +106,13 @@ public class ClientHandle : MonoBehaviour
     public static void Ping(Packet packet)
     {
         Client.instance.ping = Math.Round((DateTime.UtcNow - Client.instance.pingSent).TotalMilliseconds, 0f);
+    }
+
+    public static void Jump(Packet packet)
+    {
+        int playerId = packet.ReadInt();
+
+        GameManager.players[playerId].Jump();
     }
 
     // public static void UDPTest(Packet packet)

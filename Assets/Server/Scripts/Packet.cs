@@ -17,6 +17,7 @@ public enum ServerPackets
     projectilePosition,
     projectileDestroy,
     ping,
+    playerJump,
     udpTest
 }
 
@@ -28,6 +29,7 @@ public enum ClientPackets
     shootProjectile,
     playerShoot,
     ping,
+    playerJump,
     udpTestReceive
 }
 

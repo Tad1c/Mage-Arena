@@ -10,6 +10,7 @@ public class BasicProjectile : MonoBehaviour
     public float speed = 10.0f;
     public float range = 30.0f;
     private float pushTime = 3f;
+    private float pushForce = 50f;
 
     private Rigidbody rb;
     public int byPlayerId;
@@ -67,8 +68,7 @@ public class BasicProjectile : MonoBehaviour
             player.TakeDamage(damage);
             Vector3 direction = transform.position - player.transform.position; //player.transform.position - transform.position;
             direction = -direction.normalized;
-            player.HitByProjectile(direction, pushTime);
-            Debug.Log("Transform forward: " + direction);
+            player.HitByProjectile(direction, pushTime, pushForce);
             Destroy(gameObject);
         }
     }

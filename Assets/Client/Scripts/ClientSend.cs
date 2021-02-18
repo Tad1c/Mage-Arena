@@ -47,11 +47,12 @@ public class ClientSend : MonoBehaviour
         }
     }
 
-    public static void PlayerShoot(Vector3 facing)
+    public static void PlayerJump()
     {
-        using (Packet packet = new Packet((int)ClientPackets.playerShoot))
+        using (Packet packet = new Packet((int)ClientPackets.playerJump))
         {
-            packet.Write(facing);
+            packet.Write(true);
+
             SendTCPData(packet);
         }
     }
