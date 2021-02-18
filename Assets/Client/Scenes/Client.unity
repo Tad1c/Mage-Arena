@@ -804,9 +804,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84803c21a209eda42aa419790c759153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localPlayerPrefab: {fileID: 5710724987964419720, guid: c5cc2519f12df07488f0b9c5e1552e45, type: 3}
-  playerPrefab: {fileID: 5710724987964419720, guid: f9ea9a4cdda89c84f8841edcb96e88f5, type: 3}
-  projectilePrefab: {fileID: 5848049058961567918, guid: 138ffcaadadce9941a1c6f6a92d3e498, type: 3}
+  localPlayerPrefab: {fileID: 5710724987964419720, guid: c5cc2519f12df07488f0b9c5e1552e45,
+    type: 3}
+  playerPrefab: {fileID: 5710724987964419720, guid: f9ea9a4cdda89c84f8841edcb96e88f5,
+    type: 3}
+  projectilePrefab: {fileID: 5848049058961567918, guid: 138ffcaadadce9941a1c6f6a92d3e498,
+    type: 3}
 --- !u!4 &664709309
 Transform:
   m_ObjectHideFlags: 0
@@ -1251,6 +1254,7 @@ MonoBehaviour:
   ip: 192.168.5.38
   port: 80
   myId: 0
+  ping: 0
 --- !u!4 &1078763785
 Transform:
   m_ObjectHideFlags: 0

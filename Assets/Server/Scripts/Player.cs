@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,7 +9,7 @@ public class Player : MonoBehaviour
     public Rigidbody controller;
     public Transform shootOrigin;
     public float gravity = -9.81f;
-    public float moveSpeed = 5f;
+    public float moveSpeed = 8f;
     public float jumpSpeed = 5f;
     public float health;
     public float maxHealht = 100;
@@ -25,7 +22,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float distanceCheck;
 
-    private bool stunned = false;
+    private bool hasBeenHit = false;
+    private Vector3 projectileDirection;
+    private float projectilePushTime;
 
     [Header("Only for testing purposes")]
     public bool isOffline;
@@ -106,19 +105,7 @@ public class Player : MonoBehaviour
         if (inputs[3])
             inputDirection.x += 1;
 
-        // if (!stunned) {
-
-        if (stunned)
-        {
-            // inputDirection = hitDirection;
-            // isHit = false;
-            ServerSend.PlayerPosition(this);
-            ServerSend.PlayerRotation(this);
-        }
-        else
-        {
-            Move(inputDirection);
-        }
+        Move(inputDirection);
 
     }
 
@@ -126,9 +113,16 @@ public class Player : MonoBehaviour
     {
 
         Vector3 moveDirection = new Vector3(inputDirection.x, 0f, inputDirection.y);//transform.right * inputDirection.x + transform.forward * inputDirection.y;
-
         moveDirection *= moveSpeed;
 
+        // So we can move with the same speed when going diagonally
+        if (moveDirection.magnitude > moveSpeed)
+        {
+            float ratio = moveSpeed / moveDirection.magnitude;
+            moveDirection.x *= ratio;
+            moveDirection.z *= ratio;
+        }
+    
         if (isGrounded)
         {
             if (inputs[4])
@@ -136,6 +130,12 @@ public class Player : MonoBehaviour
         }
 
         controller.velocity = new Vector3(moveDirection.x, controller.velocity.y, moveDirection.z);
+
+        if (hasBeenHit)
+        {
+            // this -3f will actually be the speed when moving opposite of the applied force
+            controller.AddForce(projectileDirection * (moveSpeed - (moveSpeed / 2.5f)), ForceMode.VelocityChange);
+        }
 
         ServerSend.PlayerPosition(this);
         ServerSend.PlayerRotation(this);
@@ -164,19 +164,18 @@ public class Player : MonoBehaviour
         NetworkManager.instance.InstanciateProjectile(shootOrigin).Init(shootDirection, id);
     }
 
-    public void HitByProjectile(Vector3 direction)
+    public void HitByProjectile(Vector3 direction, float pushTime)
     {
-        // isHit = true;
-        // hitDirection = direction;
+        projectileDirection = direction;
+        projectilePushTime = pushTime;
         StartCoroutine(stunCountdown(direction));
     }
 
     private IEnumerator stunCountdown(Vector3 dir)
     {
-        stunned = true;
-        controller.AddForce(dir * 200f);
-        yield return new WaitForSeconds(0.5f);
-        stunned = false;
+        hasBeenHit = true;
+        yield return new WaitForSeconds(projectilePushTime);
+        hasBeenHit = false;
     }
 
     public void TakeDamage(float dmg)
