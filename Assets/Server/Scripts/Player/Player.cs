@@ -11,16 +11,34 @@ public class PlayerStats
     public float maxHealht = 100;
 }
 
-public class Player : MonoBehaviour, IEffectsOnPlayer
+public class Player : MonoBehaviour
 {
     public int id;
     public string username;
     private Rigidbody controller;
+
+    public Rigidbody Controller
+    {
+        get
+        {
+            return controller;
+        }
+        set
+        {
+            controller = value;
+        }
+    }
+
     public Transform shootOrigin;
 
     public PlayerStats playerStats;
 
-    public List<MovementState> movementStates = new List<MovementState>();
+    private PlayerBaseState currentState;
+
+    public readonly MoveState moveState = new MoveState();
+    public readonly AttackState attackState = new AttackState();
+
+    // public List<MovementState> movementStates = new List<MovementState>();
 
     private float[] inputs;
     private Vector3 projectileDirection;
@@ -29,6 +47,21 @@ public class Player : MonoBehaviour, IEffectsOnPlayer
 
     [Header("Only for testing purposes")]
     public bool isOffline;
+    public bool isHit;
+
+    private Projectile projectile;
+
+    public Projectile Projectile
+    {
+        get
+        {
+            return projectile;
+        }
+        set
+        {
+            projectile = value;
+        }
+    }
 
     private void Awake()
     {
@@ -39,6 +72,8 @@ public class Player : MonoBehaviour, IEffectsOnPlayer
     {
         if (isOffline)
             Initialize(1, "Hello");
+
+        TransitionToState(moveState);
     }
 
     public void Initialize(int id, string username)
@@ -49,19 +84,41 @@ public class Player : MonoBehaviour, IEffectsOnPlayer
         inputs = new float[2];
     }
 
+    // Using this when transitioning from state to state
+    public void TransitionToState(PlayerBaseState state)
+    {
+        //applying the new state to be current state
+        currentState = state;
+        //enter in the state
+        currentState.EnterState(this);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var pro = new Projectile();
+            GetProjectileInfo(pro);
+        }
+    }
+
     public void FixedUpdate()
     {
         if (playerStats.health <= 0)
             return;
 
-        if (isOffline)
-        {
-            OfflineMode();
-        }
-        else
-        {
-            NetworkMovement();
-        }
+
+
+        currentState.Update(this);
+
+        // if (isOffline)
+        // {
+        //     OfflineMode();
+        // }
+        // else
+        // {
+        //     NetworkMovement();
+        // }
 
     }
 
@@ -75,9 +132,9 @@ public class Player : MonoBehaviour, IEffectsOnPlayer
 
     private void NetworkMovement()
     {
-        Move(new Vector3(inputs[0], inputs[1]));
+        Move(new Vector2(inputs[0], inputs[1]));
 
-        //TODO: add stun, slow, or push the player
+        //TODO: add stun, slow, or push the player.. ADD this to push state
         if (projectilePushForce >= 1)
         {
             // calculate the force to be applied to the rb
@@ -90,7 +147,7 @@ public class Player : MonoBehaviour, IEffectsOnPlayer
         ServerSend.PlayerRotation(this);
     }
 
-    private void Move(Vector2 inputDirection)
+    public void Move(Vector2 inputDirection)
     {
 
         Vector3 moveDirection = new Vector3(inputDirection.x, 0f, inputDirection.y);//transform.right * inputDirection.x + transform.forward * inputDirection.y;
@@ -153,24 +210,20 @@ public class Player : MonoBehaviour, IEffectsOnPlayer
         ServerSend.PlayerRespawn(this);
     }
 
-    private IEnumerator ClearMovementState(MovementState movementState, float delay)
+    public void GetProjectileInfo(Projectile projectile)
     {
-        yield return new WaitForSeconds(delay);
-        movementStates.Remove(movementState);
+        this.projectile = projectile;
+        isHit = true;
     }
 
     public void OnPush(Vector3 direction, float time, float force)
     {
-        movementStates.Add(MovementState.Pushed);
-        StartCoroutine(ClearMovementState(MovementState.Pushed, time));
+        //    movementStates.Add(MovementState.Pushed);
+        //   StartCoroutine(ClearMovementState(MovementState.Pushed, time));
         projectileDirection = direction;
         projectilePushTime = time;
         projectilePushForce = force;
     }
 
-    public void OnStun()
-    {
-        throw new System.NotImplementedException();
-    }
 }
 

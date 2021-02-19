@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicProjectile : Projectile
+public class BasicProjectile : MonoBehaviour
 {
     public static Dictionary<int, BasicProjectile> projectileDic = new Dictionary<int, BasicProjectile>();
     public static int nextProjectileId = 1;
@@ -64,7 +64,7 @@ public class BasicProjectile : Projectile
     {
         if (other.CompareTag("Player"))
         {
-            PlayerManager.
+            //   PlayerManager.
             Player player = other.GetComponent<Player>();
             player.TakeDamage(damage);
             Vector3 direction = transform.position - player.transform.position; //player.transform.position - transform.position;
