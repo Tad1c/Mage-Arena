@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicProjectile : MonoBehaviour
+public class BasicProjectile : Projectile
 {
     public static Dictionary<int, BasicProjectile> projectileDic = new Dictionary<int, BasicProjectile>();
     public static int nextProjectileId = 1;
@@ -64,11 +64,12 @@ public class BasicProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            PlayerManager.
             Player player = other.GetComponent<Player>();
             player.TakeDamage(damage);
             Vector3 direction = transform.position - player.transform.position; //player.transform.position - transform.position;
             direction = -direction.normalized;
-            player.HitByProjectile(direction, pushTime, pushForce);
+            player.OnPush(direction, pushTime, pushForce);
             Destroy(gameObject);
         }
     }

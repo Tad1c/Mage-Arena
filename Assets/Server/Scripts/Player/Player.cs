@@ -11,7 +11,7 @@ public class PlayerStats
     public float maxHealht = 100;
 }
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IEffectsOnPlayer
 {
     public int id;
     public string username;
@@ -126,14 +126,6 @@ public class Player : MonoBehaviour
     }
 
 
-
-    public void HitByProjectile(Vector3 direction, float pushTime, float pushForce)
-    {
-        projectileDirection = direction;
-        projectilePushTime = pushTime;
-        projectilePushForce = pushForce;
-    }
-
     public void TakeDamage(float dmg)
     {
         if (playerStats.health <= 0)
@@ -161,5 +153,24 @@ public class Player : MonoBehaviour
         ServerSend.PlayerRespawn(this);
     }
 
+    private IEnumerator ClearMovementState(MovementState movementState, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        movementStates.Remove(movementState);
+    }
+
+    public void OnPush(Vector3 direction, float time, float force)
+    {
+        movementStates.Add(MovementState.Pushed);
+        StartCoroutine(ClearMovementState(MovementState.Pushed, time));
+        projectileDirection = direction;
+        projectilePushTime = time;
+        projectilePushForce = force;
+    }
+
+    public void OnStun()
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
