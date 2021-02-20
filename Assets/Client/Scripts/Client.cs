@@ -61,10 +61,10 @@ namespace ClientSide
             this.ip = ip;
         }
 
-        public void SetPORT(string port)
-        {
-            this.port = Int32.Parse(port);
-        }
+        // public void SetPORT(string port)
+        // {
+        //     this.port = Int32.Parse(port);
+        // }
 
         public class TCP
         {

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\simet\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\simet\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_MDS.-759698119.00" t="ExcludeRecursive" />
+    <e p="D:\Projects\BitBucket Projects\MDS" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Client" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="CameraController.cs" t="Include" />
+            <e p="Client.cs" t="Include" />
+            <e p="ClientHandle.cs" t="Include" />
+            <e p="ClientSend.cs" t="Include" />
+            <e p="GameManager.cs" t="Include" />
+            <e p="LookAtCamera.cs" t="Include" />
+            <e p="PlayerClient.cs" t="Include" />
+            <e p="PlayerController.cs" t="Include" />
+            <e p="PlayerRotation.cs" t="Include" />
+            <e p="ProjectileManager.cs" t="Include" />
+            <e p="UIManager.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Server" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="BasicProjectile.cs" t="Include" />
+            <e p="Client.cs" t="Include" />
+            <e p="Constants.cs" t="Include" />
+            <e p="NetworkManager.cs" t="Include" />
+            <e p="Packet.cs" t="Include" />
+            <e p="Player" t="Include">
+              <e p="HelathManager.cs" t="Include" />
+              <e p="Player.cs" t="Include" />
+              <e p="PlayerManager.cs" t="Include" />
+              <e p="States" t="Include">
+                <e p="MoveState.cs" t="Include" />
+                <e p="PlayerBaseState.cs" t="Include" />
+                <e p="PushState.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Projectile.cs" t="Include" />
+            <e p="Server.cs" t="Include" />
+            <e p="ServerHandle.cs" t="Include" />
+            <e p="ServerSend.cs" t="Include" />
+            <e p="ThreadManager.cs" t="Include" />
+          </e>
+        </e>
+        <e p="SO Architecture" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Attributes" t="Include">
+            <e p="MultiLine.cs" t="Include" />
+          </e>
+          <e p="Collections" t="Include">
+            <e p="AnimationCurveCollection.cs" t="Include" />
+            <e p="AudioClipCollection.cs" t="Include" />
+            <e p="BaseCollection.cs" t="Include" />
+            <e p="BoolCollection.cs" t="Include" />
+            <e p="ByteCollection.cs" t="Include" />
+            <e p="CharCollection.cs" t="Include" />
+            <e p="Collection.cs" t="Include" />
+            <e p="Color32Collection.cs" t="Include" />
+            <e p="ColorCollection.cs" t="Include" />
+            <e p="DoubleCollection.cs" t="Include" />
+            <e p="FloatCollection.cs" t="Include" />
+            <e p="GameObjectCollection.cs" t="Include" />
+            <e p="IntCollection.cs" t="Include" />
+            <e p="LongCollection.cs" t="Include" />
+            <e p="ObjectCollection.cs" t="Include" />
+            <e p="QuaternionCollection.cs" t="Include" />
+            <e p="SbyteCollection.cs" t="Include" />
+            <e p="SceneCollection.cs" t="Include" />
+            <e p="ShortCollection.cs" t="Include" />
+            <e p="StringCollection.cs" t="Include" />
+            <e p="UintCollection.cs" t="Include" />
+            <e p="UlongCollection.cs" t="Include" />
+            <e p="UshortCollection.cs" t="Include" />
+            <e p="Vector2Collection.cs" t="Include" />
+            <e p="Vector3Collection.cs" t="Include" />
+            <e p="Vector4Collection.cs" t="Include" />
+          </e>
+          <e p="Documentation" t="Include">
+            <e p="Collection.txt" t="Include" />
+            <e p="Event-Listeners.txt" t="Include" />
+            <e p="Events.txt" t="Include" />
+            <e p="References.txt" t="Include" />
+            <e p="Variables.txt" t="Include" />
+          </e>
+          <e p="Editor" t="Include">
+            <e p="BaseReferenceHelper.cs" t="Include" />
+            <e p="Code Generation" t="Include">
+              <e p="SO_CodeGenerationWindow.cs" t="Include" />
+              <e p="SO_CodeGenerator.cs" t="Include" />
+            </e>
+            <e p="Drawers" t="Include">
+              <e p="BaseReferenceDrawer.cs" t="Include" />
+              <e p="GenericPropertyDrawer.cs" t="Include" />
+              <e p="QuaternionDrawer.cs" t="Include" />
+              <e p="SceneInfoPropertyDrawer.cs" t="Include" />
+              <e p="Vector4Drawer.cs" t="Include" />
+            </e>
+            <e p="Generic Property Drawer" t="Include">
+              <e p="BasePropertyDrawIterator.cs" t="Include" />
+              <e p="IPropertyDrawIterator.cs" t="Include" />
+              <e p="IPropertyIterator.cs" t="Include" />
+              <e p="PropertyDrawIterator.cs" t="Include" />
+              <e p="PropertyDrawIteratorLayout.cs" t="Include" />
+              <e p="PropertyIterator.cs" t="Include" />
+            </e>
+            <e p="Inspectors" t="Include">
+              <e p="BaseGameEventEditor.cs" t="Include" />
+              <e p="BaseGameEventListenerEditor.cs" t="Include" />
+              <e p="BaseVariableEditor.cs" t="Include" />
+              <e p="CollectionEditor.cs" t="Include" />
+              <e p="GameEventEditor.cs" t="Include" />
+              <e p="GameEventListenerEditor.cs" t="Include" />
+              <e p="SceneVariableEditor.cs" t="Include" />
+              <e p="StackTrace.cs" t="Include" />
+              <e p="TypedGameEventEditor.cs" t="Include" />
+              <e p="TypesGameEventListenerEditor.cs" t="Include" />
+            </e>
+            <e p="ScriptableObject-Architecture.Editor.asmdef" t="Include" />
+            <e p="SOArchitecture_EditorUtility.cs" t="Include" />
+          </e>
+          <e p="Events" t="Include">
+            <e p="Game Events" t="Include">
+              <e p="AudioClipGameEvent.cs" t="Include" />
+              <e p="BoolGameEvent.cs" t="Include" />
+              <e p="ByteGameEvent.cs" t="Include" />
+              <e p="CharGameEvent.cs" t="Include" />
+              <e p="DoubleGameEvent.cs" t="Include" />
+              <e p="FloatGameEvent.cs" t="Include" />
+              <e p="GameEvent.cs" t="Include" />
+              <e p="GameEventBase.cs" t="Include" />
+              <e p="GameEventStackTrace.cs" t="Include" />
+              <e p="GameObjectGameEvent.cs" t="Include" />
+              <e p="IGameEvent.cs" t="Include" />
+              <e p="IntGameEvent.cs" t="Include" />
+              <e p="LongGameEvent.cs" t="Include" />
+              <e p="ObjectGameEvent.cs" t="Include" />
+              <e p="QuaternionGameEvent.cs" t="Include" />
+              <e p="SByteGameEvent.cs" t="Include" />
+              <e p="ShortGameEvent.cs" t="Include" />
+              <e p="StringGameEvent.cs" t="Include" />
+              <e p="UIntGameEvent.cs" t="Include" />
+              <e p="ULongGameEvent.cs" t="Include" />
+              <e p="UShortGameEvent.cs" t="Include" />
+              <e p="Vector2GameEvent.cs" t="Include" />
+              <e p="Vector3GameEvent.cs" t="Include" />
+              <e p="Vector4GameEvent.cs" t="Include" />
+            </e>
+            <e p="Listeners" t="Include">
+              <e p="AudioClipGameEventListener.cs" t="Include" />
+              <e p="BaseGameEventListener.cs" t="Include" />
+              <e p="BoolGameEventListener.cs" t="Include" />
+              <e p="ByteGameEventListener.cs" t="Include" />
+              <e p="CharGameEventListener.cs" t="Include" />
+              <e p="DoubleGameEventListener.cs" t="Include" />
+              <e p="FloatGameEventListener.cs" t="Include" />
+              <e p="GameEventListener.cs" t="Include" />
+              <e p="GameObjectGameEventListener.cs" t="Include" />
+              <e p="IGameEventListener.cs" t="Include" />
+              <e p="IntGameEventListener.cs" t="Include" />
+              <e p="LongGameEventListener.cs" t="Include" />
+              <e p="ObjectGameEventListener.cs" t="Include" />
+              <e p="QuaternionGameEventListener.cs" t="Include" />
+              <e p="SByteGameEventListener.cs" t="Include" />
+              <e p="ShortGameEventListener.cs" t="Include" />
+              <e p="StringGameEventListener.cs" t="Include" />
+              <e p="UIntGameEventListener.cs" t="Include" />
+              <e p="ULongGameEventListener.cs" t="Include" />
+              <e p="UShortGameEventListener.cs" t="Include" />
+              <e p="Vector2GameEventListener.cs" t="Include" />
+              <e p="Vector3GameEventListener.cs" t="Include" />
+              <e p="Vector4GameEventListener.cs" t="Include" />
+            </e>
+            <e p="Responses" t="Include">
+              <e p="AudioClipUnityEvent.cs" t="Include" />
+              <e p="BoolUnityEvent.cs" t="Include" />
+              <e p="ByteUnityEvent.cs" t="Include" />
+              <e p="CharUnityEvent.cs" t="Include" />
+              <e p="DoubleUnityEvent.cs" t="Include" />
+              <e p="FloatUnityEvent.cs" t="Include" />
+              <e p="GameObjectUnityEvent.cs" t="Include" />
+              <e p="IntUnityEvent.cs" t="Include" />
+              <e p="LongUnityEvent.cs" t="Include" />
+              <e p="ObjectUnityEvent.cs" t="Include" />
+              <e p="QuaternionUnityEvent.cs" t="Include" />
+              <e p="SByteUnityEvent.cs" t="Include" />
+              <e p="ShortUnityEvent.cs" t="Include" />
+              <e p="StringUnityEvent.cs" t="Include" />
+              <e p="UIntUnityEvent.cs" t="Include" />
+              <e p="ULongUnityEvent.cs" t="Include" />
+              <e p="UShortUnityEvent.cs" t="Include" />
+              <e p="Vector2UnityEvent.cs" t="Include" />
+              <e p="Vector3UnityEvent.cs" t="Include" />
+              <e p="Vector4UnityEvent.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Examples" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="CollectionCountDisplayer.cs" t="Include" />
+              <e p="DamageDealer.cs" t="Include" />
+              <e p="DamageDealerWithEvent.cs" t="Include" />
+              <e p="Disabler.cs" t="Include" />
+              <e p="ImageFillSetter.cs" t="Include" />
+              <e p="KeyboardMover.cs" t="Include" />
+              <e p="ObjectAdder.cs" t="Include" />
+              <e p="UnitHealth.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Extensions" t="Include">
+            <e p="QuaternionExtensions.cs" t="Include" />
+            <e p="Vector4Extensions.cs" t="Include" />
+          </e>
+          <e p="References" t="Include">
+            <e p="AnimationCurveReference.cs" t="Include" />
+            <e p="AudioClipReference.cs" t="Include" />
+            <e p="BaseReference.cs" t="Include" />
+            <e p="BoolReference.cs" t="Include" />
+            <e p="ByteReference.cs" t="Include" />
+            <e p="CharReference.cs" t="Include" />
+            <e p="Color32Reference.cs" t="Include" />
+            <e p="ColorReference.cs" t="Include" />
+            <e p="DoubleReference.cs" t="Include" />
+            <e p="FloatReference.cs" t="Include" />
+            <e p="GameObjectReference.cs" t="Include" />
+            <e p="IntReference.cs" t="Include" />
+            <e p="LayerMaskReference.cs" t="Include" />
+            <e p="LongReference.cs" t="Include" />
+            <e p="ObjectReference.cs" t="Include" />
+            <e p="QuaternionReference.cs" t="Include" />
+            <e p="SByteReference.cs" t="Include" />
+            <e p="SceneReference.cs" t="Include" />
+            <e p="ShortReference.cs" t="Include" />
+            <e p="StringReference.cs" t="Include" />
+            <e p="UIntReference.cs" t="Include" />
+            <e p="ULongReference.cs" t="Include" />
+            <e p="UShortReference.cs" t="Include" />
+            <e p="Vector2Reference.cs" t="Include" />
+            <e p="Vector3Reference.cs" t="Include" />
+            <e p="Vector4Reference.cs" t="Include" />
+          </e>
+          <e p="ScriptableObject-Architecture.asmdef" t="Include" />
+          <e p="SOArchitecturePreferences.cs" t="Include" />
+          <e p="Utility" t="Include">
+            <e p="IStackTraceObject.cs" t="Include" />
+            <e p="SOArchitecture_Settings.cs" t="Include" />
+            <e p="SOArchitecture_Utility.cs" t="Include" />
+            <e p="SOArchitectureBaseMonobehaviour.cs" t="Include" />
+            <e p="SOArchitectureBaseObject.cs" t="Include" />
+          </e>
+          <e p="Variables" t="Include">
+            <e p="AnimationCurveVariable.cs" t="Include" />
+            <e p="AudioClipVariable.cs" t="Include" />
+            <e p="BaseVariable.cs" t="Include" />
+            <e p="BoolVariable.cs" t="Include" />
+            <e p="ByteVariable.cs" t="Include" />
+            <e p="CharVariable.cs" t="Include" />
+            <e p="Color32Variable.cs" t="Include" />
+            <e p="ColorVariable.cs" t="Include" />
+            <e p="DoubleVariable.cs" t="Include" />
+            <e p="FloatVariable.cs" t="Include" />
+            <e p="GameObjectVariable.cs" t="Include" />
+            <e p="IntVariable.cs" t="Include" />
+            <e p="LayerMaskVariable.cs" t="Include" />
+            <e p="LongVariable.cs" t="Include" />
+            <e p="ObjectVariable.cs" t="Include" />
+            <e p="QuaternionVariable.cs" t="Include" />
+            <e p="SByteVariable.cs" t="Include" />
+            <e p="SceneVariable.cs" t="Include" />
+            <e p="ShortVariable.cs" t="Include" />
+            <e p="StringVariable.cs" t="Include" />
+            <e p="UIntVariable.cs" t="Include" />
+            <e p="ULongVariable.cs" t="Include" />
+            <e p="UShortVariable.cs" t="Include" />
+            <e p="Vector2Variable.cs" t="Include" />
+            <e p="Vector3Variable.cs" t="Include" />
+            <e p="Vector4Variable.cs" t="Include" />
+          </e>
+        </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Fonts" t="Include">
+            <e p="LiberationSans - OFL.txt" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+            <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+            <e p="TMP_Bitmap.shader" t="Include" />
+            <e p="TMP_SDF Overlay.shader" t="Include" />
+            <e p="TMP_SDF SSD.shader" t="Include" />
+            <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+            <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+            <e p="TMP_SDF-Mobile SSD.shader" t="Include" />
+            <e p="TMP_SDF-Mobile.shader" t="Include" />
+            <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+            <e p="TMP_SDF-Surface.shader" t="Include" />
+            <e p="TMP_SDF.shader" t="Include" />
+            <e p="TMP_Sprite.shader" t="Include" />
+            <e p="TMPro.cginc" t="Include" />
+            <e p="TMPro_Mobile.cginc" t="Include" />
+            <e p="TMPro_Properties.cginc" t="Include" />
+            <e p="TMPro_Surface.cginc" t="Include" />
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="MDS.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="ScriptableObject-Architecture.csproj" t="IncludeRecursive" />
+      <e p="ScriptableObject-Architecture.Editor.csproj" t="IncludeRecursive" />
+      <e p="Temp\Bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>

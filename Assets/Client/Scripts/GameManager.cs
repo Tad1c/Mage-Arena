@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
             Destroy(this);
     }
 
-    public void SpawnPlayer(int id, string username, Vector3 position, Quaternion rotation)
+    public void SpawnPlayer(int id, string username, Vector3 position, Quaternion rotation, float health)
     {
         GameObject player;
 
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         else
             player = Instantiate(playerPrefab, position, rotation);
 
-        player.GetComponent<PlayerClient>().Init(id, username);
+        player.GetComponent<PlayerClient>().Init(id, username, health);
 
 
         players.Add(id, player.GetComponent<PlayerClient>());

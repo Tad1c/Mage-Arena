@@ -12,11 +12,8 @@ public class MoveState : PlayerBaseState
     public override void Update(Player player)
     {
         if (player.isHit)
-            player.TransitionToState(player.attackState);
-
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        player.Move(new Vector2(h, v));
+            player.TransitionToState(player.pushState);
+        
+        player.Move(new Vector2(player.h, player.v));
     }
 }

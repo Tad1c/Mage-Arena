@@ -34,11 +34,11 @@ public class PlayerClient : MonoBehaviour
         }
     }
 
-    public void Init(int id, string userName)
+    public void Init(int id, string userName, float health)
     {
         this.id = id;
         this.username = userName;
-        health = maxHealth;
+        SetHealth(health);
 
         user_text.text = username;
     }

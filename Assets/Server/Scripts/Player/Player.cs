@@ -13,19 +13,22 @@ public class PlayerStats
 
 public class Player : MonoBehaviour
 {
+
+    public static Player instance;
+    
     public int id;
     public string username;
-    private Rigidbody controller;
+    private Rigidbody _controller;
 
     public Rigidbody Controller
     {
         get
         {
-            return controller;
+            return _controller;
         }
         set
         {
-            controller = value;
+            _controller = value;
         }
     }
 
@@ -33,45 +36,53 @@ public class Player : MonoBehaviour
 
     public PlayerStats playerStats;
 
-    private PlayerBaseState currentState;
+    private PlayerBaseState _currentState;
 
     public readonly MoveState moveState = new MoveState();
-    public readonly AttackState attackState = new AttackState();
+    public readonly PushState pushState = new PushState();
 
     // public List<MovementState> movementStates = new List<MovementState>();
 
     private float[] inputs;
-    private Vector3 projectileDirection;
-    private float projectilePushTime;
-    private float projectilePushForce;
+    
+    public Vector3 projectileDirection;
+    public float projectilePushTime;
+    public float projectilePushForce;
 
     [Header("Only for testing purposes")]
     public bool isOffline;
     public bool isHit;
 
-    private Projectile projectile;
+    [HideInInspector]
+    public float h, v;
+
+    private Projectile _projectile;
 
     public Projectile Projectile
     {
         get
         {
-            return projectile;
+            return _projectile;
         }
         set
         {
-            projectile = value;
+            _projectile = value;
         }
     }
 
     private void Awake()
     {
-        controller = GetComponent<Rigidbody>();
+        instance = this;
+        _controller = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
         if (isOffline)
-            Initialize(1, "Hello");
+        {
+            Initialize(10, "Hello");
+            PlayerManager.SendId(id);
+        }
 
         TransitionToState(moveState);
     }
@@ -88,9 +99,9 @@ public class Player : MonoBehaviour
     public void TransitionToState(PlayerBaseState state)
     {
         //applying the new state to be current state
-        currentState = state;
+        _currentState = state;
         //enter in the state
-        currentState.EnterState(this);
+        _currentState.EnterState(this);
     }
 
     private void Update()
@@ -107,19 +118,22 @@ public class Player : MonoBehaviour
         if (playerStats.health <= 0)
             return;
 
+        if (isOffline)
+        {
+            h = Input.GetAxisRaw("Horizontal");
+            v = Input.GetAxisRaw("Vertical");
+        }
+        else
+        {
+            h = inputs[0];
+            v = inputs[1];
+        }
 
 
-        currentState.Update(this);
-
-        // if (isOffline)
-        // {
-        //     OfflineMode();
-        // }
-        // else
-        // {
-        //     NetworkMovement();
-        // }
-
+        _currentState.Update(this);
+        
+        ServerSend.PlayerPosition(this);
+        ServerSend.PlayerRotation(this);
     }
 
     private void OfflineMode()
@@ -138,10 +152,9 @@ public class Player : MonoBehaviour
         if (projectilePushForce >= 1)
         {
             // calculate the force to be applied to the rb
-            controller.AddForce(projectileDirection * projectilePushForce, ForceMode.VelocityChange);
+            _controller.AddForce(projectileDirection * projectilePushForce, ForceMode.VelocityChange);
             projectilePushForce = Mathf.Lerp(projectilePushForce, 0f, projectilePushTime * Time.deltaTime);
         }
-
 
         ServerSend.PlayerPosition(this);
         ServerSend.PlayerRotation(this);
@@ -149,7 +162,6 @@ public class Player : MonoBehaviour
 
     public void Move(Vector2 inputDirection)
     {
-
         Vector3 moveDirection = new Vector3(inputDirection.x, 0f, inputDirection.y);//transform.right * inputDirection.x + transform.forward * inputDirection.y;
         moveDirection *= playerStats.moveSpeed;
 
@@ -161,7 +173,7 @@ public class Player : MonoBehaviour
             moveDirection.z *= ratio;
         }
 
-        controller.velocity = new Vector3(moveDirection.x, controller.velocity.y, moveDirection.z);
+        _controller.velocity = new Vector3(moveDirection.x, _controller.velocity.y, moveDirection.z);
     }
 
 
@@ -192,7 +204,7 @@ public class Player : MonoBehaviour
         if (playerStats.health <= 0f)
         {
             playerStats.health = 0f;
-            controller.useGravity = false;
+            _controller.useGravity = false;
             transform.position = new Vector3(0f, 25f, 0f);
             ServerSend.PlayerPosition(this);
             StartCoroutine(Respawn());
@@ -206,13 +218,13 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         playerStats.health = playerStats.maxHealht;
-        controller.useGravity = true;
+        _controller.useGravity = true;
         ServerSend.PlayerRespawn(this);
     }
 
     public void GetProjectileInfo(Projectile projectile)
     {
-        this.projectile = projectile;
+        this._projectile = projectile;
         isHit = true;
     }
 
@@ -223,6 +235,7 @@ public class Player : MonoBehaviour
         projectileDirection = direction;
         projectilePushTime = time;
         projectilePushForce = force;
+        isHit = true;
     }
 
 }

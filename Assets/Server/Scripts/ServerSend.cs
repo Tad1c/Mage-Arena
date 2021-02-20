@@ -76,6 +76,7 @@ public class ServerSend
             packet.Write(player.username);
             packet.Write(player.transform.position);
             packet.Write(player.transform.rotation);
+            packet.Write(player.playerStats.health);
 
             SendTCPData(toClient, packet);
         }
