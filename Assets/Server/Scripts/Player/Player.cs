@@ -2,23 +2,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[System.Serializable]
-public class PlayerStats
-{
-    public float moveSpeed = 8f;
-    public float jumpSpeed = 5f;
-    public float health;
-    public float maxHealht = 100;
-}
-
 public class Player : MonoBehaviour
 {
-
-    public static Player instance;
-    
     public int id;
     public string username;
     private Rigidbody _controller;
+    private HelathManager _helathManager;
+
+    public HelathManager HelathManager
+    {
+        get => _helathManager;
+    }
 
     public Rigidbody Controller
     {
@@ -38,8 +32,7 @@ public class Player : MonoBehaviour
 
     private PlayerBaseState _currentState;
 
-    public readonly MoveState moveState = new MoveState();
-    public readonly PushState pushState = new PushState();
+
 
     // public List<MovementState> movementStates = new List<MovementState>();
 
@@ -72,7 +65,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
         _controller = GetComponent<Rigidbody>();
     }
 
@@ -81,14 +73,15 @@ public class Player : MonoBehaviour
         if (isOffline)
         {
             Initialize(10, "Hello");
-            PlayerManager.SendId(id);
         }
 
-        TransitionToState(moveState);
+     //   stateManager.TransitionToState(moveState);
     }
 
     public void Initialize(int id, string username)
     {
+        _helathManager = GetComponent<HelathManager>();
+        
         this.id = id;
         this.username = username;
         playerStats.health = playerStats.maxHealht;
@@ -197,20 +190,16 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
-        if (playerStats.health <= 0)
-            return;
+       _helathManager.PlayerHit(dmg);
 
-        playerStats.health -= dmg;
-        if (playerStats.health <= 0f)
-        {
-            playerStats.health = 0f;
-            _controller.useGravity = false;
-            transform.position = new Vector3(0f, 25f, 0f);
-            ServerSend.PlayerPosition(this);
-            StartCoroutine(Respawn());
-        }
-
-        ServerSend.PlayerHealth(this);
+        // if (playerStats.health <= 0f)
+        // {
+        //     playerStats.health = 0f;
+        //     _controller.useGravity = false;
+        //     transform.position = new Vector3(0f, 25f, 0f);
+        //     ServerSend.PlayerPosition(this);
+        //     StartCoroutine(Respawn());
+        // }
     }
 
     private IEnumerator Respawn()

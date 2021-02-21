@@ -21,7 +21,9 @@ public class PushState : PlayerBaseState
 
     public override void Update(Player player)
     {
+        
         MoveAndPush(new Vector2(player.h, player.v), player);
+        
     }
 
     private void MoveAndPush(Vector2 inputDirection, Player player)
@@ -34,10 +36,10 @@ public class PushState : PlayerBaseState
             player.Controller.AddForce(direction * force, ForceMode.VelocityChange);
             force = Mathf.Lerp(force, 0f, time * Time.deltaTime);
         }
-        else
-        {
-            player.TransitionToState(player.moveState);
-        }
+        // else
+        // {
+        //     player.TransitionToState(player.moveState);
+        // }
     }
 }
 

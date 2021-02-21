@@ -76,7 +76,7 @@ public class ServerSend
             packet.Write(player.username);
             packet.Write(player.transform.position);
             packet.Write(player.transform.rotation);
-            packet.Write(player.playerStats.health);
+            packet.Write(player.HelathManager.Health);
 
             SendTCPData(toClient, packet);
         }
@@ -124,13 +124,13 @@ public class ServerSend
         }
     }
 
-    public static void PlayerHealth(Player player)
+    public static void PlayerHealth(int id, float health)
     {
         using (Packet packet = new Packet((int)ServerPackets.playerHealth))
         {
-            packet.Write(player.id);
+            packet.Write(id);
             //TODO: Uncomment this line of code.
-            packet.Write(player.playerStats.health);
+            packet.Write(health);
 
             SendTCPDataToAll(packet);
         }
