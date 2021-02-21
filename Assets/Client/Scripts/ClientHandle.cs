@@ -39,9 +39,10 @@ public class ClientHandle : MonoBehaviour
         Vector3 position = packet.ReadVector3();
 
         if (GameManager.players.ContainsKey(id)) {
-            GameManager.players[id].transform.position = position;
+            GameManager.players[id].InterpolateMovement(position);
         }
     }
+
 
     public static void PlayerRotation(Packet packet)
     {

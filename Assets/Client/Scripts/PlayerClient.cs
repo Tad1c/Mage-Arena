@@ -70,4 +70,20 @@ public class PlayerClient : MonoBehaviour
         animator.SetTrigger("Jump");
     }
 
+
+    public void InterpolateMovement(Vector3 newPosition) {
+        StartCoroutine(MoveObject(transform.position, newPosition, 0.05f));
+    }
+
+    IEnumerator MoveObject(Vector3 source, Vector3 target, float overTime)
+    {
+        float startTime = Time.time;
+        while (Time.time < startTime + overTime)
+        {
+            transform.position = Vector3.Lerp(source, target, (Time.time - startTime) / overTime);
+            yield return null;
+        }
+        transform.position = target;
+    }
+
 }
