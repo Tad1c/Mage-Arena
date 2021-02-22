@@ -6,6 +6,7 @@ using System.Linq;
 public class StateHelper : IStateHelper
 {
     private readonly List<PlayerBaseState> playerStates = new List<PlayerBaseState>();
+
     public StateHelper()
     {
         // add the default state for the player
@@ -16,13 +17,16 @@ public class StateHelper : IStateHelper
 
     public void AddState(PlayerBaseState state)
     {
+        if (state is MoveState)
+        {
+            MyLog.D("MoveState is not added, because it exist");
+            return;
+        }
+
         MyLog.D("Pushing state " + state.GetType().Name);
 
         if (HasState(state))
-        {
             RemoveState(state);
-            AddState(state);
-        }
 
         // MoveState -> SlideState -> StunState
 
@@ -37,28 +41,31 @@ public class StateHelper : IStateHelper
     public void RemoveState(PlayerBaseState stateToPop)
     {
         // Make sure not to pop a MoveState
+        
         if (stateToPop is MoveState) return;
 
         MyLog.D("Popping " + stateToPop.GetType().Name);
 
-        foreach (PlayerBaseState state in playerStates)
+        foreach (var state in playerStates)
         {
-            if (state.GetType().Equals(stateToPop.GetType()))
+            if (state.GetType() == stateToPop.GetType())
             {
                 playerStates.Remove(state);
                 MyLog.D("Popped");
                 break;
             }
         }
-
         LogCurrentStates();
+        
+        // if(playerStates.Count == 0)
+        //     playerStates.Add(new MoveState());
     }
 
     private void LogCurrentStates()
     {
         MyLog.D(StatesCount() + " states in stack: ");
 
-        foreach (PlayerBaseState state in playerStates)
+        foreach (var state in playerStates)
         {
             MyLog.D("  --  " + state.GetType().ToString());
 
@@ -67,9 +74,9 @@ public class StateHelper : IStateHelper
 
     public bool HasState(PlayerBaseState hasThisState)
     {
-        foreach (PlayerBaseState state in playerStates)
+        foreach (var state in playerStates)
         {
-            if (state.GetType().Equals(hasThisState.GetType())) return true;
+            if (state.GetType() == hasThisState.GetType()) return true;
         }
         return false;
     }

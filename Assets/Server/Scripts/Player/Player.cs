@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
 
     private Projectile _projectile;
 
+    private StunState _stun;
+
     public Projectile Projectile
     {
         get
@@ -59,6 +61,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponent<Rigidbody>();
+        _stun = GetComponent<StunState>();
     }
 
     private void Start()
@@ -66,7 +69,18 @@ public class Player : MonoBehaviour
         if (isOffline)
         {
             Initialize(10, "Hello");
+            StartCoroutine(Test());
         }
+    }
+
+    private IEnumerator Test()
+    {
+        yield return  new WaitForSeconds(2);
+        TransitionToState(new SlideState(-transform.forward, 50, 3));
+        yield return  new WaitForSeconds(0.1f);
+        TransitionToState(_stun.Init(4f, this));
+        // yield return  new WaitForSeconds(2f);
+        // TransitionToState(new SlideState(-transform.forward, 100, 3));
     }
 
     public void Initialize(int id, string username)
@@ -111,7 +125,10 @@ public class Player : MonoBehaviour
             v = inputs[1];
         }
 
-        stateHelper.GetTopState().Update(this);
+        stateHelper.GetTopState().StateUpdate(this);
+        
+        
+        
 
         ServerSend.PlayerPosition(this);
         ServerSend.PlayerRotation(this);

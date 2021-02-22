@@ -30,8 +30,10 @@ public class PlayerStateTest
         statehelper.AddState(playerState);
         statehelper.AddState(slideState2);
         statehelper.RemoveState(slideState);
+        statehelper.AddState(playerState);
 
-        Assert.AreEqual(playerState.GetType(), statehelper.GetTopState().GetType());
+        Assert.AreEqual(1, statehelper.StatesCount());
+        Assert.AreEqual(new MoveState().GetType(), statehelper.GetTopState().GetType());
     }
 
 }

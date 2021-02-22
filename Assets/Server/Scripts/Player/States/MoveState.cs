@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveState : PlayerBaseState
 {
-    public override void Update(Player player)
+    public override void StateUpdate(Player player)
     {
         // Here we can check with StateHelper.HasState if some state might block moving (ex. stun)
         // StateHelper.HasState<StunState>() == true --> return;

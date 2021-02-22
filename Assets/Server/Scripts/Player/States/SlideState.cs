@@ -23,10 +23,17 @@ public class SlideState : PlayerBaseState
         _time = time;
     }
 
-    public override void Update(Player player)
+    public override void StateUpdate(Player player)
     {
 
-        player.Move(new Vector2(player.h, player.v));
+        if (!player.StateHelper.HasState<StunState>())
+        {
+            player.Move(new Vector2(player.h, player.v));
+        }
+        else
+        {
+            player.Move(new Vector2(0f, 0f));
+        }
 
         // Here we can check with StateHelper.HasState if some state might block sliding (ex. rooting)
         // StateHelper.HasState<RootState>() == true --> PopState()
@@ -43,6 +50,5 @@ public class SlideState : PlayerBaseState
         }
 
     }
-
 }
 
