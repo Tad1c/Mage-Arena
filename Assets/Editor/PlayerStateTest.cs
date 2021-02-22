@@ -11,12 +11,7 @@ public class PlayerStateTest
     {
         PlayerBaseState playerState = new MoveState();
 
-        IStateHelper state = new MockState()
-        {
-            playerState = playerState
-        };
-
-        StateHelper statehelper = new StateHelper(state);
+        IStateHelper statehelper = new StateHelper();
 
         Assert.AreEqual(playerState.GetType(), statehelper.GetTopState().GetType());
     }
@@ -29,16 +24,12 @@ public class PlayerStateTest
         PlayerBaseState slideState = new SlideState(Vector3.forward, 20f, 3f);
         PlayerBaseState slideState2 = new SlideState(Vector3.forward, 40f, 4f);
 
-        IStateHelper state = new MockState()
-        {
-            playerState = playerState
-        };
+        IStateHelper statehelper = new StateHelper();
 
-        StateHelper statehelper = new StateHelper(state);
-        statehelper.PushState(slideState);
-        statehelper.PushState(playerState);
-        statehelper.PushState(slideState2);
-        statehelper.PopState(slideState);
+        statehelper.AddState(slideState);
+        statehelper.AddState(playerState);
+        statehelper.AddState(slideState2);
+        statehelper.RemoveState(slideState);
 
         Assert.AreEqual(playerState.GetType(), statehelper.GetTopState().GetType());
     }

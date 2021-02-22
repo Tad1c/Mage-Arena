@@ -8,11 +8,8 @@ public class Player : MonoBehaviour
     public string username;
     private Rigidbody _controller;
 
-
-    // StateManager can be modified just by this player
-    private StateManager stateManager;
-    // Only the getter is public
-    public StateManager StateManager { get { return stateManager; } }
+    private StateHelper stateHelper;
+    public StateHelper StateHelper { get { return stateHelper; } }
 
 
     private HealthManager healthManager;
@@ -75,7 +72,7 @@ public class Player : MonoBehaviour
     public void Initialize(int id, string username)
     {
         healthManager = GetComponent<HealthManager>();
-        stateManager = GetComponent<StateManager>();
+        stateHelper = new StateHelper();
 
         this.id = id;
         this.username = username;
@@ -114,7 +111,7 @@ public class Player : MonoBehaviour
             v = inputs[1];
         }
 
-        stateManager.GetTopState().Update(this);
+        stateHelper.GetTopState().Update(this);
 
         ServerSend.PlayerPosition(this);
         ServerSend.PlayerRotation(this);

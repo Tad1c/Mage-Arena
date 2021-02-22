@@ -39,7 +39,7 @@ public class SlideState : PlayerBaseState
         }
         else
         {
-            player.StateManager.RemoveState(this);
+            player.StateHelper.RemoveState(this);
         }
 
     }

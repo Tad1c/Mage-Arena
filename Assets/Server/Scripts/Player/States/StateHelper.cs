@@ -3,32 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class StateHelper
+public class StateHelper : IStateHelper
 {
     private readonly List<PlayerBaseState> playerStates = new List<PlayerBaseState>();
-
-    private readonly IStateHelper _stateHelper;
-
-    public StateHelper(IStateHelper stateHelper)
+    public StateHelper()
     {
-        _stateHelper = stateHelper;
         // add the default state for the player
         // this should't be removed, but will always be pushed on bottom
-        MoveState defaultMoveState = new MoveState();
-        playerStates.Add(defaultMoveState);
-
-        _stateHelper.playerState = defaultMoveState;
-
+        playerStates.Add(new MoveState());
         LogCurrentStates();
     }
 
-    public void PushState(PlayerBaseState state)
+    public void AddState(PlayerBaseState state)
     {
         MyLog.D("Pushing state " + state.GetType().Name);
 
-        //TODO: add logic to refresh certain states instead of adding them as duplicates, and this COntains won't work
-        //TODO: we need a way to check if certain type of PlayerBaseState exists in playerStates, ex: HasState(SlideState)
-        if (HasState(state)) return;
+        if (HasState(state))
+        {
+            RemoveState(state);
+            AddState(state);
+        }
 
         // MoveState -> SlideState -> StunState
 
@@ -36,12 +30,11 @@ public class StateHelper
 
         // insert new state on top, pushing the move state to bottom
         playerStates.Insert(0, state);
-        _stateHelper.playerState = state;
 
         LogCurrentStates();
     }
 
-    public void PopState(PlayerBaseState stateToPop)
+    public void RemoveState(PlayerBaseState stateToPop)
     {
         // Make sure not to pop a MoveState
         if (stateToPop is MoveState) return;
@@ -57,8 +50,6 @@ public class StateHelper
                 break;
             }
         }
-
-        _stateHelper.playerState = playerStates[0];
 
         LogCurrentStates();
     }
