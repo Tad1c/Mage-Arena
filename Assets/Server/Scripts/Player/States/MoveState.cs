@@ -6,8 +6,8 @@ public class MoveState : PlayerBaseState
 {
     public override void Update(Player player)
     {
-        // if (player.isHit)
-        //     player.TransitionToState(player.pushState);
+        // Here we can check with StateHelper.HasState if some state might block moving (ex. stun)
+        // StateHelper.HasState<StunState>() == true --> return;
 
         player.Move(new Vector2(player.h, player.v));
     }

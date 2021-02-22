@@ -8,7 +8,10 @@ public class Player : MonoBehaviour
     public string username;
     private Rigidbody _controller;
 
+
+    // StateHelper can be modified just by this player
     private StateHelper stateHelper;
+    // Only the getter is public
     public StateHelper StateHelper { get { return stateHelper; } }
 
 
@@ -36,13 +39,8 @@ public class Player : MonoBehaviour
 
     private float[] inputs;
 
-    public Vector3 projectileDirection;
-    public float projectilePushTime;
-    public float projectilePushForce;
-
     [Header("Only for testing purposes")]
     public bool isOffline;
-    public bool isHit;
 
     [HideInInspector]
     public float h, v;
@@ -79,7 +77,7 @@ public class Player : MonoBehaviour
     public void Initialize(int id, string username)
     {
         healthManager = GetComponent<HealthManager>();
-      
+
         this.id = id;
         this.username = username;
         playerStats.health = playerStats.maxHealht;
@@ -131,22 +129,6 @@ public class Player : MonoBehaviour
         Move(new Vector2(h, v));
     }
 
-    private void NetworkMovement()
-    {
-        Move(new Vector2(inputs[0], inputs[1]));
-
-        //TODO: add stun, slow, or push the player.. ADD this to push state
-        if (projectilePushForce >= 1)
-        {
-            // calculate the force to be applied to the rb
-            _controller.AddForce(projectileDirection * projectilePushForce, ForceMode.VelocityChange);
-            projectilePushForce = Mathf.Lerp(projectilePushForce, 0f, projectilePushTime * Time.deltaTime);
-        }
-
-        ServerSend.PlayerPosition(this);
-        ServerSend.PlayerRotation(this);
-    }
-
     public void Move(Vector2 inputDirection)
     {
         Vector3 moveDirection = new Vector3(inputDirection.x, 0f, inputDirection.y);//transform.right * inputDirection.x + transform.forward * inputDirection.y;
@@ -193,18 +175,6 @@ public class Player : MonoBehaviour
     public void GetProjectileInfo(Projectile projectile)
     {
         this._projectile = projectile;
-        isHit = true;
-    }
-
-    public void OnPush(Vector3 direction, float time, float force)
-    {
-
-        //    movementStates.Add(MovementState.Pushed);
-        //   StartCoroutine(ClearMovementState(MovementState.Pushed, time));
-        projectileDirection = direction;
-        projectilePushTime = time;
-        projectilePushForce = force;
-        isHit = true;
     }
 
 }

@@ -28,6 +28,9 @@ class SlideState : PlayerBaseState
 
         player.Move(new Vector2(player.h, player.v));
 
+        // Here we can check with StateHelper.HasState if some state might block sliding (ex. rooting)
+        // StateHelper.HasState<RootState>() == true --> PopState()
+
         if (_force >= 1)
         {
             // calculate the force to be applied to the rb
@@ -38,6 +41,7 @@ class SlideState : PlayerBaseState
         {
             player.StateHelper.PopState();
         }
+
     }
 
 }
