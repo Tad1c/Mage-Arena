@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1414741740}
   - component: {fileID: 1414741739}
   - component: {fileID: -6282765397468656406}
+  - component: {fileID: 8775157195344216637}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -56,11 +57,7 @@ MonoBehaviour:
     jumpSpeed: 5
     health: 0
     maxHealht: 100
-  projectileDirection: {x: 0, y: 0, z: 0}
-  projectilePushTime: 0
-  projectilePushForce: 0
   isOffline: 0
-  isHit: 0
   h: 0
   v: 0
 --- !u!54 &1414741740
@@ -103,6 +100,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2c3a9ac8f066e6469039b731d91a103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8775157195344216637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3479711736023880253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d005ca40188ccb34fbbd8a5a4204cd32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3540234278436240224

@@ -9,7 +9,7 @@ but the player is still able to move, whilst a force is being added
 - Sliding can be interuppted by rooting effects
 - Player can slide while being stunned
 */
-class SlideState : PlayerBaseState
+public class SlideState : PlayerBaseState
 {
 
     private Vector3 _direction;
@@ -39,7 +39,7 @@ class SlideState : PlayerBaseState
         }
         else
         {
-            player.StateHelper.PopState();
+            player.StateManager.RemoveState(this);
         }
 
     }
