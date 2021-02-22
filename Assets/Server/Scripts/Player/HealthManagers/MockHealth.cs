@@ -3,8 +3,9 @@
 public class MockHealth : IHealth
  {
      public float Health { get; set; }
-     public void IsDead()
+     public void Died()
      {
          Debug.Log("Player is dead");
      }
+
  }

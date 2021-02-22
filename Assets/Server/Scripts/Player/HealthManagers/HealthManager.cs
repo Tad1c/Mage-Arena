@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class HelathManager : MonoBehaviour, IHealth
+public class HealthManager : MonoBehaviour, IHealth
 {
     private float _currentHealth;
 
@@ -17,7 +17,10 @@ public class HelathManager : MonoBehaviour, IHealth
     public float Health
     {
         get => _currentHealth;
-        set => _currentHealth = value;
+        set {
+            _currentHealth = value;
+            if (value <= 0) _healthController.PlayerDied();
+        }
     }
 
     private void Awake()
@@ -26,13 +29,13 @@ public class HelathManager : MonoBehaviour, IHealth
         _healthController = new HealthController(this, _maxHealth);
     }
 
-    public void PlayerHit(float dmg)
+    public void TakeDamage(float amount)
     {
-        _healthController.TakeDmg(dmg);
+        _healthController.TakeDmg(amount);
         ServerSend.PlayerHealth(_player.id, Health);
     }
 
-    public void IsDead()
+    public void Died()
     {
         //Disable movement
         //Send event to playerManager for respawn

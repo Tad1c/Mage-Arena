@@ -256,6 +256,7 @@ namespace ClientSide
                 }
                 catch (Exception e)
                 {
+                    Debug.LogError(e.Message ?? "Client ReceiveCallback Error");
                     Disconnect();
                 }
             }

@@ -18,10 +18,11 @@
         if (_health.Health <= 0)
         {
             _health.Health = 0;
-            _health.IsDead();
         }
     }
 
+    public void PlayerDied() => _health.Died();
+    
     public void RefillHealth(float health) => _health.Health = health;
     
     public void AddHealth(float health) => _health.Health += health;

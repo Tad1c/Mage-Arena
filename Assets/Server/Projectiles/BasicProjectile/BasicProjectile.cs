@@ -21,19 +21,15 @@ public class BasicProjectile : MonoBehaviour
 
     public float posUpdateRate = 0.2f;
 
-    private Vector3 hitDir;
-
-    public void Init(Vector3 dir, int playerId)
+    public void Init(Vector3 direction, int playerId)
     {
         byPlayerId = playerId;
-        finalDestination = transform.TransformPoint(dir * range);
-        hitDir = dir;
+        finalDestination = transform.TransformPoint(direction * range);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
         rb = GetComponent<Rigidbody>();
 
         id = nextProjectileId;
@@ -45,7 +41,6 @@ public class BasicProjectile : MonoBehaviour
         transform.LookAt(finalDestination);
         // ServerSend.ProjectilePosition(id, finalDestination);
         //InvokeRepeating("UpdatePosition", posUpdateRate, posUpdateRate);  //1s delay, repeat every 1s
-
     }
 
     private void Update()
@@ -64,12 +59,14 @@ public class BasicProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //   PlayerManager.
             Player player = other.GetComponent<Player>();
-            player.TakeDamage(damage);
-            Vector3 direction = transform.position - player.transform.position; //player.transform.position - transform.position;
-            direction = -direction.normalized;
-            player.OnPush(direction, pushTime, pushForce);
+            player.HealthManager.TakeDamage(damage);
+
+            Vector3 pushDirection = transform.position - player.transform.position; //player.transform.position - transform.position;
+            pushDirection = -pushDirection.normalized;
+
+            player.TransitionToState(new SlideState(pushDirection, pushForce, pushTime));
+
             Destroy(gameObject);
         }
     }

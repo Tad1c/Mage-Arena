@@ -7,12 +7,14 @@ public class Player : MonoBehaviour
     public int id;
     public string username;
     private Rigidbody _controller;
-    private HelathManager _helathManager;
 
-    public HelathManager HelathManager
-    {
-        get => _helathManager;
-    }
+    private StateHelper stateHelper;
+    public StateHelper StateHelper { get { return stateHelper; } }
+
+
+    private HealthManager healthManager;
+    public HealthManager HealthManager { get { return healthManager; } }
+
 
     public Rigidbody Controller
     {
@@ -30,14 +32,10 @@ public class Player : MonoBehaviour
 
     public PlayerStats playerStats;
 
-    private PlayerBaseState _currentState;
-
-
-
     // public List<MovementState> movementStates = new List<MovementState>();
 
     private float[] inputs;
-    
+
     public Vector3 projectileDirection;
     public float projectilePushTime;
     public float projectilePushForce;
@@ -75,13 +73,13 @@ public class Player : MonoBehaviour
             Initialize(10, "Hello");
         }
 
-     //   stateManager.TransitionToState(moveState);
+        stateHelper = new StateHelper();
     }
 
     public void Initialize(int id, string username)
     {
-        _helathManager = GetComponent<HelathManager>();
-        
+        healthManager = GetComponent<HealthManager>();
+      
         this.id = id;
         this.username = username;
         playerStats.health = playerStats.maxHealht;
@@ -89,12 +87,9 @@ public class Player : MonoBehaviour
     }
 
     // Using this when transitioning from state to state
-    public void TransitionToState(PlayerBaseState state)
+    public void TransitionToState(PlayerBaseState newState)
     {
-        //applying the new state to be current state
-        _currentState = state;
-        //enter in the state
-        _currentState.EnterState(this);
+        newState.EnterState(this);
     }
 
     private void Update()
@@ -122,9 +117,8 @@ public class Player : MonoBehaviour
             v = inputs[1];
         }
 
+        stateHelper.GetTopState().Update(this);
 
-        _currentState.Update(this);
-        
         ServerSend.PlayerPosition(this);
         ServerSend.PlayerRotation(this);
     }
@@ -187,21 +181,6 @@ public class Player : MonoBehaviour
         ServerSend.Jump(this);
     }
 
-
-    public void TakeDamage(float dmg)
-    {
-       _helathManager.PlayerHit(dmg);
-
-        // if (playerStats.health <= 0f)
-        // {
-        //     playerStats.health = 0f;
-        //     _controller.useGravity = false;
-        //     transform.position = new Vector3(0f, 25f, 0f);
-        //     ServerSend.PlayerPosition(this);
-        //     StartCoroutine(Respawn());
-        // }
-    }
-
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(5f);
@@ -219,6 +198,7 @@ public class Player : MonoBehaviour
 
     public void OnPush(Vector3 direction, float time, float force)
     {
+
         //    movementStates.Add(MovementState.Pushed);
         //   StartCoroutine(ClearMovementState(MovementState.Pushed, time));
         projectileDirection = direction;
