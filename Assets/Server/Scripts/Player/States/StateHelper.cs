@@ -80,13 +80,10 @@ public class StateHelper : IStateHelper
     public PlayerBaseState GetTopState() => playerStates[0];
     public void GetTopState(Player player) => playerStates[0].StateUpdate(player);
 
-    public void CheckForOtherStates(Player player)
+    public void UpdateAllStates(Player player)
     {
-        if (playerStates.Count == 1)
-            GetTopState(player);
-        else
-            for (int i = 0; i < playerStates.Count - 1; i++)
-                playerStates[i].StateUpdate(player);
+        for (int i = 0; i < playerStates.Count - 1; i++)
+            playerStates[i].StateUpdate(player);
     }
 
     public bool HasState<T>() => playerStates.OfType<T>().Any();

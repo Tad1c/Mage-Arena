@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
         h = isOffline ? Input.GetAxisRaw("Horizontal") : inputs[0];
         v = isOffline ? Input.GetAxisRaw("Vertical") : inputs[1];
 
-        _stateHelper.CheckForOtherStates(this);
+        _stateHelper.UpdateAllStates(this);
 
         ServerSend.PlayerPosition(this);
         ServerSend.PlayerRotation(this);

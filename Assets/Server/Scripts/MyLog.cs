@@ -7,7 +7,7 @@ using UnityEngine;
  */
 public static class MyLog
 {
-    public static bool isLoggingEnabled = true;
+    public static bool isLoggingEnabled = false;
 
     public static void D(string message) {
         if(isLoggingEnabled) Debug.Log(message);
