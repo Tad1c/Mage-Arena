@@ -23,7 +23,7 @@ public class HealthTest
         healthController.TakeDmg(150);
         Assert.AreEqual(0, playerHealth.Health);
     }
-    
+
     [Test]
     public void RefillHealth()
     {

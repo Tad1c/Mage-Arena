@@ -25,6 +25,8 @@ public class SlideState : PlayerBaseState
 
     public override void StateUpdate(Player player)
     {
+        
+        MyLog.D("SlideState is called");
 
         if (!player.StateHelper.HasState<StunState>())
         {

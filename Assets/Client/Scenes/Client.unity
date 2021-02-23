@@ -808,8 +808,9 @@ MonoBehaviour:
     type: 3}
   playerPrefab: {fileID: 5710724987964419720, guid: f9ea9a4cdda89c84f8841edcb96e88f5,
     type: 3}
-  projectilePrefab: {fileID: 5848049058961567918, guid: 138ffcaadadce9941a1c6f6a92d3e498,
-    type: 3}
+  projectilePrefab:
+  - {fileID: 5848049058961567918, guid: 138ffcaadadce9941a1c6f6a92d3e498, type: 3}
+  - {fileID: 5848049058961567918, guid: 3b7730735ed026a4db3c3cf31c91edc8, type: 3}
 --- !u!4 &664709309
 Transform:
   m_ObjectHideFlags: 0

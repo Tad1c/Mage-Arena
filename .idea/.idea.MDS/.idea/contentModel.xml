@@ -52,6 +52,7 @@
                 <e p="PlayerExtensions.cs" t="Include" />
               </e>
               <e p="Player.cs" t="Include" />
+              <e p="PlayerManager.cs" t="Include" />
               <e p="PlayerStats.cs" t="Include" />
               <e p="States" t="Include">
                 <e p="IStateHelper.cs" t="Include" />

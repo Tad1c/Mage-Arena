@@ -72,6 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootPos: {fileID: 2729222661678294658}
+  fireRate: 5
 --- !u!114 &627107507805851135
 MonoBehaviour:
   m_ObjectHideFlags: 0

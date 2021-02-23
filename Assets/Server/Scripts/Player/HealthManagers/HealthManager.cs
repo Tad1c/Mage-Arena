@@ -14,6 +14,8 @@ public class HealthManager : MonoBehaviour, IHealth
 
     private Player _player;
 
+    private PlayerManager _playerManager;
+
     public float Health
     {
         get => _currentHealth;
@@ -26,6 +28,7 @@ public class HealthManager : MonoBehaviour, IHealth
     private void Awake()
     {
         _player = GetComponent<Player>();
+        _playerManager = GetComponent<PlayerManager>();
         _healthController = new HealthController(this, _maxHealth);
     }
 
@@ -37,8 +40,7 @@ public class HealthManager : MonoBehaviour, IHealth
 
     public void Died()
     {
-        //Disable movement
-        //Send event to playerManager for respawn
+        _playerManager.PlayerDead();
     }
 
     public void Respawn()

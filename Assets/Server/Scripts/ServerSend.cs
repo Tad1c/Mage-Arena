@@ -148,7 +148,7 @@ public class ServerSend
 
 
     #region ProjectileShit
-    public static void InstantiateBasicProjectile(BasicProjectile basicProjectile, int playerId, Vector3 finalDestination)
+    public static void InstantiateBasicProjectile(BasicProjectile basicProjectile, int playerId, Vector3 finalDestination, int type)
     {
         using (Packet packet = new Packet((int)ServerPackets.projectileShoot))
         {
@@ -156,6 +156,7 @@ public class ServerSend
             packet.Write(playerId);
             packet.Write(basicProjectile.transform.position);
             packet.Write(finalDestination);
+            packet.Write(type);
 
             SendTCPDataToAll(packet);
         }

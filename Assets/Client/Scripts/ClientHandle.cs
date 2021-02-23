@@ -92,8 +92,9 @@ public class ClientHandle : MonoBehaviour
         int byPlayerId = packet.ReadInt();
         Vector3 position = packet.ReadVector3();
         Vector3 finalPosition = packet.ReadVector3();
-
-        GameManager.instance.SpawnProjectile(id, byPlayerId, position, finalPosition);
+        int type = packet.ReadInt();
+        
+        GameManager.instance.SpawnProjectile(id, byPlayerId, position, finalPosition, type);
     }
 
     public static void ProjectileDestroy(Packet packet)

@@ -8,4 +8,8 @@ public class MockHealth : IHealth
          Debug.Log("Player is dead");
      }
 
+     public void Respawn()
+     {
+         Debug.Log("Player Respawned");
+     }
  }

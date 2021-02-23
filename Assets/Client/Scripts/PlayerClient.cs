@@ -71,8 +71,10 @@ public class PlayerClient : MonoBehaviour
     }
 
 
-    public void InterpolateMovement(Vector3 newPosition) {
-        StartCoroutine(MoveObject(transform.position, newPosition, 0.05f));
+    public void InterpolateMovement(Vector3 newPosition)
+    {
+        this.transform.position = newPosition;
+        //StartCoroutine(MoveObject(transform.position, newPosition, 0.05f));
     }
 
     IEnumerator MoveObject(Vector3 source, Vector3 target, float overTime)

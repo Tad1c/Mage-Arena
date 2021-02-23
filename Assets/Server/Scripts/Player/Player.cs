@@ -8,60 +8,40 @@ public class Player : MonoBehaviour
     public string username;
     private Rigidbody _controller;
 
-    private StateHelper stateHelper;
-    public StateHelper StateHelper { get { return stateHelper; } }
+    private StateHelper _stateHelper;
 
+    public StateHelper StateHelper
+    {
+        get { return _stateHelper; }
+    }
 
-    private HealthManager healthManager;
-    public HealthManager HealthManager { get { return healthManager; } }
+    private HealthManager _healthManager;
 
+    public HealthManager HealthManager
+    {
+        get { return _healthManager; }
+    }
 
     public Rigidbody Controller
     {
-        get
-        {
-            return _controller;
-        }
-        set
-        {
-            _controller = value;
-        }
+        get { return _controller; }
+        set { _controller = value; }
     }
 
     public Transform shootOrigin;
 
     public PlayerStats playerStats;
 
-    // public List<MovementState> movementStates = new List<MovementState>();
-
     private float[] inputs;
 
     [Header("Only for testing purposes")]
     public bool isOffline;
 
-    [HideInInspector]
-    public float h, v;
-
-    private Projectile _projectile;
-
-    private StunState _stun;
-
-    public Projectile Projectile
-    {
-        get
-        {
-            return _projectile;
-        }
-        set
-        {
-            _projectile = value;
-        }
-    }
+    [HideInInspector] public float h, v;
 
     private void Awake()
     {
         _controller = GetComponent<Rigidbody>();
-        _stun = GetComponent<StunState>();
     }
 
     private void Start()
@@ -75,18 +55,18 @@ public class Player : MonoBehaviour
 
     private IEnumerator Test()
     {
-        yield return  new WaitForSeconds(2);
+        yield return new WaitForSeconds(2);
+        TransitionToState(new StunState(4f));
+        yield return new WaitForSeconds(1f);
+        TransitionToState(new SlideState(-transform.forward, 50, 5));
+        yield return new WaitForSeconds(1);
         TransitionToState(new SlideState(-transform.forward, 50, 3));
-        yield return  new WaitForSeconds(0.1f);
-        TransitionToState(_stun.Init(4f, this));
-        // yield return  new WaitForSeconds(2f);
-        // TransitionToState(new SlideState(-transform.forward, 100, 3));
     }
 
     public void Initialize(int id, string username)
     {
-        healthManager = GetComponent<HealthManager>();
-        stateHelper = new StateHelper();
+        _healthManager = GetComponent<HealthManager>();
+        _stateHelper = new StateHelper();
 
         this.id = id;
         this.username = username;
@@ -97,57 +77,44 @@ public class Player : MonoBehaviour
     // Using this when transitioning from state to state
     public void TransitionToState(PlayerBaseState newState)
     {
+        if(_healthManager.Health <= 0)
+            return;
+        
         newState.EnterState(this);
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            var pro = new Projectile();
-            GetProjectileInfo(pro);
-        }
     }
 
     public void FixedUpdate()
     {
-        if (playerStats.health <= 0)
+        if (_healthManager.Health <= 0)
             return;
 
-        if (isOffline)
-        {
-            h = Input.GetAxisRaw("Horizontal");
-            v = Input.GetAxisRaw("Vertical");
-        }
-        else
-        {
-            h = inputs[0];
-            v = inputs[1];
-        }
+        h = isOffline ? Input.GetAxisRaw("Horizontal") : inputs[0];
+        v = isOffline ? Input.GetAxisRaw("Vertical") : inputs[1];
 
-        stateHelper.GetTopState().StateUpdate(this);
-        
-        
-        
+        _stateHelper.CheckForOtherStates(this);
 
         ServerSend.PlayerPosition(this);
         ServerSend.PlayerRotation(this);
     }
 
-    private void OfflineMode()
-    {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        Move(new Vector2(h, v));
-    }
-
     public void Move(Vector2 inputDirection)
     {
-        Vector3 moveDirection = new Vector3(inputDirection.x, 0f, inputDirection.y);//transform.right * inputDirection.x + transform.forward * inputDirection.y;
+        Vector3 moveDirection = MoveDirection(inputDirection);
         moveDirection *= playerStats.moveSpeed;
 
         // So we can move with the same speed when going diagonally
+        moveDirection = Vector3(moveDirection);
+
+        _controller.velocity = ControllerVelocity(moveDirection);
+    }
+
+    private Vector3 ControllerVelocity(Vector3 moveDirection)
+    {
+        return new Vector3(moveDirection.x, _controller.velocity.y, moveDirection.z);
+    }
+
+    private Vector3 Vector3(Vector3 moveDirection)
+    {
         if (moveDirection.magnitude > playerStats.moveSpeed)
         {
             float ratio = playerStats.moveSpeed / moveDirection.magnitude;
@@ -155,9 +122,13 @@ public class Player : MonoBehaviour
             moveDirection.z *= ratio;
         }
 
-        _controller.velocity = new Vector3(moveDirection.x, _controller.velocity.y, moveDirection.z);
+        return moveDirection;
     }
 
+    private Vector3 MoveDirection(Vector2 inputDirection)
+    {
+        return new Vector3(inputDirection.x, 0f, inputDirection.y);
+    }
 
 
     public void SetInputs(float[] inputs, Quaternion rotation)
@@ -166,29 +137,13 @@ public class Player : MonoBehaviour
         transform.rotation = rotation;
     }
 
-    public void ShootProjectile(Vector3 shootDirection)
+    public void ShootProjectile(Vector3 shootDirection, int type)
     {
-        NetworkManager.instance.InstanciateProjectile(shootOrigin).Init(shootDirection, id);
+        NetworkManager.instance.InstanciateProjectile(shootOrigin, type).Init(shootDirection, id);
     }
 
     public void Jump()
     {
         ServerSend.Jump(this);
     }
-
-    private IEnumerator Respawn()
-    {
-        yield return new WaitForSeconds(5f);
-
-        playerStats.health = playerStats.maxHealht;
-        _controller.useGravity = true;
-        ServerSend.PlayerRespawn(this);
-    }
-
-    public void GetProjectileInfo(Projectile projectile)
-    {
-        this._projectile = projectile;
-    }
-
 }
-

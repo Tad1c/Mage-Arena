@@ -18,6 +18,7 @@
         if (_health.Health <= 0)
         {
             _health.Health = 0;
+            PlayerDied();
         }
     }
 

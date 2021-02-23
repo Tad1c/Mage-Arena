@@ -40,8 +40,6 @@ public class StateHelper : IStateHelper
 
     public void RemoveState(PlayerBaseState stateToPop)
     {
-        // Make sure not to pop a MoveState
-        
         if (stateToPop is MoveState) return;
 
         MyLog.D("Popping " + stateToPop.GetType().Name);
@@ -55,10 +53,8 @@ public class StateHelper : IStateHelper
                 break;
             }
         }
+
         LogCurrentStates();
-        
-        // if(playerStates.Count == 0)
-        //     playerStates.Add(new MoveState());
     }
 
     private void LogCurrentStates()
@@ -68,7 +64,6 @@ public class StateHelper : IStateHelper
         foreach (var state in playerStates)
         {
             MyLog.D("  --  " + state.GetType().ToString());
-
         }
     }
 
@@ -83,9 +78,18 @@ public class StateHelper : IStateHelper
 
 
     public PlayerBaseState GetTopState() => playerStates[0];
+    public void GetTopState(Player player) => playerStates[0].StateUpdate(player);
+
+    public void CheckForOtherStates(Player player)
+    {
+        if (playerStates.Count == 1)
+            GetTopState(player);
+        else
+            for (int i = 0; i < playerStates.Count - 1; i++)
+                playerStates[i].StateUpdate(player);
+    }
 
     public bool HasState<T>() => playerStates.OfType<T>().Any();
 
     public int StatesCount() => playerStates.Count;
-
 }

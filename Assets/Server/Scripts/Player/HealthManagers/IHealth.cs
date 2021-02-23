@@ -2,4 +2,5 @@
 {
     float Health { get; set; }
     void Died();
+    void Respawn();
 }

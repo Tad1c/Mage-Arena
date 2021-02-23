@@ -2,15 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum ProjectileType
+{
+    Stun,
+    Push
+}
+
 public class BasicProjectile : MonoBehaviour
 {
     public static Dictionary<int, BasicProjectile> projectileDic = new Dictionary<int, BasicProjectile>();
     public static int nextProjectileId = 1;
 
+    public ProjectileType projectileType;
+
+    public int type;
+
     public float speed = 10.0f;
     public float range = 30.0f;
+
+    public float stunDuration = 1f;
+
     private float pushTime = 3f;
     private float pushForce = 50f;
+
 
     private Rigidbody rb;
     public int byPlayerId;
@@ -37,7 +52,7 @@ public class BasicProjectile : MonoBehaviour
 
         projectileDic.Add(id, this);
 
-        ServerSend.InstantiateBasicProjectile(this, byPlayerId, finalDestination);
+        ServerSend.InstantiateBasicProjectile(this, byPlayerId, finalDestination, type);
         transform.LookAt(finalDestination);
         // ServerSend.ProjectilePosition(id, finalDestination);
         //InvokeRepeating("UpdatePosition", posUpdateRate, posUpdateRate);  //1s delay, repeat every 1s
@@ -52,7 +67,6 @@ public class BasicProjectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,12 +74,23 @@ public class BasicProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Player player = other.GetComponent<Player>();
-            player.HealthManager.TakeDamage(damage);
 
-            Vector3 pushDirection = transform.position - player.transform.position; //player.transform.position - transform.position;
+            Vector3 pushDirection =
+                transform.position - player.transform.position; //player.transform.position - transform.position;
             pushDirection = -pushDirection.normalized;
 
-            player.TransitionToState(new SlideState(pushDirection, pushForce, pushTime));
+            player.HealthManager.TakeDamage(damage);
+            
+            switch (projectileType)
+            {
+                case ProjectileType.Push:
+                    player.TransitionToState(new SlideState(pushDirection, pushForce, pushTime));
+                    break;
+                case ProjectileType.Stun:
+                    player.TransitionToState(new StunState(stunDuration));
+                    break;
+            }
+
 
             Destroy(gameObject);
         }
@@ -78,6 +103,4 @@ public class BasicProjectile : MonoBehaviour
         projectileDic.Remove(id);
         ServerSend.DestroyBasicProjectile(this);
     }
-
-
 }

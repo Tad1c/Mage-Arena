@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject localPlayerPrefab;
     public GameObject playerPrefab;
-    public GameObject projectilePrefab;
+    public List<GameObject> projectilePrefab;
 
     private void Awake()
     {
@@ -38,9 +38,9 @@ public class GameManager : MonoBehaviour
         players.Add(id, player.GetComponent<PlayerClient>());
     }
 
-    public void SpawnProjectile(int id, int playerId, Vector3 position, Vector3 finalPosition)
+    public void SpawnProjectile(int id, int playerId, Vector3 position, Vector3 finalPosition, int type)
     {
-        GameObject projectile = Instantiate(projectilePrefab, position, Quaternion.identity);
+        GameObject projectile = Instantiate(projectilePrefab[type], position, Quaternion.identity);
 
         ProjectileManager projectileManager = projectile.GetComponent<ProjectileManager>();
         projectiles.Add(id, projectileManager);

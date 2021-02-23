@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class PlayerBaseState : MonoBehaviour
+public abstract class PlayerBaseState
 {
     public virtual void EnterState(Player player)
     {
