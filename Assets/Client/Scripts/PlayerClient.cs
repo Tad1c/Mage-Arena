@@ -17,7 +17,7 @@ public class PlayerClient : MonoBehaviour
 
     public float health;
     public float maxHealth;
-    public MeshRenderer model;
+    public GameObject model;
 
     public float pingCountdown = 1f;
     public float pingCountDownLimit = 1f;
@@ -56,12 +56,12 @@ public class PlayerClient : MonoBehaviour
 
     public void Die()
     {
-        model.enabled = false;
+        model.SetActive(false);
     }
 
     public void Respawn()
     {
-        model.enabled = true;
+        model.SetActive(true);
         SetHealth(maxHealth);
     }
 
@@ -71,9 +71,11 @@ public class PlayerClient : MonoBehaviour
     }
 
 
-    public void InterpolateMovement(Vector3 newPosition)
+    public void InterpolateMovement(Vector3 newPosition, float playerVelocityMagnitude)
     {
         this.transform.position = newPosition;
+        animator.SetFloat("movementSpeed", playerVelocityMagnitude);
+
         //StartCoroutine(MoveObject(transform.position, newPosition, 0.05f));
     }
 

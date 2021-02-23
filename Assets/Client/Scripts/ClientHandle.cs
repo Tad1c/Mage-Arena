@@ -37,9 +37,10 @@ public class ClientHandle : MonoBehaviour
     {
         int id = packet.ReadInt();
         Vector3 position = packet.ReadVector3();
+        float playerVelocityMagnitude = packet.ReadFloat();
 
         if (GameManager.players.ContainsKey(id)) {
-            GameManager.players[id].InterpolateMovement(position);
+            GameManager.players[id].InterpolateMovement(position, playerVelocityMagnitude);
         }
     }
 

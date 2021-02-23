@@ -88,6 +88,7 @@ public class ServerSend
         {
             packet.Write(player.id);
             packet.Write(player.transform.position);
+            packet.Write(player.Controller.velocity.magnitude);
 
             SendUDPDataToAll(packet);
         }

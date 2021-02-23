@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
         projectiles.Add(id, projectileManager);
         projectileManager.Init(id, playerId, finalPosition);
 
+        players[playerId].animator.SetTrigger("attack");
+
     }
 
 }

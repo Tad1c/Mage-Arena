@@ -75,12 +75,14 @@ public class BasicProjectile : MonoBehaviour
         {
             Player player = other.GetComponent<Player>();
 
+            if (player.id == id) return;
+
             Vector3 pushDirection =
                 transform.position - player.transform.position; //player.transform.position - transform.position;
             pushDirection = -pushDirection.normalized;
 
             player.HealthManager.TakeDamage(damage);
-            
+
             switch (projectileType)
             {
                 case ProjectileType.Push:
