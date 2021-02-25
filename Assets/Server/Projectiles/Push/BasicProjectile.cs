@@ -54,8 +54,6 @@ public class BasicProjectile : MonoBehaviour
 
         ServerSend.InstantiateBasicProjectile(this, byPlayerId, finalDestination, type);
         transform.LookAt(finalDestination);
-        // ServerSend.ProjectilePosition(id, finalDestination);
-        //InvokeRepeating("UpdatePosition", posUpdateRate, posUpdateRate);  //1s delay, repeat every 1s
     }
 
     private void Update()
@@ -75,11 +73,9 @@ public class BasicProjectile : MonoBehaviour
         {
             Player player = other.GetComponent<Player>();
 
-            if (player.id == id) return;
-
             Vector3 pushDirection =
-                transform.position - player.transform.position; //player.transform.position - transform.position;
-            pushDirection = -pushDirection.normalized;
+                player.transform.position - transform.position; //player.transform.position - transform.position;
+         //   pushDirection = -pushDirection.normalized;
 
             player.HealthManager.TakeDamage(damage);
 
@@ -87,9 +83,11 @@ public class BasicProjectile : MonoBehaviour
             {
                 case ProjectileType.Push:
                     player.TransitionToState(new SlideState(pushDirection, pushForce, pushTime));
+                    MyLog.D($"{player.username} was hit with push projectile and force is {pushForce}");
                     break;
                 case ProjectileType.Stun:
                     player.TransitionToState(new StunState(stunDuration));
+                    MyLog.D($"{player.username} was hit with stun projectile and stun timer is {stunDuration}");
                     break;
             }
 

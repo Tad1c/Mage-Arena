@@ -16,6 +16,11 @@ public class SlideState : PlayerBaseState
     private float _force;
     private float _time;
 
+    public float Force
+    {
+        get => _force;
+    }
+
     public SlideState(Vector3 direction, float force, float time)
     {
         _direction = direction;
@@ -26,7 +31,7 @@ public class SlideState : PlayerBaseState
     public override void StateUpdate(Player player)
     {
         
-        MyLog.D("SlideState is called");
+     //   MyLog.D("SlideState is called");
 
         if (!player.StateHelper.HasState<StunState>())
         {

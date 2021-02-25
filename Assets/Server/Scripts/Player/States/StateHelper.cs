@@ -27,7 +27,7 @@ public class StateHelper : IStateHelper
 
         if (HasState(state))
             RemoveState(state);
-
+        
         // MoveState -> SlideState -> StunState
 
         // to refresh the state, just pop the existing state and add the new one
@@ -75,7 +75,6 @@ public class StateHelper : IStateHelper
         }
         return false;
     }
-
 
     public PlayerBaseState GetTopState() => playerStates[0];
     public void GetTopState(Player player) => playerStates[0].StateUpdate(player);

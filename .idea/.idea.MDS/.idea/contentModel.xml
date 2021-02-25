@@ -9,9 +9,7 @@
       <e p="Assets" t="Include">
         <e p="Client" t="Include">
           <e p="Projectiles" t="Include">
-            <e p="BasicProjectile" t="Include">
-              <e p="ProjectileManager.cs" t="Include" />
-            </e>
+            <e p="ProjectileManager.cs" t="Include" />
           </e>
           <e p="Scripts" t="Include">
             <e p="CameraController.cs" t="Include" />
@@ -32,10 +30,10 @@
         </e>
         <e p="Server" t="Include">
           <e p="Projectiles" t="Include">
-            <e p="BasicProjectile" t="Include">
+            <e p="Projectile.cs" t="Include" />
+            <e p="Push" t="Include">
               <e p="BasicProjectile.cs" t="Include" />
             </e>
-            <e p="Projectile.cs" t="Include" />
           </e>
           <e p="Scripts" t="Include">
             <e p="Client.cs" t="Include" />

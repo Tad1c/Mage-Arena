@@ -16,7 +16,7 @@ public class StunState : PlayerBaseState
     public override void StateUpdate(Player player)
     {
         
-        MyLog.D("StunState is called");
+        //MyLog.D("StunState is called");
 
         _timeLeft -= Time.deltaTime;
         

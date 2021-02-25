@@ -56,11 +56,11 @@ public class Player : MonoBehaviour
     private IEnumerator Test()
     {
         yield return new WaitForSeconds(2);
-        TransitionToState(new StunState(4f));
-        yield return new WaitForSeconds(1f);
         TransitionToState(new SlideState(-transform.forward, 50, 5));
+        yield return new WaitForSeconds(1f);
+        TransitionToState(new StunState(4f));
         yield return new WaitForSeconds(1);
-        TransitionToState(new SlideState(-transform.forward, 50, 3));
+        TransitionToState(new SlideState(-transform.forward, 70, 3));
     }
 
     public void Initialize(int id, string username)
@@ -129,7 +129,6 @@ public class Player : MonoBehaviour
     {
         return new Vector3(inputDirection.x, 0f, inputDirection.y);
     }
-
 
     public void SetInputs(float[] inputs, Quaternion rotation)
     {
