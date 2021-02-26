@@ -37,11 +37,7 @@ public class ServerHandle
     {
         Vector3 shootDirection = packet.ReadVector3();
         int type = packet.ReadInt();
-        
-        //We dont want to shoot if the player is stunned
-        if(Server.clients[fromClient].player.StateHelper.HasState<StunState>())
-            return;
-        
+
         Server.clients[fromClient].player.ShootProjectile(shootDirection, type);
     }
 

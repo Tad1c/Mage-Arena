@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,8 +24,8 @@ public class BasicProjectile : MonoBehaviour
 
     public float stunDuration = 1f;
 
-    private float pushTime = 3f;
-    private float pushForce = 50f;
+    public float pushTime = 3f;
+    public float pushForce = 50f;
 
 
     private Rigidbody rb;
@@ -35,6 +36,8 @@ public class BasicProjectile : MonoBehaviour
     private Vector3 finalDestination;
 
     public float posUpdateRate = 0.2f;
+    
+   // public  void InitializeValues(int dmg, float push)
 
     public void Init(Vector3 direction, int playerId)
     {
@@ -42,19 +45,29 @@ public class BasicProjectile : MonoBehaviour
         finalDestination = transform.TransformPoint(direction * range);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void Fire()
     {
-        rb = GetComponent<Rigidbody>();
+        
+    }
 
-        id = nextProjectileId;
-        nextProjectileId++;
-
-        projectileDic.Add(id, this);
-
-        ServerSend.InstantiateBasicProjectile(this, byPlayerId, finalDestination, type);
+    private void OnEnable()
+    {
         transform.LookAt(finalDestination);
     }
+
+    // Start is called before the first frame update
+    // void Start()
+    // {
+    //     rb = GetComponent<Rigidbody>();
+    //
+    //     id = nextProjectileId;
+    //     nextProjectileId++;
+    //
+    //     projectileDic.Add(id, this);
+    //
+    //     ServerSend.InstantiateBasicProjectile(this, byPlayerId, finalDestination, type);
+    //     transform.LookAt(finalDestination);
+    // }
 
     private void Update()
     {
@@ -63,37 +76,37 @@ public class BasicProjectile : MonoBehaviour
 
         if (Vector3.Distance(transform.position, finalDestination) < 0.01f)
         {
-            Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            Player player = other.GetComponent<Player>();
-
-            Vector3 pushDirection =
-                player.transform.position - transform.position; //player.transform.position - transform.position;
-         //   pushDirection = -pushDirection.normalized;
-
-            player.HealthManager.TakeDamage(damage);
-
-            switch (projectileType)
-            {
-                case ProjectileType.Push:
-                    player.TransitionToState(new SlideState(pushDirection, pushForce, pushTime));
-                    MyLog.D($"{player.username} was hit with push projectile and force is {pushForce}");
-                    break;
-                case ProjectileType.Stun:
-                    player.TransitionToState(new StunState(stunDuration));
-                    MyLog.D($"{player.username} was hit with stun projectile and stun timer is {stunDuration}");
-                    break;
-            }
-
-
-            Destroy(gameObject);
-        }
+        // if (other.CompareTag("Player"))
+        // {
+        //     Player player = other.GetComponent<Player>();
+        //
+        //     Vector3 pushDirection =
+        //         player.transform.position - transform.position; //player.transform.position - transform.position;
+        //  //   pushDirection = -pushDirection.normalized;
+        //
+        //     player.HealthManager.TakeDamage(damage);
+        //
+        //     switch (projectileType)
+        //     {
+        //         case ProjectileType.Push:
+        //             player.TransitionToState(new SlideState(pushDirection, pushForce, pushTime));
+        //             MyLog.D($"{player.username} was hit with push projectile and force is {pushForce}");
+        //             break;
+        //         case ProjectileType.Stun:
+        //             player.TransitionToState(new StunState(stunDuration));
+        //             MyLog.D($"{player.username} was hit with stun projectile and stun timer is {stunDuration}");
+        //             break;
+        //     }
+        //
+        //
+        //     Destroy(gameObject);
+        // }
     }
 
 

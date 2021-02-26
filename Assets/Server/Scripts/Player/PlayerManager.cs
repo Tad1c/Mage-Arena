@@ -8,10 +8,13 @@ public class PlayerManager : MonoBehaviour
     private Player _player;
     private IHealth _healthManager;
 
+    private AbilityManager _abilityManager;
+
     private void Awake()
     {
         _player = GetComponent<Player>();
         _healthManager = GetComponent<IHealth>();
+        _abilityManager = new AbilityManager();
     }
 
     public void PlayerDead()

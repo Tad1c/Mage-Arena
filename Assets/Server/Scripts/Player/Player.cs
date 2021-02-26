@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
         if (isOffline)
         {
             Initialize(10, "Hello");
-            StartCoroutine(Test());
+        //    StartCoroutine(Test());
         }
     }
 
@@ -138,6 +138,10 @@ public class Player : MonoBehaviour
 
     public void ShootProjectile(Vector3 shootDirection, int type)
     {
+        if(_stateHelper.HasState<StunState>())
+            return;
+        //TODO: This object or projectile will be not instaciable need only to set active some object that we have in the pool in our MagicPool.cs
+        
         NetworkManager.instance.InstanciateProjectile(shootOrigin, type).Init(shootDirection, id);
     }
 
