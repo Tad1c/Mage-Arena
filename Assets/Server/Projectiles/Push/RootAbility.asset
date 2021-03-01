@@ -9,15 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0e31995f580bd649a2cfca8c9215caa, type: 3}
-  m_Name: PushAbility
+  m_Script: {fileID: 11500000, guid: 2bcb18c4f3f393d4192643463e6c339e, type: 3}
+  m_Name: RootAbility
   m_EditorClassIdentifier: 
-  abilityName: PushAbility
+  abilityName: Stun
   damage: 10
   speed: 30
   range: 30
   cooldown: 1
-  fireRate: 1
-  prefab: {fileID: 2909942855044075523, guid: 8ec5e9ce09aeb6a4f9b93aff02d955c1, type: 3}
-  pushTime: 3
-  pushForce: 50
+  fireRate: 5
+  prefab: {fileID: 4646152587436197093, guid: 0df583c169e19ab46ab756681b5834e7, type: 3}
+  stunDuration: 1

@@ -9,20 +9,23 @@ public class PushAbility : Ability
     public float pushTime = 3f;
     public float pushForce = 50f;
 
-    private BasicProjectile _projectile;
+    private Projectile _projectile;
     
     public override void Initialize(Transform shootOrigin)
     {
-        _projectile = prefab.GetComponent<BasicProjectile>();
-        _projectile.damage = damage;
-        _projectile.speed = speed;
-        _projectile.pushTime = pushTime;
-        _projectile.pushForce = pushForce;
-        _projectile.range = range;
+        _projectile = prefab;
+
+        if (_projectile is PushProjectile projectile)
+        {
+            projectile.speed = speed;
+            projectile.pushTime = pushTime;
+            projectile.pushForce = pushForce;
+            projectile.range = range;
+        }
     }
 
     public override void FireAbility()
     {
-        _projectile.Fire();
+        //   projectile.Fire();
     }
 }

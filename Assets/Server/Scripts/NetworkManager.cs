@@ -36,9 +36,9 @@ public class NetworkManager : MonoBehaviour
         return Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
     }
 
-    public BasicProjectile InstanciateProjectile(Transform origin, int type)
+    public StunProjectile InstanciateProjectile(Transform origin, int type)
     {
-        var obj = Instantiate(projectilePrefab[type], origin.position, Quaternion.identity).GetComponent<BasicProjectile>();
+        var obj = Instantiate(projectilePrefab[type], origin.position, Quaternion.identity).GetComponent<StunProjectile>();
         obj.type = type;
         
         return obj;

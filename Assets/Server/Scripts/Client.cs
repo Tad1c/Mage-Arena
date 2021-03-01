@@ -76,7 +76,7 @@ namespace ServerSide
                 }
                 catch (Exception e)
                 {
-                    Debug.Log($"Error sending data to player {id} via TCP: {e}");
+                    MyLog.D($"Error sending data to player {id} via TCP: {e}");
                 }
             }
 
@@ -102,7 +102,7 @@ namespace ServerSide
                 }
                 catch (Exception e)
                 {
-                    Debug.Log($"Error receiving TCP data: {e}");
+                    MyLog.D($"Error receiving TCP data: {e}");
                     Server.clients[id].Disconnect();
                 }
             }
@@ -244,7 +244,7 @@ namespace ServerSide
 
         private void Disconnect()
         {
-            Debug.Log($"{tcp.socket.Client.RemoteEndPoint} has disconnected");
+            MyLog.D($"{tcp.socket.Client.RemoteEndPoint} has disconnected");
 
             ThreadManager.ExecuteOnMainThread(() =>
             {

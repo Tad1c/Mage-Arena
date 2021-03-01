@@ -23,7 +23,7 @@ public class Server
         MaxPlayers = maxPlayers;
         Port = port;
 
-        Debug.Log("Starting server...");
+        MyLog.D("Starting server...");
         InitializeServerData();
 
         IPAddress ipAddress = IPAddress.Any;
@@ -35,7 +35,7 @@ public class Server
         udpListener = new UdpClient(Port);
         udpListener.BeginReceive(UDPReceiveCallback, null);
 
-        Debug.Log($"Server started on {ipAddress}:{Port}");
+        MyLog.D($"Server started on {ipAddress}:{Port}");
     }
 
     public static void Stop()
@@ -84,7 +84,7 @@ public class Server
         }
         catch (Exception e)
         {
-            Debug.Log($"Error receiving UDP data: {e}");
+            MyLog.D($"Error receiving UDP data: {e}");
         }
     }
 
@@ -99,7 +99,7 @@ public class Server
         }
         catch (Exception e)
         {
-            Debug.Log($"Error sending data to {clientEndPoint} via UDP {e}");
+           MyLog.D($"Error sending data to {clientEndPoint} via UDP {e}");
         }
     }
 
@@ -111,7 +111,7 @@ public class Server
         //Once client is connected we need to make sure that he is continuing listening for connections
         tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
-        Debug.Log($"Incoming connect from {client.Client.RemoteEndPoint}...");
+        MyLog.D($"Incoming connect from {client.Client.RemoteEndPoint}...");
 
         for (int i = 1; i <= MaxPlayers; i++)
         {
@@ -122,7 +122,7 @@ public class Server
             }
         }
 
-        Debug.Log($"{client.Client.RemoteEndPoint} failed to connect: Server full!");
+        MyLog.D($"{client.Client.RemoteEndPoint} failed to connect: Server full!");
     }
 
     private static void InitializeServerData()
@@ -143,6 +143,6 @@ public class Server
 
                // {(int)ClientPackets.udpTestReceive, ServerHandle.UDPTestReceived}
             };
-        Debug.Log("Initialized packets");
+        MyLog.D("Initialized packets");
     }
 }

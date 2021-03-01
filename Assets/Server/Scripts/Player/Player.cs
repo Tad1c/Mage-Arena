@@ -7,6 +7,12 @@ public class Player : MonoBehaviour
     public int id;
     public string username;
     private Rigidbody _controller;
+    private AbilityManager _abilityManager;
+
+    public AbilityManager AbilityManager
+    {
+        get => _abilityManager;
+    }
 
     private StateHelper _stateHelper;
 
@@ -27,9 +33,7 @@ public class Player : MonoBehaviour
         get { return _controller; }
         set { _controller = value; }
     }
-
-    public Transform shootOrigin;
-
+    //TODO: Need to fix this
     public PlayerStats playerStats;
 
     private float[] inputs;
@@ -42,6 +46,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponent<Rigidbody>();
+        _abilityManager = GetComponent<AbilityManager>();
     }
 
     private void Start()
@@ -103,7 +108,7 @@ public class Player : MonoBehaviour
         moveDirection *= playerStats.moveSpeed;
 
         // So we can move with the same speed when going diagonally
-        moveDirection = Vector3(moveDirection);
+        moveDirection = GetCorrectedDirection(moveDirection);
 
         _controller.velocity = ControllerVelocity(moveDirection);
     }
@@ -113,7 +118,7 @@ public class Player : MonoBehaviour
         return new Vector3(moveDirection.x, _controller.velocity.y, moveDirection.z);
     }
 
-    private Vector3 Vector3(Vector3 moveDirection)
+    private Vector3 GetCorrectedDirection(Vector3 moveDirection)
     {
         if (moveDirection.magnitude > playerStats.moveSpeed)
         {
@@ -138,11 +143,11 @@ public class Player : MonoBehaviour
 
     public void ShootProjectile(Vector3 shootDirection, int type)
     {
-        if(_stateHelper.HasState<StunState>())
-            return;
-        //TODO: This object or projectile will be not instaciable need only to set active some object that we have in the pool in our MagicPool.cs
+        // if(_stateHelper.HasState<StunState>())
+        //     return;
         
-        NetworkManager.instance.InstanciateProjectile(shootOrigin, type).Init(shootDirection, id);
+   //     _abilityManager.Shoot(type);
+        //NetworkManager.instance.InstanciateProjectile(shootOrigin, type).Init(shootDirection, id);
     }
 
     public void Jump()

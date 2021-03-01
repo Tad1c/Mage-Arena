@@ -7,12 +7,12 @@ using UnityEngine;
 public class ObjectPool
 {
     private int _numberOfObjects;
-    private GameObject _prefab;
+    private Projectile _prefab;
     
-    private  List<GameObject> objectPool = new List<GameObject>();
+    private  List<Projectile> objectPool = new List<Projectile>();
     private Transform _parentObject;
 
-    public ObjectPool(int numberOfObjects, GameObject prefab, Transform parentObject)
+    public ObjectPool(int numberOfObjects, Projectile prefab, Transform parentObject)
     {
         _numberOfObjects = numberOfObjects;
         _prefab = prefab;
@@ -23,18 +23,18 @@ public class ObjectPool
     {
         for (int i = 0; i < _numberOfObjects; i++)
         {
-            GameObject obj = MonoBehaviour.Instantiate(_prefab, _parentObject.position, _parentObject.rotation, _parentObject);
-            obj.SetActive(false);
+            Projectile obj = MonoBehaviour.Instantiate(_prefab, _parentObject.position, _parentObject.rotation, _parentObject);
+            obj.gameObject.SetActive(false);
             objectPool.Add(obj);
         }
     }
 
     [CanBeNull]
-    public GameObject GetPooledObject(int amount)
+    public Projectile GetPooledObject(int amount)
     {
         for (int i = 0; i < amount; i++)
         {
-            if (!objectPool[i].activeInHierarchy)
+            if (!objectPool[i].gameObject.activeInHierarchy)
                 return objectPool[i];
             else 
             {

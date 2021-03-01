@@ -30,15 +30,18 @@
         </e>
         <e p="Server" t="Include">
           <e p="Projectiles" t="Include">
-            <e p="Projectile.cs" t="Include" />
-            <e p="Push" t="Include">
-              <e p="BasicProjectile.cs" t="Include" />
-            </e>
             <e p="Scirpts" t="Include">
-              <e p="Ability.cs" t="Include" />
-              <e p="AbilityManager.cs" t="Include" />
-              <e p="PushAbility.cs" t="Include" />
-              <e p="StunAbility.cs" t="Include" />
+              <e p="Abilities" t="Include">
+                <e p="Ability.cs" t="Include" />
+                <e p="AbilityManager.cs" t="Include" />
+                <e p="PushAbility.cs" t="Include" />
+                <e p="StunAbility.cs" t="Include" />
+              </e>
+              <e p="Projectile" t="Include">
+                <e p="Projectile.cs" t="Include" />
+                <e p="PushProjectile.cs" t="Include" />
+                <e p="StunProjectile.cs" t="Include" />
+              </e>
             </e>
           </e>
           <e p="Scripts" t="Include">

@@ -16,5 +16,7 @@ MonoBehaviour:
   damage: 10
   speed: 30
   range: 30
-  prefab: {fileID: 0}
+  cooldown: 1
+  fireRate: 10
+  prefab: {fileID: 4646152587436197093, guid: 1fab36e792a75524f8fb54251f88c4a9, type: 3}
   stunDuration: 1

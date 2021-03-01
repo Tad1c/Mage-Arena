@@ -1267,7 +1267,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1145119530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1503,10 +1503,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f33f8a9d213b7438e98a14224d868e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _abilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  prefab: {fileID: 4646152587436197091, guid: 1fab36e792a75524f8fb54251f88c4a9, type: 3}
+  abilitiesToBuy:
+  - {fileID: 11400000, guid: bb7feeebef398684287728410c698c6d, type: 2}
+  currentAbilities:
+  - {fileID: 11400000, guid: aa2a54d8d246a944b80ddf693230172a, type: 2}
+  - {fileID: 11400000, guid: a326d7c9f6ac5064c9076501525a834d, type: 2}
   shootOrigin: {fileID: 440945657}
   parentObject: {fileID: 1412508832}
 --- !u!1 &1412508831

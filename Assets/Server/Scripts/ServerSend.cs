@@ -149,7 +149,7 @@ public class ServerSend
 
 
     #region ProjectileShit
-    public static void InstantiateBasicProjectile(BasicProjectile basicProjectile, int playerId, Vector3 finalDestination, int type)
+    public static void InstantiateBasicProjectile(Projectile basicProjectile, int playerId, Vector3 finalDestination, int type)
     {
         using (Packet packet = new Packet((int)ServerPackets.projectileShoot))
         {
@@ -164,7 +164,7 @@ public class ServerSend
     }
 
 
-    public static void DestroyBasicProjectile(BasicProjectile basicProjectile)
+    public static void DestroyBasicProjectile(Projectile basicProjectile)
     {
         using (Packet packet = new Packet((int)ServerPackets.projectileDestroy))
         {
