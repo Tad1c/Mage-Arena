@@ -17,7 +17,7 @@ public class MidpointCalculator : MonoBehaviour
     {
         groundPlane = new Plane(Vector3.up, Vector3.zero);
     }
-    void Update()
+    void FixedUpdate()
     {
         if (player == null || midpoint == null) return;
 
