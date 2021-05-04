@@ -48,7 +48,9 @@ public class PushProjectile : Projectile
 
         Vector3 pushDirection = player.transform.position - transform.position; //player.transform.position - transform.position;
         //pushDirection = -pushDirection.normalized;
-
+        
+        player.HealthManager.TakeDamage(damage);
+        
         player.TransitionToState(new SlideState(pushDirection, pushForce, pushTime));
 
         MyLog.D($"{player.username} was hit with push projectile and force is {pushForce}");

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviour
@@ -36,9 +37,13 @@ public class NetworkManager : MonoBehaviour
         return Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
     }
 
-    public StunProjectile InstanciateProjectile(Transform origin, int type)
+    [CanBeNull]
+    public Projectile InstanciateProjectile(Transform origin, int type)
     {
-        var obj = Instantiate(projectilePrefab[type], origin.position, Quaternion.identity).GetComponent<StunProjectile>();
+        if (!projectilePrefab[type])
+            return null;
+        
+        var obj = Instantiate(projectilePrefab[type], origin.position, Quaternion.identity).GetComponent<Projectile>();
         obj.type = type;
         
         return obj;

@@ -145,9 +145,9 @@ public class Player : MonoBehaviour
     {
         // if(_stateHelper.HasState<StunState>())
         //     return;
-        
-   //     _abilityManager.Shoot(type);
-        //NetworkManager.instance.InstanciateProjectile(shootOrigin, type).Init(shootDirection, id);
+        //
+        // _abilityManager.Shoot(type);
+        // NetworkManager.instance.InstanciateProjectile(shootOrigin, type).Init(shootDirection, id);
     }
 
     public void Jump()

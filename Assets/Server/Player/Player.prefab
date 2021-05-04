@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1414741739}
   - component: {fileID: -6282765397468656406}
   - component: {fileID: 375662493}
+  - component: {fileID: 1336047618}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -51,7 +52,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   username: 
-  shootOrigin: {fileID: 2222490797104248287}
   playerStats:
     moveSpeed: 8
     jumpSpeed: 5
@@ -114,6 +114,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fcf07cae2c69d84aa2f9fe336eadfbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1336047618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3479711736023880253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f33f8a9d213b7438e98a14224d868e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilitiesToBuy:
+  - {fileID: 11400000, guid: bb7feeebef398684287728410c698c6d, type: 2}
+  currentAbilities:
+  - {fileID: 11400000, guid: aa2a54d8d246a944b80ddf693230172a, type: 2}
+  - {fileID: 11400000, guid: a326d7c9f6ac5064c9076501525a834d, type: 2}
+  shootOrigin: {fileID: 2222490797104248287}
+  parentObject: {fileID: 0}
 --- !u!1 &6868589659328114986
 GameObject:
   m_ObjectHideFlags: 0

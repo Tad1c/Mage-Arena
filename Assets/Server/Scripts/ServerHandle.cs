@@ -38,7 +38,7 @@ public class ServerHandle
         Vector3 shootDirection = packet.ReadVector3();
         int type = packet.ReadInt();
 
-        Server.clients[fromClient].player.AbilityManager.Shoot(shootDirection, type);
+        Server.clients[fromClient].player.AbilityManager.Shoot(shootDirection, type, fromClient);
     }
 
 

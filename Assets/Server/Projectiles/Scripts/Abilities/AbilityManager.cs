@@ -28,14 +28,14 @@ public class AbilityManager : MonoBehaviour
         _player = GetComponent<Player>();
     }
 
-    public void Start()
-    {
-        for (int i = 0; i < currentAbilities.Count; i++)
-        {
-            currentAbilities[i].Initialize(shootOrigin);
-            _objectPool.Add(ObjectPool(i));
-        }
-    }
+    // public void Start()
+    // {
+    //     for (int i = 0; i < currentAbilities.Count; i++)
+    //     {
+    //         currentAbilities[i].Initialize(shootOrigin);
+    //         _objectPool.Add(ObjectPool(i));
+    //     }
+    // }
 
     private ObjectPool ObjectPool(int i)
     {
@@ -48,38 +48,41 @@ public class AbilityManager : MonoBehaviour
     //Only for testing purposes
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-            Shoot(shootOrigin.forward,0);
-        if (Input.GetKeyDown(KeyCode.Y))
-            Shoot(shootOrigin.forward,1);
-        if (Input.GetKeyDown(KeyCode.U))
-            Shoot(shootOrigin.forward,2);
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            BuyAbility(abilitiesToBuy[0]);
-        }
+        // if (Input.GetKeyDown(KeyCode.T))
+        //     Shoot(shootOrigin.forward,0);
+        // if (Input.GetKeyDown(KeyCode.Y))
+        //     Shoot(shootOrigin.forward,1);
+        // if (Input.GetKeyDown(KeyCode.U))
+        //     Shoot(shootOrigin.forward,2);
+        //
+        // if (Input.GetKeyDown(KeyCode.P))
+        // {
+        //     BuyAbility(abilitiesToBuy[0]);
+        // }
     }
 
-    public void Shoot(Vector3 origin, int index, int amount = 1)
+    public void Shoot(Vector3 origin, int type, int playerId, int amount = 1)
     {
         if(_player.StateHelper.HasState<StunState>())
             return;
 
-        if (Time.time >= currentAbilities[index].cooldown)
-        {
-            currentAbilities[index].cooldown = Time.time + 1f/ currentAbilities[index].fireRate;
-            
-            var projectile = _objectPool[index].GetPooledObject(amount);
-
-            if (projectile != null)
-            {
-                projectile.transform.localPosition = shootOrigin.position;
-                projectile.Init(origin, _player.id);
-                projectile.gameObject.SetActive(true);
-            //    ServerSend.InstantiateBasicProjectile(projectile, _player.id, origin, index);
-            }
-        }
+        NetworkManager.instance.InstanciateProjectile(shootOrigin, type)?.Init(origin, playerId);
+        
+        //
+        // if (Time.time >= currentAbilities[index].cooldown)
+        // {
+        //     currentAbilities[index].cooldown = Time.time + 1f/ currentAbilities[index].fireRate;
+        //     
+        //     var projectile = _objectPool[index].GetPooledObject(amount);
+        //
+        //     if (projectile != null)
+        //     {
+        //         projectile.transform.localPosition = shootOrigin.position;
+        //         projectile.Init(origin, _player.id);
+        //    //     projectile.gameObject.SetActive(true);
+        //       //  ServerSend.InstantiateBasicProjectile(projectile, _player.id, origin, index);
+        //     }
+        // }
     }
 
     public void BuyAbility(Ability ability)

@@ -115,7 +115,6 @@ public class ClientHandle : MonoBehaviour
     public static void Jump(Packet packet)
     {
         int playerId = packet.ReadInt();
-
         GameManager.players[playerId].Jump();
     }
 
