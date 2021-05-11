@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using ScriptableObjectArchitecture;
+using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
@@ -11,20 +12,15 @@ public class PlayerController : MonoBehaviour
 
     public float fireRate = 15f;
 
+    public IntVariable selectedAbility;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
-            ClientSend.ShootProjectile(shootPos.forward, 0); // Push
+            ClientSend.ShootProjectile(shootPos.forward, selectedAbility);
         }
-
-        if (Input.GetKeyDown(KeyCode.Mouse1) && Time.time >= nextTimeToFire)
-        {
-            nextTimeToFire = Time.time + 1f / fireRate;
-            ClientSend.ShootProjectile(shootPos.forward, 1); //Stun
-        }
-
         if (Input.GetKeyDown(KeyCode.Space)) ClientSend.PlayerJump();
     }
 

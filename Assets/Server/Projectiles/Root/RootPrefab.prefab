@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4646152587436197088}
   - component: {fileID: 4646152587436197093}
   m_Layer: 0
-  m_Name: ProjectileStun
+  m_Name: RootPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

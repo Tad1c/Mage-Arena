@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     public List<GameObject> projectilePrefab;
 
+
     private void Awake()
     {
         if (instance == null)
@@ -40,13 +41,15 @@ public class GameManager : MonoBehaviour
 
     public void SpawnProjectile(int id, int playerId, Vector3 position, Vector3 finalPosition, int type)
     {
-        GameObject projectile = Instantiate(projectilePrefab[type], position, Quaternion.identity);
+        if (projectilePrefab.Count > type) {
+            GameObject projectile = Instantiate(projectilePrefab[type], position, Quaternion.identity);
 
-        ProjectileManager projectileManager = projectile.GetComponent<ProjectileManager>();
-        projectiles.Add(id, projectileManager);
-        projectileManager.Init(id, playerId, finalPosition);
+            ProjectileManager projectileManager = projectile.GetComponent<ProjectileManager>();
+            projectiles.Add(id, projectileManager);
+            projectileManager.Init(id, playerId, finalPosition);
 
-        players[playerId].animator.SetTrigger("attack");
+            players[playerId].animator.SetTrigger("attack");
+        }
 
     }
 
