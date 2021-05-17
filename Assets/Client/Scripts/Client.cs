@@ -301,7 +301,7 @@ namespace ClientSide
                 {(int)ServerPackets.playerRespawn, ClientHandle.PlayerRespawn},
                 {(int)ServerPackets.projectileShoot, ClientHandle.ProjectileSpawn},
                 {(int)ServerPackets.projectilePosition, ClientHandle.ProjectilePosition},
-                {(int)ServerPackets.projectileDestroy, ClientHandle.ProjectileDestroy},
+                {(int)ServerPackets.projectileDestroy, ClientHandle.DestorySpellOnClient},
                 {(int)ServerPackets.playerJump, ClientHandle.Jump},
                 {(int)ServerPackets.ping, ClientHandle.Ping},
                 // {(int)ServerPackets.udpTest, ClientHandle.UDPTest}

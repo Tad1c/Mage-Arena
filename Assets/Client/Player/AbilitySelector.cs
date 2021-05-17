@@ -7,18 +7,34 @@ using UnityEngine.UI;
 public class AbilitySelector : MonoBehaviour
 {
 
-    public Toggle[] abilityToggles = new Toggle[4];
-    // public AbilityManager abilityManager;
+    public ToggleGroup toggleGroup;
 
-    public IntVariable selectedAbility;
+    public Toggle[] spellToggles = new Toggle[4];
+
+    [HideInInspector]
+    public List<Spell> spells = new List<Spell>();
+
+    public IntVariable selectedSpellId;
 
     private void Start()
     {
-        selectedAbility.Value = 0;
+        for (int i = 0; i < spellToggles.Length; i++)
+        {
+            if (spellToggles[i].TryGetComponent<SpellUI>(out var spellUI))
+            {
+                spells[i] = spellUI.spell;
+            }
+        }
     }
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Mouse1)) {
+            toggleGroup.SetAllTogglesOff();
+            selectedSpellId.Value = -1;
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             HandleAbilitySelect(0);
@@ -35,17 +51,23 @@ public class AbilitySelector : MonoBehaviour
         {
             HandleAbilitySelect(3);
         }
-
     }
 
     private void HandleAbilitySelect(int index)
     {
-        if (abilityToggles.Length > index)
+        if (spellToggles.Length > index)
         {
-            abilityToggles[index].isOn = true;
-            // instead of toggle index, here we will need ability ID
-            // and make sure player has bought this ability
-            selectedAbility.Value = index; 
+            var spellToggle = spellToggles[index];
+            spellToggle.isOn = !spellToggle.isOn;
+
+            if (spellToggle.isOn)
+            {
+                selectedSpellId.Value = spells[index].id;
+            }
+            else
+            {
+                selectedSpellId.Value = -1;
+            }
         }
     }
 

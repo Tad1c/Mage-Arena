@@ -22,8 +22,7 @@ public class MidpointCalculator : MonoBehaviour
         if (player == null || midpoint == null) return;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float rayDistance;
-        if (groundPlane.Raycast(ray, out rayDistance))
+        if (groundPlane.Raycast(ray, out float rayDistance))
         {
             Vector3 point = ray.GetPoint(rayDistance);
 
@@ -34,7 +33,8 @@ public class MidpointCalculator : MonoBehaviour
 
             // Limit the distance between the player and the midpoint
             float distance = Vector3.Distance(player.transform.position, midpointPosition);
-            if (distance > maxDistance) {
+            if (distance > maxDistance)
+            {
                 Vector3 vect = player.transform.position - midpointPosition;
                 vect = vect.normalized;
                 vect *= (distance - maxDistance);

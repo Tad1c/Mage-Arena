@@ -12,15 +12,30 @@ public class PlayerController : MonoBehaviour
 
     public float fireRate = 15f;
 
-    public IntVariable selectedAbility;
+    public IntVariable selectedSpellId;
+
+    private Camera mainCamera;
+    private Plane groundPlane;
+
+    private void Start()
+    {
+        mainCamera = Camera.main;
+        groundPlane = new Plane(Vector3.up, transform.position);
+    }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
-            ClientSend.ShootProjectile(shootPos.forward, selectedAbility);
+
+            if (selectedSpellId.Value > -1)
+            {
+                Vector3 mousePos = GetCursorWorldPosition();
+                ClientSend.ShootProjectile(mousePos, selectedSpellId.Value);
+            }
         }
+
         if (Input.GetKeyDown(KeyCode.Space)) ClientSend.PlayerJump();
     }
 
@@ -28,6 +43,17 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         SendInputToServer();
+    }
+
+    Vector3 GetCursorWorldPosition()
+    {
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Vector3 point = Vector3.zero;
+        if (groundPlane.Raycast(ray, out float distance))
+        {
+            point = ray.GetPoint(distance);
+        }
+        return new Vector3(point.x, transform.position.y, point.z);
     }
 
     private void SendInputToServer()

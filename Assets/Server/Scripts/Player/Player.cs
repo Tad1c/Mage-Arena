@@ -6,13 +6,9 @@ public class Player : MonoBehaviour
 {
     public int id;
     public string username;
-    private Rigidbody _controller;
-    private AbilityManager _abilityManager;
+    public Transform shootOriginTransform;
 
-    public AbilityManager AbilityManager
-    {
-        get => _abilityManager;
-    }
+    private Rigidbody _controller;
 
     private StateHelper _stateHelper;
 
@@ -46,7 +42,6 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponent<Rigidbody>();
-        _abilityManager = GetComponent<AbilityManager>();
     }
 
     private void Start()
@@ -75,7 +70,7 @@ public class Player : MonoBehaviour
 
         this.id = id;
         this.username = username;
-        playerStats.health = playerStats.maxHealht;
+        playerStats.health = playerStats.maxHealth;
         inputs = new float[2];
     }
 
@@ -139,15 +134,6 @@ public class Player : MonoBehaviour
     {
         this.inputs = inputs;
         transform.rotation = rotation;
-    }
-
-    public void ShootProjectile(Vector3 shootDirection, int type)
-    {
-        // if(_stateHelper.HasState<StunState>())
-        //     return;
-        //
-        // _abilityManager.Shoot(type);
-        // NetworkManager.instance.InstanciateProjectile(shootOrigin, type).Init(shootDirection, id);
     }
 
     public void Jump()

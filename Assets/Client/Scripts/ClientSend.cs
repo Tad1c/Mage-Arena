@@ -57,12 +57,12 @@ public class ClientSend : MonoBehaviour
         }
     }
 
-    public static void ShootProjectile(Vector3 shootDirection, int type)
+    public static void ShootProjectile(Vector3 shootDirection, int spellId)
     {
         using (Packet packet = new Packet((int)ClientPackets.shootProjectile))
         {
             packet.Write(shootDirection);
-            packet.Write(type);
+            packet.Write(spellId);
             SendTCPData(packet);
         }
     }

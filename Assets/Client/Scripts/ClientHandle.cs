@@ -39,7 +39,8 @@ public class ClientHandle : MonoBehaviour
         Vector3 position = packet.ReadVector3();
         float playerVelocityMagnitude = packet.ReadFloat();
 
-        if (GameManager.players.ContainsKey(id)) {
+        if (GameManager.players.ContainsKey(id))
+        {
             GameManager.players[id].InterpolateMovement(position, playerVelocityMagnitude);
         }
     }
@@ -53,7 +54,7 @@ public class ClientHandle : MonoBehaviour
         {
             GameManager.players[id].transform.rotation = rotation;
         }
-        
+
     }
 
     public static void PlayerDisconnected(Packet pack)
@@ -89,22 +90,23 @@ public class ClientHandle : MonoBehaviour
 
     public static void ProjectileSpawn(Packet packet)
     {
-        int id = packet.ReadInt();
+        int spellId = packet.ReadInt();
+        int spellServerId = packet.ReadInt(); 
         int byPlayerId = packet.ReadInt();
-        Vector3 position = packet.ReadVector3();
-        Vector3 finalPosition = packet.ReadVector3();
-        int type = packet.ReadInt();
+        Vector3 startPosition = packet.ReadVector3();
+        Vector3 shootTarget = packet.ReadVector3();
 
-        GameManager.instance.SpawnProjectile(id, byPlayerId, position, finalPosition, type);
+        LocalSpellManager.instance.CastSpell(spellId, spellServerId, byPlayerId, startPosition, shootTarget);
+
+        // GameManager.instance.SpawnProjectile(spellId, byPlayerId, position, finalPosition, type);
     }
 
-    public static void ProjectileDestroy(Packet packet)
+    public static void DestorySpellOnClient(Packet packet)
     {
-        int id = packet.ReadInt();
+        int spellServerId = packet.ReadInt();
         Vector3 position = packet.ReadVector3();
 
-        GameManager.projectiles[id].DestoryProjectile(position);
-        GameManager.projectiles.Remove(id);
+        LocalSpellManager.instance.DestroySpell(spellServerId, position);
     }
 
     public static void Ping(Packet packet)

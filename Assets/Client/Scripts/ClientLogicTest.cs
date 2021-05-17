@@ -5,19 +5,19 @@ using UnityEngine;
 public class ClientLogicTest : MonoBehaviour
 {
 
-    public float moveSpeed = 15f;
+    public float moveSpeed = 6.5f;
 
     public GameObject playerPrefab;
     public GameObject canvas;
 
-    private Rigidbody rigidbody;
+    private Rigidbody rb;
 
     private void Start()
     {
         GameObject player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
 
-        rigidbody = player.AddComponent<Rigidbody>();
-        rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        rb = player.AddComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         player.GetComponent<CapsuleCollider>().enabled = true;
 
@@ -37,17 +37,17 @@ public class ClientLogicTest : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
 
         Vector3 moveDirection = MoveDirection(new Vector2(h,v));
-        moveDirection *= 15f;
+        moveDirection *= moveSpeed;
 
         // So we can move with the same speed when going diagonally
         moveDirection = GetCorrectedDirection(moveDirection);
 
-        rigidbody.velocity = ControllerVelocity(moveDirection);
+        rb.velocity = ControllerVelocity(moveDirection);
     }
 
     private Vector3 ControllerVelocity(Vector3 moveDirection)
     {
-        return new Vector3(moveDirection.x, rigidbody.velocity.y, moveDirection.z);
+        return new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
     }
 
     private Vector3 MoveDirection(Vector2 inputDirection)

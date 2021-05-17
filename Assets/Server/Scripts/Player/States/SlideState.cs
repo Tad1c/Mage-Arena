@@ -23,7 +23,7 @@ public class SlideState : PlayerBaseState
 
     public SlideState(Vector3 direction, float force, float time)
     {
-        _direction = direction;
+        _direction = direction.normalized;
         _force = force;
         _time = time;
     }

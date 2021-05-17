@@ -9,7 +9,6 @@ public class NetworkManager : MonoBehaviour
     public static NetworkManager instance;
 
     public GameObject playerPrefab;
-    public List<GameObject> projectilePrefab;
 
     private void Awake()
     {
@@ -35,18 +34,6 @@ public class NetworkManager : MonoBehaviour
     public Player InstanciatePlayer()
     {
         return Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
-    }
-
-    [CanBeNull]
-    public Projectile InstanciateProjectile(Transform origin, int type)
-    {
-        if (!projectilePrefab[type])
-            return null;
-        
-        var obj = Instantiate(projectilePrefab[type], origin.position, Quaternion.identity).GetComponent<Projectile>();
-        obj.type = type;
-        
-        return obj;
     }
 
 }
