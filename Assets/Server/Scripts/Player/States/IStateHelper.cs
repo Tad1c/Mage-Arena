@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IStateHelper
 {
     int StatesCount();
-     void AddState(PlayerBaseState state);
-     void RemoveState(PlayerBaseState state);
-     PlayerBaseState GetTopState();
+    void AddState(PlayerBaseState state);
+    void RemoveState(PlayerBaseState state);
+    PlayerBaseState GetTopState();
 }

@@ -16,7 +16,8 @@ public class BallisticFireballLocal : ParabolicVerticalSpellMovement
 
     public override void DestroySpellClient(Vector3 pos)
     {
-        Instantiate(explosionPrefabs[0], transform.position, Quaternion.identity);
+        GameObject go = Instantiate(explosionPrefabs[0], transform.position, Quaternion.identity);
+        Destroy(go, 3);
         base.DestroySpellClient(pos);
     }
 

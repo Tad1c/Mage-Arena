@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
             {
                 Vector3 mousePos = GetCursorWorldPosition();
                 ClientSend.ShootProjectile(mousePos, selectedSpellId.Value);
+                AbilitySelector.instance.StartCooldownForSelectedSpell();
             }
         }
 

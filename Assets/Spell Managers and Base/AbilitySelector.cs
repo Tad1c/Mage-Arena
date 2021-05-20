@@ -6,15 +6,32 @@ using UnityEngine.UI;
 
 public class AbilitySelector : MonoBehaviour
 {
+    public static AbilitySelector instance;
 
     public ToggleGroup toggleGroup;
 
     public Toggle[] spellToggles = new Toggle[4];
 
     [HideInInspector]
-    public List<Spell> spells = new List<Spell>();
+    public List<SpellUI> spells = new List<SpellUI>();
 
     public IntVariable selectedSpellId;
+
+    private int selectedIndex = -1;
+
+    public void StartCooldownForSelectedSpell()
+    {
+        spells[selectedIndex].StartCooldown();
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(this);
+    }
+
 
     private void Start()
     {
@@ -22,7 +39,7 @@ public class AbilitySelector : MonoBehaviour
         {
             if (spellToggles[i].TryGetComponent<SpellUI>(out var spellUI))
             {
-                spells[i] = spellUI.spell;
+                spells[i] = spellUI;
             }
         }
     }
@@ -30,9 +47,11 @@ public class AbilitySelector : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Mouse1)) {
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
             toggleGroup.SetAllTogglesOff();
             selectedSpellId.Value = -1;
+            selectedIndex = -1;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -55,6 +74,10 @@ public class AbilitySelector : MonoBehaviour
 
     private void HandleAbilitySelect(int index)
     {
+        if (selectedIndex == index) return;
+
+        selectedIndex = index;
+
         if (spellToggles.Length > index)
         {
             var spellToggle = spellToggles[index];
@@ -62,7 +85,7 @@ public class AbilitySelector : MonoBehaviour
 
             if (spellToggle.isOn)
             {
-                selectedSpellId.Value = spells[index].id;
+                selectedSpellId.Value = spells[index].spell.id;
             }
             else
             {

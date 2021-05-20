@@ -112,7 +112,6 @@ MonoBehaviour:
   spell: {fileID: 11400000, guid: 483d5cd626ebeec4faa3616d53c6fc6d, type: 2}
   spellServerId: 0
   byPlayerId: 0
-  direction: {x: 0, y: 0, z: 0}
   finalPosition: {x: 0, y: 0, z: 0}
   castOrigin: {x: 0, y: 0, z: 0}
   firingAngle: 45
