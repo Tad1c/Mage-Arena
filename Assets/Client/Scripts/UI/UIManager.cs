@@ -20,6 +20,14 @@ public class UIManager : MonoBehaviour
             Destroy(this);
     }
 
+    private void Start()
+    {
+        usernameField.text = CurrentPlayerData.playerDisplayName;
+        Client.instance.SetIP(Matchmaker.ip);
+        Client.instance.SetPorts(Matchmaker.tcp_port, Matchmaker.udp_port);
+        ConnectToServer();
+    }
+
     public void ConnectToServer()
     {
         startMenu.SetActive(false);

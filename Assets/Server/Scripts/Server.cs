@@ -9,7 +9,8 @@ using ServerSide;
 public class Server
 {
     public static int MaxPlayers { get; private set; }
-    public static int Port { get; private set; }
+    public static int TCPPort { get; private set; }
+    public static int UDPPort { get; private set; }
 
     public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
     public delegate void PacketHandler(int fromClient, Packet packet);
@@ -18,24 +19,26 @@ public class Server
     private static TcpListener tcpListener;
     private static UdpClient udpListener;
 
-    public static void Start(int maxPlayers, int port)
+    public static void Start(int maxPlayers, int tcpPort, int udpPort)
     {
         MaxPlayers = maxPlayers;
-        Port = port;
+
+        TCPPort = tcpPort;
+        UDPPort = udpPort;
 
         MyLog.D("Starting server...");
         InitializeServerData();
 
         IPAddress ipAddress = IPAddress.Any;
 
-        tcpListener = new TcpListener(ipAddress, Port);
+        tcpListener = new TcpListener(ipAddress, TCPPort);
         tcpListener.Start();
         tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
-        udpListener = new UdpClient(Port);
+        udpListener = new UdpClient(UDPPort);
         udpListener.BeginReceive(UDPReceiveCallback, null);
 
-        MyLog.D($"Server started on {ipAddress}:{Port}");
+        MyLog.D($"Server started on {ipAddress}:{TCPPort}");
     }
 
     public static void Stop()
@@ -99,7 +102,7 @@ public class Server
         }
         catch (Exception e)
         {
-           MyLog.D($"Error sending data to {clientEndPoint} via UDP {e}");
+            MyLog.D($"Error sending data to {clientEndPoint} via UDP {e}");
         }
     }
 

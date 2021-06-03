@@ -14,7 +14,8 @@ namespace ClientSide
         public static int dataBufferSize = 4096;
 
         public string ip = "127.0.0.1";
-        public int port = 26950;
+        public int tcp_port = 30500;
+        public int udp_port = 30501;
         public int myId = 0;
         public TCP tcp;
         public UDP udp;
@@ -61,10 +62,11 @@ namespace ClientSide
             this.ip = ip;
         }
 
-        // public void SetPORT(string port)
-        // {
-        //     this.port = Int32.Parse(port);
-        // }
+        public void SetPorts(int tcpp, int udpp)
+        {
+            this.tcp_port = tcpp;
+            this.udp_port = udpp;
+        }
 
         public class TCP
         {
@@ -83,7 +85,7 @@ namespace ClientSide
                 };
 
                 receiveBuffer = new byte[dataBufferSize];
-                socket.BeginConnect(instance.ip, instance.port, ConnectCallback, socket);
+                socket.BeginConnect(instance.ip, instance.tcp_port, ConnectCallback, socket);
             }
 
             private void ConnectCallback(IAsyncResult result)
@@ -206,7 +208,7 @@ namespace ClientSide
 
             public UDP()
             {
-                endPoint = new IPEndPoint(IPAddress.Parse(instance.ip), instance.port);
+                endPoint = new IPEndPoint(IPAddress.Parse(instance.ip), instance.udp_port);
             }
 
             public void Connect(int localPort)
