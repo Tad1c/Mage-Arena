@@ -5,6 +5,9 @@ using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
 using ServerSide;
+using PlayFab.MultiplayerAgent;
+using PlayFab;
+using System.Linq;
 
 public class Server
 {
@@ -38,7 +41,16 @@ public class Server
         udpListener = new UdpClient(UDPPort);
         udpListener.BeginReceive(UDPReceiveCallback, null);
 
-        MyLog.D($"Server started on {ipAddress}:{TCPPort}");
+        MyLog.D($"Server started on TCP {ipAddress}:{TCPPort}");
+        MyLog.D($"Server started on UDP {ipAddress}:{UDPPort}");
+
+        StartCoroutine(DelayedReady());
+    }
+
+    IEnumerator DelayedReady()
+    {
+        yield return new WaitForSeconds(1f);
+        PlayFabMultiplayerAgentAPI.ReadyForPlayers();
     }
 
     public static void Stop()

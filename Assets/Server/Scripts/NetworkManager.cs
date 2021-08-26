@@ -24,25 +24,19 @@ public class NetworkManager : MonoBehaviour
     private void Start()
     {
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
         PlayFabMultiplayerAgentAPI.Start();
         PlayFabMultiplayerAgentAPI.OnServerActiveCallback += OnServerActive;
-        StartCoroutine(WaitReady());
-    }
 
-    IEnumerator WaitReady()
-    {
-        yield return new WaitForSeconds(0.5f);
-        PlayFabMultiplayerAgentAPI.ReadyForPlayers();
-    }
-
-    private void OnServerActive()
-    {
-        Debug.Log("Server Started From Agent Activation");
         var ports = PlayFabMultiplayerAgentAPI.GetGameServerConnectionInfo().GamePortsConfiguration.ToList();
         var tcpp = ports.Find(p => p.Name == "port_tcp").ClientConnectionPort;
         var udpp = ports.Find(p => p.Name == "port_udp").ClientConnectionPort;
         Server.Start(50, tcpp, udpp);
+    }
+
+    private void OnServerActive()
+    {
+        Debug.Log("Server is ready for players.");
         Invoke("StartShutdownLoop", 120);
         // players can now connect to the server
     }
