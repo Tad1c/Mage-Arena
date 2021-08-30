@@ -49,6 +49,8 @@ namespace ServerSide
 
             public void Connect(TcpClient socket)
             {
+                Debug.Log("Server: Client TCP Connect");
+
                 this.socket = socket;
 
                 socket.ReceiveBufferSize = dataBufferSize;
@@ -175,6 +177,7 @@ namespace ServerSide
 
             public void Connect(IPEndPoint endPoint)
             {
+                Debug.Log("Server: Client UDP Connect");
                 this.endPoint = endPoint;
                 // ServerSend.UDPTest(id);
             }
@@ -211,8 +214,9 @@ namespace ServerSide
 
         public void SendIntoGame(string playerName)
         {
+            Debug.Log("Server try to spawn player.");
             //   player = new Player(id, playerName, Vector3.zero);
-            player = NetworkManager.instance.InstanciatePlayer();
+            player = PlayerSpawner.instance.InstanciatePlayer();
 
             player.Initialize(id, playerName);
 

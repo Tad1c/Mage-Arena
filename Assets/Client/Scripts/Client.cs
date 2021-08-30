@@ -54,6 +54,7 @@ namespace ClientSide
 
             isConnected = true;
 
+            Debug.Log($"[Client] Connect on ip {instance.ip}, ports: tcp = {instance.tcp_port} - udp = {instance.udp_port}");
             tcp.Connect();
         }
 
@@ -85,15 +86,19 @@ namespace ClientSide
                 };
 
                 receiveBuffer = new byte[dataBufferSize];
-                socket.BeginConnect(instance.ip, instance.tcp_port, ConnectCallback, socket);
+                socket.BeginConnect(instance.ip, instance.tcp_port, new AsyncCallback(ConnectCallback), socket);
             }
 
             private void ConnectCallback(IAsyncResult result)
             {
+                Debug.Log("[Client] TCP ConnectCallback");
+
                 socket.EndConnect(result);
 
                 if (!socket.Connected)
                     return;
+
+                Debug.Log("[Client] TCP is connected");
 
                 stream = socket.GetStream();
 
@@ -213,7 +218,9 @@ namespace ClientSide
 
             public void Connect(int localPort)
             {
-                socket = new UdpClient(localPort);
+
+                Debug.Log("[Client] Connecting to UDP " + endPoint);
+                socket = new UdpClient(instance.udp_port);
 
                 socket.Connect(endPoint);
                 socket.BeginReceive(ReceiveCallback, null);

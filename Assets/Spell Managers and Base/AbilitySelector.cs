@@ -21,7 +21,7 @@ public class AbilitySelector : MonoBehaviour
 
     public void StartCooldownForSelectedSpell()
     {
-        spells[selectedIndex].StartCooldown();
+        if (selectedIndex >= 0 && selectedIndex < spells.Count) spells[selectedIndex].StartCooldown();
     }
 
     private void Awake()

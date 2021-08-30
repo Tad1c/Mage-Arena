@@ -8,6 +8,7 @@ using ServerSide;
 using PlayFab.MultiplayerAgent;
 using PlayFab;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class Server
 {
@@ -43,14 +44,6 @@ public class Server
 
         MyLog.D($"Server started on TCP {ipAddress}:{TCPPort}");
         MyLog.D($"Server started on UDP {ipAddress}:{UDPPort}");
-
-        StartCoroutine(DelayedReady());
-    }
-
-    IEnumerator DelayedReady()
-    {
-        yield return new WaitForSeconds(1f);
-        PlayFabMultiplayerAgentAPI.ReadyForPlayers();
     }
 
     public static void Stop()
@@ -66,6 +59,8 @@ public class Server
 
     private static void UDPReceiveCallback(IAsyncResult result)
     {
+        Debug.Log("Server: UDPReceiveCallback");
+
         try
         {
             IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Any, 0);
@@ -120,6 +115,9 @@ public class Server
 
     private static void TCPConnectCallback(IAsyncResult result)
     {
+
+        Debug.Log("Server: TCPConnectCallback");
+
         //String the tcp client instance in local variable
         TcpClient client = tcpListener.EndAcceptTcpClient(result);
 

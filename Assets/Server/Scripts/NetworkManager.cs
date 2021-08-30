@@ -5,39 +5,50 @@ using UnityEngine;
 using PlayFab.MultiplayerAgent;
 using PlayFab;
 using System.Linq;
+using PlayFab.MultiplayerModels;
 
 public class NetworkManager : MonoBehaviour
 {
-
-    public static NetworkManager instance;
-
-    public GameObject playerPrefab;
-
-    private void Awake()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(this);
-    }
 
     private void Start()
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+
         PlayFabMultiplayerAgentAPI.Start();
         PlayFabMultiplayerAgentAPI.OnServerActiveCallback += OnServerActive;
 
-        var ports = PlayFabMultiplayerAgentAPI.GetGameServerConnectionInfo().GamePortsConfiguration.ToList();
-        var tcpp = ports.Find(p => p.Name == "port_tcp").ClientConnectionPort;
-        var udpp = ports.Find(p => p.Name == "port_udp").ClientConnectionPort;
-        Server.Start(50, tcpp, udpp);
+        StartCoroutine(ReadyForPlayers());
+    }
+
+    private IEnumerator ReadyForPlayers()
+    {
+        yield return new WaitForSeconds(.5f);
+        PlayFabMultiplayerAgentAPI.ReadyForPlayers();
+        Debug.Log("Server ReadyForPlayers");
     }
 
     private void OnServerActive()
     {
-        Debug.Log("Server is ready for players.");
+        Debug.Log("Server active, OnServerActive");
         Invoke("StartShutdownLoop", 120);
+
+        var ports = PlayFabMultiplayerAgentAPI.GetGameServerConnectionInfo().GamePortsConfiguration.ToList();
+        var tcpPort = ports.Find(p => p.Name == "port_tcp");
+        var udpPort = ports.Find(p => p.Name == "port_udp");
+
+        var clientTcpPort = tcpPort.ClientConnectionPort;
+        var serverTcpPort = tcpPort.ServerListeningPort;
+
+        var clientUdpPort = udpPort.ClientConnectionPort;
+        var serverUdpPort = udpPort.ServerListeningPort;
+
+        foreach (PlayFab.MultiplayerAgent.Model.GamePort p in ports) {
+            Debug.Log($"[Server] port name = {p.Name} , client = {p.ClientConnectionPort}, server = {p.ServerListeningPort}");
+        }
+
+        Server.Start(50, serverTcpPort, serverUdpPort);
+
         // players can now connect to the server
     }
 
@@ -62,9 +73,5 @@ public class NetworkManager : MonoBehaviour
         Server.Stop();
     }
 
-    public Player InstanciatePlayer()
-    {
-        return Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
-    }
 
 }
