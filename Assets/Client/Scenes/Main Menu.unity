@@ -874,7 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e524009ca620134ea208f33be6b6d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  looingForMatch: {fileID: 11400000, guid: cb88405c4c8fce140b1d55a960571187, type: 2}
+  lookingForMatch: {fileID: 11400000, guid: cb88405c4c8fce140b1d55a960571187, type: 2}
 --- !u!4 &2101581595
 Transform:
   m_ObjectHideFlags: 0
