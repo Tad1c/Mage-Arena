@@ -8,11 +8,11 @@ using ScriptableObjectArchitecture;
 
 public class MainMenuHandler : MonoBehaviour
 {
-    public BoolVariable looingForMatch;
+    public BoolVariable lookingForMatch;
 
     public void StartMatching()
     {
-        looingForMatch.Value = true;
+        lookingForMatch.Value = true;
 
         Matchmaker.StartMatchmaking("DEVQ", (ticket) =>
         {
@@ -39,7 +39,7 @@ public class MainMenuHandler : MonoBehaviour
                 Debug.Log("[MATCHMAKER] Ticket Status: " + result.Status);
                 if (result.Status == "Matched")
                 {
-                    looingForMatch.Value = false;
+                    lookingForMatch.Value = false;
 
                     PlayFabMultiplayerAPI.GetMatch(
                         new GetMatchRequest
@@ -65,14 +65,18 @@ public class MainMenuHandler : MonoBehaviour
                         },
                         err =>
                         {
-                            looingForMatch.Value = false;
+                            lookingForMatch.Value = false;
                             Debug.LogError("[ Matchmaker ] ERROR: " + err.ErrorMessage);
                         });
+                }
+                else if (result.Status == "Canceled")
+                {
+                    lookingForMatch.Value = false;
                 }
             },
             error =>
             {
-                looingForMatch.Value = false;
+                lookingForMatch.Value = false;
                 Debug.LogError("[ Matchmaker ] ERROR: " + error.ErrorMessage);
             });
         yield return new WaitForSeconds(6.2f);
