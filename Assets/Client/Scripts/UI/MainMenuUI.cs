@@ -1,18 +1,23 @@
 using ScriptableObjectArchitecture;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
-
+    [Header("Vignette effect")]
     public Image vignetteImg;
     public float minimumVignetteOpacity = 0.6f;
     public BoolVariable lookingForMatch;
 
+    [Header("Welcome")]
+    public TextMeshProUGUI welcomeLabel;
+
     private void Start()
     {
+        welcomeLabel.text = $"Welcome, {CurrentPlayerData.playerDisplayName}";
         lookingForMatch.AddListener(LookingForMatchChanged);
     }
 
