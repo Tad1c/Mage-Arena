@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private Camera mainCamera;
     private Plane groundPlane;
 
+    private Vector2 moveVec;
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
@@ -36,10 +40,8 @@ public class PlayerController : MonoBehaviour
                 AbilitySelector.instance.StartCooldownForSelectedSpell();
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Space)) ClientSend.PlayerJump();
+        */
     }
-
 
     private void FixedUpdate()
     {
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 GetCursorWorldPosition()
     {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         Vector3 point = Vector3.zero;
         if (groundPlane.Raycast(ray, out float distance))
         {
@@ -57,12 +59,56 @@ public class PlayerController : MonoBehaviour
         return new Vector3(point.x, transform.position.y, point.z);
     }
 
+    #region Player Input
+    public void OnMove(InputValue input)
+    {
+        moveVec = input.Get<Vector2>();
+    }
+
+    public void OnJump()
+    {
+        ClientSend.PlayerJump();
+    }
+
+    public void OnFirstSpell()
+    {
+        CastSpell(0);
+    }
+
+    public void OnSecondSpell()
+    {
+        CastSpell(1);
+    }
+
+    public void OnThirdSpell()
+    {
+        CastSpell(2);
+    }
+
+    public void OnFourthSpell()
+    {
+        CastSpell(3);
+    }
+
+
+    #endregion
+
+    private void CastSpell(int spellPos)
+    {
+        int spellId = AbilitySelector.instance.GetSpellIdAtPos(spellPos);
+        if (selectedSpellId.Value > -1)
+        {
+            ClientSend.ShootProjectile(GetCursorWorldPosition(), spellId);
+            AbilitySelector.instance.StartCooldownForSpellWithPosition(spellPos);
+        }
+    }
+
     private void SendInputToServer()
     {
         float[] inputs = new float[]
         {
-            Input.GetAxisRaw("Horizontal"),
-            Input.GetAxisRaw("Vertical"),
+            moveVec.x,
+            moveVec.y
         };
 
         ClientSend.PlayerMovement(inputs);

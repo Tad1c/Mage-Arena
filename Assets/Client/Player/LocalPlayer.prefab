@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 627107507805851135}
   - component: {fileID: 1766821139518403372}
   - component: {fileID: 1831251035210381945}
+  - component: {fileID: -3727649927109408341}
   m_Layer: 8
   m_Name: LocalPlayer
   m_TagString: Player
@@ -195,6 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31001133529b5ac4aa09cf1d7a724fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveTowardsSpeed: 9
   id: 0
   username: 
   user_text: {fileID: 8321491207634680148}
@@ -259,6 +261,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8698528166ff5c747a878b07a33ab0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3727649927109408341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710724987964419720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: a06e6b62d5e48ef4898bece630045d36,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: PC
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &6199203633291129223
 GameObject:
   m_ObjectHideFlags: 0

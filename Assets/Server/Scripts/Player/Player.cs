@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     public int id;
     public string username;
     public Transform shootOriginTransform;
+
+    private Vector2 moveVec;
 
     private Rigidbody _controller;
 
@@ -83,13 +86,18 @@ public class Player : MonoBehaviour
         newState.EnterState(this);
     }
 
+    public void OnMove(InputValue input)
+    {
+        moveVec = input.Get<Vector2>();
+    }
+
     public void FixedUpdate()
     {
         if (_healthManager.Health <= 0)
             return;
 
-        h = isOffline ? Input.GetAxisRaw("Horizontal") : inputs[0];
-        v = isOffline ? Input.GetAxisRaw("Vertical") : inputs[1];
+        h = isOffline ? moveVec.x : inputs[0];
+        v = isOffline ? moveVec.y : inputs[1];
 
         _stateHelper.CheckForOtherStates(this);
 

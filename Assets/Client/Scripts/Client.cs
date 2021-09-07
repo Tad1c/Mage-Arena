@@ -38,6 +38,12 @@ namespace ClientSide
                 Destroy(this);
         }
 
+        private void Start()
+        {
+            instance.SetIP(Matchmaker.ip);
+            instance.SetPorts(Matchmaker.tcp_port, Matchmaker.udp_port);
+            ConnectToServer();
+        }
 
         private void OnApplicationQuit()
         {

@@ -87,6 +87,7 @@ public class ServerSend
         using (Packet packet = new Packet((int)ServerPackets.playerPosition))
         {
             packet.Write(player.id);
+            packet.Write(DateTimeOffset.Now.ToUnixTimeMilliseconds());
             packet.Write(player.transform.position);
             packet.Write(player.Controller.velocity.magnitude);
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ClientLogicTest : MonoBehaviour
 {
@@ -8,9 +9,10 @@ public class ClientLogicTest : MonoBehaviour
     public float moveSpeed = 6.5f;
 
     public GameObject playerPrefab;
-    public GameObject canvas;
 
     private Rigidbody rb;
+
+    private Vector2 moveVec;
 
     private void Start()
     {
@@ -26,17 +28,16 @@ public class ClientLogicTest : MonoBehaviour
 
         PlayerClient playerClient = player.GetComponent<PlayerClient>();
         playerClient.enabled = false;
-
-        canvas.SetActive(false);
+    }
+    public void OnMove(InputValue input)
+    {
+        moveVec = input.Get<Vector2>();
     }
 
     private void Update()
     {
 
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        Vector3 moveDirection = MoveDirection(new Vector2(h,v));
+        Vector3 moveDirection = MoveDirection(moveVec);
         moveDirection *= moveSpeed;
 
         // So we can move with the same speed when going diagonally

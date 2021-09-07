@@ -7,6 +7,7 @@ using ClientSide;
 
 public class ClientHandle : MonoBehaviour
 {
+
     public static void Welcome(Packet packet)
     {
         string msg = packet.ReadString();
@@ -36,12 +37,13 @@ public class ClientHandle : MonoBehaviour
     public static void PlayerPosition(Packet packet)
     {
         int id = packet.ReadInt();
+        long timestamp = packet.ReadLong();
         Vector3 position = packet.ReadVector3();
         float playerVelocityMagnitude = packet.ReadFloat();
 
         if (GameManager.players.ContainsKey(id))
         {
-            GameManager.players[id].InterpolateMovement(position, playerVelocityMagnitude);
+            GameManager.players[id].InterpolateMovement(position, playerVelocityMagnitude, timestamp);
         }
     }
 

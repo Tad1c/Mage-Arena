@@ -24,6 +24,23 @@ public class AbilitySelector : MonoBehaviour
         if (selectedIndex >= 0 && selectedIndex < spells.Count) spells[selectedIndex].StartCooldown();
     }
 
+    public void StartCooldownForSpellWithPosition(int spellPosition)
+    {
+        if (spellPosition >= 0 && spellPosition < spells.Count) spells[spellPosition].StartCooldown();
+    }
+
+    public int GetSpellIdAtPos(int pos)
+    {
+        if (pos < spells.Count)
+        {
+            return spells[pos].spell.id;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
     private void Awake()
     {
         if (instance == null)
@@ -44,7 +61,8 @@ public class AbilitySelector : MonoBehaviour
         }
     }
 
-    void Update()
+    /*
+      void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -72,6 +90,7 @@ public class AbilitySelector : MonoBehaviour
         }
     }
 
+    
     private void HandleAbilitySelect(int index)
     {
         if (selectedIndex == index) return;
@@ -93,5 +112,6 @@ public class AbilitySelector : MonoBehaviour
             }
         }
     }
+     */
 
 }
