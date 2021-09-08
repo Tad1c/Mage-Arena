@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MidpointCalculator : MonoBehaviour
 {
@@ -13,15 +14,19 @@ public class MidpointCalculator : MonoBehaviour
 
     private Plane groundPlane;
 
+    private Camera mainCam;
+
     private void Start()
     {
         groundPlane = new Plane(Vector3.up, Vector3.zero);
+        mainCam = Camera.main;
     }
+
     void FixedUpdate()
     {
         if (player == null || midpoint == null) return;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (groundPlane.Raycast(ray, out float rayDistance))
         {
             Vector3 point = ray.GetPoint(rayDistance);

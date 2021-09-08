@@ -8,39 +8,15 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public Transform shootPos;
-
-    private float nextTimeToFire;
-
     public float fireRate = 15f;
-
     public IntVariable selectedSpellId;
 
-    private Camera mainCamera;
     private Plane groundPlane;
-
     private Vector2 moveVec;
 
     private void Start()
     {
-        mainCamera = Camera.main;
         groundPlane = new Plane(Vector3.up, transform.position);
-    }
-
-    private void Update()
-    {
-        /*
-        if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToFire)
-        {
-            nextTimeToFire = Time.time + 1f / fireRate;
-
-            if (selectedSpellId.Value > -1)
-            {
-                Vector3 mousePos = GetCursorWorldPosition();
-                ClientSend.ShootProjectile(mousePos, selectedSpellId.Value);
-                AbilitySelector.instance.StartCooldownForSelectedSpell();
-            }
-        }
-        */
     }
 
     private void FixedUpdate()
@@ -95,11 +71,16 @@ public class PlayerController : MonoBehaviour
 
     private void CastSpell(int spellPos)
     {
-        int spellId = AbilitySelector.instance.GetSpellIdAtPos(spellPos);
-        if (selectedSpellId.Value > -1)
+        var spell = AbilitySelector.instance.GetSpellAtPosition(spellPos);
+
+        if (spell == null) return;
+
+        int spellId = spell.spellData.id;
+
+        if (!spell.isInCooldown)
         {
             ClientSend.ShootProjectile(GetCursorWorldPosition(), spellId);
-            AbilitySelector.instance.StartCooldownForSpellWithPosition(spellPos);
+            spell.StartCooldown();
         }
     }
 

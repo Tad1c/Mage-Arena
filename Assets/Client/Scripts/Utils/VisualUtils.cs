@@ -7,7 +7,7 @@ public static class VisualUtils
     /// <summary>
     /// Minimum Smooth Speed we will set closingSpeed to in SmoothMove. 
     /// </summary>
-    private const float k_MinSmoothSpeed = 4.0f;
+    private const float k_MinSmoothSpeed = 6.0f;
 
     /// <summary>
     /// In SmoothMove we set a velocity proportional to our distance, to roughly approximate a spring effect.

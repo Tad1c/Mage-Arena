@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class SpellUI : MonoBehaviour
 {
-    public Spell spell;
+    public Spell spellData;
 
     public Image cooldownImage;
 
-    private bool isInCooldown = false;
+    [HideInInspector]
+    public bool isInCooldown = false;
 
     public void StartCooldown() {
         if (isInCooldown) return;
         isInCooldown = true;
-        StartCoroutine(AnimateSliderOverTime(spell.cooldown));
+        StartCoroutine(AnimateSliderOverTime(spellData.cooldown));
     }
 
     IEnumerator AnimateSliderOverTime(float seconds)

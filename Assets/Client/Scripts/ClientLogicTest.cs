@@ -29,6 +29,7 @@ public class ClientLogicTest : MonoBehaviour
         PlayerClient playerClient = player.GetComponent<PlayerClient>();
         playerClient.enabled = false;
     }
+
     public void OnMove(InputValue input)
     {
         moveVec = input.Get<Vector2>();
@@ -59,7 +60,7 @@ public class ClientLogicTest : MonoBehaviour
     private Vector3 GetCorrectedDirection(Vector3 moveDirection)
     {
         if (moveDirection.magnitude > moveSpeed)
-        {
+        { 
             float ratio = moveSpeed / moveDirection.magnitude;
             moveDirection.x *= ratio;
             moveDirection.z *= ratio;

@@ -15,29 +15,14 @@ public class AbilitySelector : MonoBehaviour
     [HideInInspector]
     public List<SpellUI> spells = new List<SpellUI>();
 
-    public IntVariable selectedSpellId;
-
-    private int selectedIndex = -1;
-
-    public void StartCooldownForSelectedSpell()
-    {
-        if (selectedIndex >= 0 && selectedIndex < spells.Count) spells[selectedIndex].StartCooldown();
-    }
-
-    public void StartCooldownForSpellWithPosition(int spellPosition)
-    {
-        if (spellPosition >= 0 && spellPosition < spells.Count) spells[spellPosition].StartCooldown();
-    }
-
-    public int GetSpellIdAtPos(int pos)
-    {
+    public SpellUI GetSpellAtPosition(int pos) {
         if (pos < spells.Count)
         {
-            return spells[pos].spell.id;
+            return spells[pos];
         }
         else
         {
-            return -1;
+            return null;
         }
     }
 
@@ -60,58 +45,5 @@ public class AbilitySelector : MonoBehaviour
             }
         }
     }
-
-    /*
-      void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            toggleGroup.SetAllTogglesOff();
-            selectedSpellId.Value = -1;
-            selectedIndex = -1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            HandleAbilitySelect(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            HandleAbilitySelect(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            HandleAbilitySelect(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            HandleAbilitySelect(3);
-        }
-    }
-
-    
-    private void HandleAbilitySelect(int index)
-    {
-        if (selectedIndex == index) return;
-
-        selectedIndex = index;
-
-        if (spellToggles.Length > index)
-        {
-            var spellToggle = spellToggles[index];
-            spellToggle.isOn = !spellToggle.isOn;
-
-            if (spellToggle.isOn)
-            {
-                selectedSpellId.Value = spells[index].spell.id;
-            }
-            else
-            {
-                selectedSpellId.Value = -1;
-            }
-        }
-    }
-     */
 
 }

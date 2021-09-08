@@ -6,16 +6,18 @@ using UnityEngine.InputSystem;
 public class PlayerRotation : MonoBehaviour
 {
 
-
     private Plane groundPlane;
+    private Camera mainCam;
+
     private void Start()
     {
         groundPlane = new Plane(Vector3.up, Vector3.zero);
+        mainCam = Camera.main;
     }
 
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = mainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (groundPlane.Raycast(ray, out float rayDistance))
         {
             Vector3 point = ray.GetPoint(rayDistance);

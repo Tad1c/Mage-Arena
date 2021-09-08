@@ -12,7 +12,7 @@ public class Tooltip : MonoBehaviour
 
     private void OnEnable()
     {
-        Spell spell = spellItem.spell;
+        Spell spell = spellItem.spellData;
         var name = spell.name;
 
         var stats = $"Damage: {spell.damage}\nCooldown: {spell.cooldown}\n";

@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &430546795388187601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2964618706882510191}
+  m_Layer: 8
+  m_Name: LookAtThis
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2964618706882510191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430546795388187601}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8637093429927329835}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3707749473716532689
 GameObject:
   m_ObjectHideFlags: 0
@@ -17,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9047306824769610617
 Transform:
   m_ObjectHideFlags: 0
@@ -143,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 7778118908642724414}
-  selectedSpellId: {fileID: 11400000, guid: e1f78e5782d6892409ce7aacb7f2652d, type: 2}
+  selectedSpellId: {fileID: 0}
 --- !u!1 &5710724987964419720
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +211,7 @@ Transform:
   - {fileID: 1669085016975331090}
   - {fileID: 2729222661678294658}
   - {fileID: 9047306824769610617}
+  - {fileID: 2964618706882510191}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -222,7 +253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPos: {fileID: 2729222661678294658}
   fireRate: 5
-  selectedSpellId: {fileID: 11400000, guid: e1f78e5782d6892409ce7aacb7f2652d, type: 2}
+  selectedSpellId: {fileID: 0}
 --- !u!114 &627107507805851135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8698528166ff5c747a878b07a33ab0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lookAtThis: {fileID: 2964618706882510191}
 --- !u!114 &-3727649927109408341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,7 +320,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: PC
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
