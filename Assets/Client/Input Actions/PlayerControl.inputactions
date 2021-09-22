@@ -69,7 +69,51 @@
                 {
                     "name": "",
                     "id": "48be382a-c68f-45c2-8080-52bcfd0b0019",
-                    "path": "<Keyboard>/q",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FirstSpell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "291832a4-ea77-4163-ba5a-0f63881dcf31",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FirstSpell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bfcf11fe-1cb2-4d10-93bf-3d9f923e9c00",
+                    "path": "<DualShockGamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FirstSpell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df750cb6-ad84-47bb-8376-081bd4573572",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FirstSpell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b57408a1-1613-4143-9a5b-30e3f01fc028",
+                    "path": "<SwitchProControllerHID>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -80,7 +124,7 @@
                 {
                     "name": "",
                     "id": "8588cc28-d2d2-4255-ba52-0a96bb5247d9",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -91,7 +135,7 @@
                 {
                     "name": "",
                     "id": "cb1cca59-accc-4c2a-b153-5a48a3333bea",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -102,7 +146,7 @@
                 {
                     "name": "",
                     "id": "b53eb9ab-9f29-4835-9bb4-b2888ca7c779",
-                    "path": "<Keyboard>/t",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
