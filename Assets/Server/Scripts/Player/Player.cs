@@ -1,18 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     public int id;
     public string username;
-    private Rigidbody _controller;
-    private AbilityManager _abilityManager;
+    public Transform shootOriginTransform;
 
-    public AbilityManager AbilityManager
-    {
-        get => _abilityManager;
-    }
+    private Vector2 moveVec;
+
+    private Rigidbody _controller;
 
     private StateHelper _stateHelper;
 
@@ -46,7 +45,6 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponent<Rigidbody>();
-        _abilityManager = GetComponent<AbilityManager>();
     }
 
     private void Start()
@@ -75,7 +73,7 @@ public class Player : MonoBehaviour
 
         this.id = id;
         this.username = username;
-        playerStats.health = playerStats.maxHealht;
+        playerStats.health = playerStats.maxHealth;
         inputs = new float[2];
     }
 
@@ -88,13 +86,18 @@ public class Player : MonoBehaviour
         newState.EnterState(this);
     }
 
+    public void OnMove(InputValue input)
+    {
+        moveVec = input.Get<Vector2>();
+    }
+
     public void FixedUpdate()
     {
         if (_healthManager.Health <= 0)
             return;
 
-        h = isOffline ? Input.GetAxisRaw("Horizontal") : inputs[0];
-        v = isOffline ? Input.GetAxisRaw("Vertical") : inputs[1];
+        h = isOffline ? moveVec.x : inputs[0];
+        v = isOffline ? moveVec.y : inputs[1];
 
         _stateHelper.CheckForOtherStates(this);
 
@@ -139,15 +142,6 @@ public class Player : MonoBehaviour
     {
         this.inputs = inputs;
         transform.rotation = rotation;
-    }
-
-    public void ShootProjectile(Vector3 shootDirection, int type)
-    {
-        // if(_stateHelper.HasState<StunState>())
-        //     return;
-        //
-        // _abilityManager.Shoot(type);
-        // NetworkManager.instance.InstanciateProjectile(shootOrigin, type).Init(shootDirection, id);
     }
 
     public void Jump()

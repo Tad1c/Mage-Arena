@@ -5,13 +5,17 @@ using UnityEngine;
 
 public class CameraSetup : MonoBehaviour
 {
+    public Transform lookAtThis;
+
     void Start()
     {
-        var virtualCamObj = GameObject.FindGameObjectWithTag("VirtualCamera");
-        if (virtualCamObj != null)
+        var groupObj = GameObject.FindGameObjectWithTag("GroupTarget");
+        if (groupObj != null)
         {
-            MidpointCalculator midpointCalculator = virtualCamObj.GetComponent<MidpointCalculator>();
-            midpointCalculator.player = transform;
+            // MidpointCalculator midpointCalculator = virtualCamObj.GetComponent<MidpointCalculator>();
+            // midpointCalculator.player = transform;
+            CinemachineTargetGroup cinemachineGroup = groupObj.GetComponent<CinemachineTargetGroup>();
+            cinemachineGroup.m_Targets[1].target = transform;
         }
 
     }

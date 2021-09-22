@@ -9,11 +9,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public static Dictionary<int, PlayerClient> players = new Dictionary<int, PlayerClient>();
-    public static Dictionary<int, ProjectileManager> projectiles = new Dictionary<int, ProjectileManager>();
 
     public GameObject localPlayerPrefab;
     public GameObject playerPrefab;
-    public List<GameObject> projectilePrefab;
 
     private void Awake()
     {
@@ -36,18 +34,6 @@ public class GameManager : MonoBehaviour
 
 
         players.Add(id, player.GetComponent<PlayerClient>());
-    }
-
-    public void SpawnProjectile(int id, int playerId, Vector3 position, Vector3 finalPosition, int type)
-    {
-        GameObject projectile = Instantiate(projectilePrefab[type], position, Quaternion.identity);
-
-        ProjectileManager projectileManager = projectile.GetComponent<ProjectileManager>();
-        projectiles.Add(id, projectileManager);
-        projectileManager.Init(id, playerId, finalPosition);
-
-        players[playerId].animator.SetTrigger("attack");
-
     }
 
 }

@@ -87,6 +87,7 @@ public class ServerSend
         using (Packet packet = new Packet((int)ServerPackets.playerPosition))
         {
             packet.Write(player.id);
+            packet.Write(DateTimeOffset.Now.ToUnixTimeMilliseconds());
             packet.Write(player.transform.position);
             packet.Write(player.Controller.velocity.magnitude);
 
@@ -147,29 +148,27 @@ public class ServerSend
         }
     }
 
+    #region Spell functions
 
-    #region ProjectileShit
-    public static void InstantiateBasicProjectile(Projectile basicProjectile, int playerId, Vector3 finalDestination, int type)
+    public static void InitSpellOnClient(int spellId, int spellServerId, int playerId, Vector3 startPosition, Vector3 shootTarget)
     {
-        using (Packet packet = new Packet((int)ServerPackets.projectileShoot))
-        {
-            packet.Write(basicProjectile.id);
-            packet.Write(playerId);
-            packet.Write(basicProjectile.transform.position);
-            packet.Write(finalDestination);
-            packet.Write(type);
+        using Packet packet = new Packet((int)ServerPackets.projectileShoot);
 
-            SendTCPDataToAll(packet);
-        }
+        packet.Write(spellId);
+        packet.Write(spellServerId);
+        packet.Write(playerId);
+        packet.Write(startPosition);
+        packet.Write(shootTarget);
+
+        SendTCPDataToAll(packet);
     }
 
-
-    public static void DestroyBasicProjectile(Projectile basicProjectile)
+    public static void DestorySpellOnClient(int spellServerId, Vector3 finalPosition)
     {
         using (Packet packet = new Packet((int)ServerPackets.projectileDestroy))
         {
-            packet.Write(basicProjectile.id);
-            packet.Write(basicProjectile.transform.position);
+            packet.Write(spellServerId);
+            packet.Write(finalPosition);
 
             SendTCPDataToAll(packet);
         }

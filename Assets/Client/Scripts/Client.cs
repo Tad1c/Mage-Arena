@@ -14,7 +14,8 @@ namespace ClientSide
         public static int dataBufferSize = 4096;
 
         public string ip = "127.0.0.1";
-        public int port = 26950;
+        public int tcp_port = 30500;
+        public int udp_port = 30501;
         public int myId = 0;
         public TCP tcp;
         public UDP udp;
@@ -37,6 +38,12 @@ namespace ClientSide
                 Destroy(this);
         }
 
+        private void Start()
+        {
+            instance.SetIP(Matchmaker.ip);
+            instance.SetPorts(Matchmaker.tcp_port, Matchmaker.udp_port);
+            ConnectToServer();
+        }
 
         private void OnApplicationQuit()
         {
@@ -53,6 +60,7 @@ namespace ClientSide
 
             isConnected = true;
 
+            Debug.Log($"[Client] Connect on ip {instance.ip}, ports: tcp = {instance.tcp_port} - udp = {instance.udp_port}");
             tcp.Connect();
         }
 
@@ -61,10 +69,11 @@ namespace ClientSide
             this.ip = ip;
         }
 
-        // public void SetPORT(string port)
-        // {
-        //     this.port = Int32.Parse(port);
-        // }
+        public void SetPorts(int tcpp, int udpp)
+        {
+            this.tcp_port = tcpp;
+            this.udp_port = udpp;
+        }
 
         public class TCP
         {
@@ -83,15 +92,19 @@ namespace ClientSide
                 };
 
                 receiveBuffer = new byte[dataBufferSize];
-                socket.BeginConnect(instance.ip, instance.port, ConnectCallback, socket);
+                socket.BeginConnect(instance.ip, instance.tcp_port, new AsyncCallback(ConnectCallback), socket);
             }
 
             private void ConnectCallback(IAsyncResult result)
             {
+                Debug.Log("[Client] TCP ConnectCallback");
+
                 socket.EndConnect(result);
 
                 if (!socket.Connected)
                     return;
+
+                Debug.Log("[Client] TCP is connected");
 
                 stream = socket.GetStream();
 
@@ -206,12 +219,14 @@ namespace ClientSide
 
             public UDP()
             {
-                endPoint = new IPEndPoint(IPAddress.Parse(instance.ip), instance.port);
+                endPoint = new IPEndPoint(IPAddress.Parse(instance.ip), instance.udp_port);
             }
 
             public void Connect(int localPort)
             {
-                socket = new UdpClient(localPort);
+
+                Debug.Log("[Client] Connecting to UDP " + endPoint);
+                socket = new UdpClient(instance.udp_port);
 
                 socket.Connect(endPoint);
                 socket.BeginReceive(ReceiveCallback, null);
@@ -301,7 +316,7 @@ namespace ClientSide
                 {(int)ServerPackets.playerRespawn, ClientHandle.PlayerRespawn},
                 {(int)ServerPackets.projectileShoot, ClientHandle.ProjectileSpawn},
                 {(int)ServerPackets.projectilePosition, ClientHandle.ProjectilePosition},
-                {(int)ServerPackets.projectileDestroy, ClientHandle.ProjectileDestroy},
+                {(int)ServerPackets.projectileDestroy, ClientHandle.DestorySpellOnClient},
                 {(int)ServerPackets.playerJump, ClientHandle.Jump},
                 {(int)ServerPackets.ping, ClientHandle.Ping},
                 // {(int)ServerPackets.udpTest, ClientHandle.UDPTest}

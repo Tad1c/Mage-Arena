@@ -25,7 +25,7 @@ public class ClientSend : MonoBehaviour
         using (Packet packet = new Packet((int)ClientPackets.welcomeReceived))
         {
             packet.Write(Client.instance.myId);
-            packet.Write(UIManager.instance.usernameField.text);
+            packet.Write(CurrentPlayerData.playerDisplayName);
 
             SendTCPData(packet);
         }
@@ -57,12 +57,12 @@ public class ClientSend : MonoBehaviour
         }
     }
 
-    public static void ShootProjectile(Vector3 shootDirection, int type)
+    public static void ShootProjectile(Vector3 shootDirection, int spellPos)
     {
         using (Packet packet = new Packet((int)ClientPackets.shootProjectile))
         {
             packet.Write(shootDirection);
-            packet.Write(type);
+            packet.Write(spellPos);
             SendTCPData(packet);
         }
     }

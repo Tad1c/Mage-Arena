@@ -5,11 +5,16 @@ using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
 using ServerSide;
+using PlayFab.MultiplayerAgent;
+using PlayFab;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class Server
 {
     public static int MaxPlayers { get; private set; }
-    public static int Port { get; private set; }
+    public static int TCPPort { get; private set; }
+    public static int UDPPort { get; private set; }
 
     public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
     public delegate void PacketHandler(int fromClient, Packet packet);
@@ -18,24 +23,27 @@ public class Server
     private static TcpListener tcpListener;
     private static UdpClient udpListener;
 
-    public static void Start(int maxPlayers, int port)
+    public static void Start(int maxPlayers, int tcpPort, int udpPort)
     {
         MaxPlayers = maxPlayers;
-        Port = port;
+
+        TCPPort = tcpPort;
+        UDPPort = udpPort;
 
         MyLog.D("Starting server...");
         InitializeServerData();
 
         IPAddress ipAddress = IPAddress.Any;
 
-        tcpListener = new TcpListener(ipAddress, Port);
+        tcpListener = new TcpListener(ipAddress, TCPPort);
         tcpListener.Start();
         tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
-        udpListener = new UdpClient(Port);
+        udpListener = new UdpClient(UDPPort);
         udpListener.BeginReceive(UDPReceiveCallback, null);
 
-        MyLog.D($"Server started on {ipAddress}:{Port}");
+        MyLog.D($"Server started on TCP {ipAddress}:{TCPPort}");
+        MyLog.D($"Server started on UDP {ipAddress}:{UDPPort}");
     }
 
     public static void Stop()
@@ -51,6 +59,8 @@ public class Server
 
     private static void UDPReceiveCallback(IAsyncResult result)
     {
+        Debug.Log("Server: UDPReceiveCallback");
+
         try
         {
             IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Any, 0);
@@ -99,12 +109,15 @@ public class Server
         }
         catch (Exception e)
         {
-           MyLog.D($"Error sending data to {clientEndPoint} via UDP {e}");
+            MyLog.D($"Error sending data to {clientEndPoint} via UDP {e}");
         }
     }
 
     private static void TCPConnectCallback(IAsyncResult result)
     {
+
+        Debug.Log("Server: TCPConnectCallback");
+
         //String the tcp client instance in local variable
         TcpClient client = tcpListener.EndAcceptTcpClient(result);
 

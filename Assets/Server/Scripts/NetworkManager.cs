@@ -2,29 +2,70 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using PlayFab.MultiplayerAgent;
+using PlayFab;
+using System.Linq;
+using PlayFab.MultiplayerModels;
 
 public class NetworkManager : MonoBehaviour
 {
 
-    public static NetworkManager instance;
-
-    public GameObject playerPrefab;
-    public List<GameObject> projectilePrefab;
-
-    private void Awake()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(this);
-    }
-
     private void Start()
     {
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 30;
-        
-        Server.Start(50, 26950);
+        Application.targetFrameRate = 60;
+
+        PlayFabMultiplayerAgentAPI.Start();
+        PlayFabMultiplayerAgentAPI.OnServerActiveCallback += OnServerActive;
+
+        StartCoroutine(ReadyForPlayers());
+    }
+
+    private IEnumerator ReadyForPlayers()
+    {
+        yield return new WaitForSeconds(.5f);
+        PlayFabMultiplayerAgentAPI.ReadyForPlayers();
+        Debug.Log("Server ReadyForPlayers");
+    }
+
+    private void OnServerActive()
+    {
+        Debug.Log("Server active, OnServerActive");
+        Invoke("StartShutdownLoop", 120);
+
+        var ports = PlayFabMultiplayerAgentAPI.GetGameServerConnectionInfo().GamePortsConfiguration.ToList();
+        var tcpPort = ports.Find(p => p.Name == "port_tcp");
+        var udpPort = ports.Find(p => p.Name == "port_udp");
+
+        var clientTcpPort = tcpPort.ClientConnectionPort;
+        var serverTcpPort = tcpPort.ServerListeningPort;
+
+        var clientUdpPort = udpPort.ClientConnectionPort;
+        var serverUdpPort = udpPort.ServerListeningPort;
+
+        foreach (PlayFab.MultiplayerAgent.Model.GamePort p in ports) {
+            Debug.Log($"[Server] port name = {p.Name} , client = {p.ClientConnectionPort}, server = {p.ServerListeningPort}");
+        }
+
+        Server.Start(50, serverTcpPort, serverUdpPort);
+
+        // players can now connect to the server
+    }
+
+    void StartShutdownLoop()
+    {
+        StartCoroutine(ShutDownWhenAllDisconnected());
+    }
+
+    IEnumerator ShutDownWhenAllDisconnected()
+    {
+        var objs = GameObject.FindGameObjectsWithTag("Player");
+        if (objs.Length <= 1)
+        {
+            Application.Quit();
+        }
+        yield return new WaitForSeconds(10f);
+        StartCoroutine(ShutDownWhenAllDisconnected());
     }
 
     private void OnApplicationQuit()
@@ -32,21 +73,5 @@ public class NetworkManager : MonoBehaviour
         Server.Stop();
     }
 
-    public Player InstanciatePlayer()
-    {
-        return Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
-    }
-
-    [CanBeNull]
-    public Projectile InstanciateProjectile(Transform origin, int type)
-    {
-        if (!projectilePrefab[type])
-            return null;
-        
-        var obj = Instantiate(projectilePrefab[type], origin.position, Quaternion.identity).GetComponent<Projectile>();
-        obj.type = type;
-        
-        return obj;
-    }
 
 }

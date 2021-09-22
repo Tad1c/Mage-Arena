@@ -1,23 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ClientLogicTest : MonoBehaviour
 {
 
-    public float moveSpeed = 15f;
+    public float moveSpeed = 6.5f;
 
     public GameObject playerPrefab;
-    public GameObject canvas;
 
-    private Rigidbody rigidbody;
+    private Rigidbody rb;
+
+    private Vector2 moveVec;
 
     private void Start()
     {
         GameObject player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
 
-        rigidbody = player.AddComponent<Rigidbody>();
-        rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        rb = player.AddComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         player.GetComponent<CapsuleCollider>().enabled = true;
 
@@ -26,28 +28,28 @@ public class ClientLogicTest : MonoBehaviour
 
         PlayerClient playerClient = player.GetComponent<PlayerClient>();
         playerClient.enabled = false;
+    }
 
-        canvas.SetActive(false);
+    public void OnMove(InputValue input)
+    {
+        moveVec = input.Get<Vector2>();
     }
 
     private void Update()
     {
 
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        Vector3 moveDirection = MoveDirection(new Vector2(h,v));
-        moveDirection *= 15f;
+        Vector3 moveDirection = MoveDirection(moveVec);
+        moveDirection *= moveSpeed;
 
         // So we can move with the same speed when going diagonally
         moveDirection = GetCorrectedDirection(moveDirection);
 
-        rigidbody.velocity = ControllerVelocity(moveDirection);
+        rb.velocity = ControllerVelocity(moveDirection);
     }
 
     private Vector3 ControllerVelocity(Vector3 moveDirection)
     {
-        return new Vector3(moveDirection.x, rigidbody.velocity.y, moveDirection.z);
+        return new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
     }
 
     private Vector3 MoveDirection(Vector2 inputDirection)
@@ -58,7 +60,7 @@ public class ClientLogicTest : MonoBehaviour
     private Vector3 GetCorrectedDirection(Vector3 moveDirection)
     {
         if (moveDirection.magnitude > moveSpeed)
-        {
+        { 
             float ratio = moveSpeed / moveDirection.magnitude;
             moveDirection.x *= ratio;
             moveDirection.z *= ratio;

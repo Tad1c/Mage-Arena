@@ -7,6 +7,9 @@ using ClientSide;
 
 public class PlayerClient : MonoBehaviour
 {
+    float m_SmoothedSpeed;
+
+    public float moveTowardsSpeed = 9f;
 
     public int id;
     public string username;
@@ -23,6 +26,8 @@ public class PlayerClient : MonoBehaviour
     public float pingCountDownLimit = 1f;
 
     public Animator animator;
+    long lastTimestamp = 0;
+    Vector3 targetPos = Vector3.zero;
     private void FixedUpdate()
     {
         pingCountdown += Time.fixedDeltaTime;
@@ -32,6 +37,11 @@ public class PlayerClient : MonoBehaviour
             pingText.text = Client.instance.ping.ToString();
             ClientSend.Ping();
         }
+    }
+
+    private void Update()
+    {
+        VisualUtils.SmoothMove(transform, targetPos, Time.deltaTime, ref m_SmoothedSpeed);
     }
 
     public void Init(int id, string userName, float health)
@@ -71,11 +81,14 @@ public class PlayerClient : MonoBehaviour
     }
 
 
-    public void InterpolateMovement(Vector3 newPosition, float playerVelocityMagnitude)
+    public void InterpolateMovement(Vector3 newPosition, float playerVelocityMagnitude, long timestamp)
     {
-        this.transform.position = newPosition;
+        if (lastTimestamp < timestamp)
+        {
+            targetPos = newPosition;
+            lastTimestamp = timestamp;
+        }
         animator.SetFloat("movementSpeed", playerVelocityMagnitude);
-
         //StartCoroutine(MoveObject(transform.position, newPosition, 0.05f));
     }
 

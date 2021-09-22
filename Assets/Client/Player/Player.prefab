@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6716662009891926274}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31001133529b5ac4aa09cf1d7a724fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveTowardsSpeed: 9
   id: 0
   username: 
   user_text: {fileID: 4383996331335567632}
@@ -89,15 +90,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 7ed3e345f07e89940ae0c1e00eeb7d1d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 7ed3e345f07e89940ae0c1e00eeb7d1d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 7ed3e345f07e89940ae0c1e00eeb7d1d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400048, guid: 7ed3e345f07e89940ae0c1e00eeb7d1d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -142,6 +143,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8637093429927329835}
     m_Modifications:
+    - target: {fileID: 258875033161135829, guid: 282871eb7dc0d174ca2256842ae83070,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 258875033161135829, guid: 282871eb7dc0d174ca2256842ae83070,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 267993718734078951, guid: 282871eb7dc0d174ca2256842ae83070,
         type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -215,17 +226,17 @@ PrefabInstance:
     - target: {fileID: 1043612742025638019, guid: 282871eb7dc0d174ca2256842ae83070,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1043612742025638019, guid: 282871eb7dc0d174ca2256842ae83070,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1043612742025638019, guid: 282871eb7dc0d174ca2256842ae83070,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1043612742025638019, guid: 282871eb7dc0d174ca2256842ae83070,
         type: 3}
