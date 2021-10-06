@@ -18,7 +18,8 @@ public enum ServerPackets
     projectileDestroy,
     ping,
     playerJump,
-    udpTest
+    udpTest,
+    zoneRadius
 }
 
 /// <summary>Sent from client to server.</summary>

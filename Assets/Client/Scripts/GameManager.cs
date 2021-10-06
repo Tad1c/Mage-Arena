@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public GameObject localPlayerPrefab;
     public GameObject playerPrefab;
 
+    public ParticleSystem zoneSystem;
+
     private void Awake()
     {
         if (instance == null)
@@ -34,6 +36,12 @@ public class GameManager : MonoBehaviour
 
 
         players.Add(id, player.GetComponent<PlayerClient>());
+    }
+
+    public void SetZoneRadius(float radius)
+    {
+        ParticleSystem.ShapeModule shape = zoneSystem.shape;
+        shape.radius = Mathf.Lerp(65, 43, Mathf.InverseLerp(20, 45, radius));
     }
 
 }

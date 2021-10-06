@@ -82,6 +82,13 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[id].Respawn();
     }
 
+    public static void ZoneRadius(Packet packet)
+    {
+        float radius = packet.ReadFloat();
+
+        GameManager.instance.SetZoneRadius(radius);
+    }
+
     public static void ProjectilePosition(Packet packet)
     {
         int id = packet.ReadInt();
@@ -93,7 +100,7 @@ public class ClientHandle : MonoBehaviour
     public static void ProjectileSpawn(Packet packet)
     {
         int spellId = packet.ReadInt();
-        int spellServerId = packet.ReadInt(); 
+        int spellServerId = packet.ReadInt();
         int byPlayerId = packet.ReadInt();
         Vector3 startPosition = packet.ReadVector3();
         Vector3 shootTarget = packet.ReadVector3();

@@ -148,6 +148,16 @@ public class ServerSend
         }
     }
 
+    public static void ZoneRadius(float radius)
+    {
+        using (Packet packet = new Packet((int)ServerPackets.zoneRadius))
+        {
+            packet.Write(radius);
+
+            SendTCPDataToAll(packet);
+        }
+    }
+
     #region Spell functions
 
     public static void InitSpellOnClient(int spellId, int spellServerId, int playerId, Vector3 startPosition, Vector3 shootTarget)
