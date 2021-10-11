@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         ParticleSystem.ShapeModule shape = zoneSystem.shape;
         shape.radius = Mathf.Lerp(65, 43, Mathf.InverseLerp(20, 45, radius));
+        Debug.Log("Current zone radius "+radius);
     }
 
 }

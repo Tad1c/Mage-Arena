@@ -17,7 +17,8 @@ public class Zone : MonoBehaviour
 
     private void Update()
     {
-        c.radius -= 0.0007f;
+        if (c.radius > 20f)
+            c.radius -= 0.0007f;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,5 +57,6 @@ public class Zone : MonoBehaviour
     {
         ServerSend.ZoneRadius(c.radius);
         yield return new WaitForSeconds(2f);
+        StartCoroutine(SendZoneRadiusUpdates());
     }
 }
